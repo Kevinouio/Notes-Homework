@@ -1,0 +1,1 @@
+cmd='<SOURCE_DIR>/configure;--prefix=<INSTALL_DIR>;>;/Users/kevinho/Desktop/Lab10/build/gmp_configure.log;2>&1'

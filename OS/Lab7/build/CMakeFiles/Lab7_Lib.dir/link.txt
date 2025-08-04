@@ -1,0 +1,2 @@
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc libLab7_Lib.a CMakeFiles/Lab7_Lib.dir/src/MMU.cpp.o CMakeFiles/Lab7_Lib.dir/src/TLB.cpp.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib libLab7_Lib.a

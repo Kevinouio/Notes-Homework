@@ -1,0 +1,1 @@
+/usr/bin/c++ -g -O0 CMakeFiles/Lab1.dir/src/main.cpp.o -o Lab1  -Wl,-rpath,/home/kth258/Lab1/build libLab1_lib.so 

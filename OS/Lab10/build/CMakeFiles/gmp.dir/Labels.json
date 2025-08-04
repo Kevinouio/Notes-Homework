@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/kevinho/Desktop/Lab10/build/CMakeFiles/gmp"
+		},
+		{
+			"file" : "/Users/kevinho/Desktop/Lab10/build/CMakeFiles/gmp.rule"
+		},
+		{
+			"file" : "/Users/kevinho/Desktop/Lab10/build/CMakeFiles/gmp-complete.rule"
+		},
+		{
+			"file" : "/Users/kevinho/Desktop/Lab10/build/gmp/src/gmp-stamp/gmp-build.rule"
+		},
+		{
+			"file" : "/Users/kevinho/Desktop/Lab10/build/gmp/src/gmp-stamp/gmp-configure.rule"
+		},
+		{
+			"file" : "/Users/kevinho/Desktop/Lab10/build/gmp/src/gmp-stamp/gmp-download.rule"
+		},
+		{
+			"file" : "/Users/kevinho/Desktop/Lab10/build/gmp/src/gmp-stamp/gmp-install.rule"
+		},
+		{
+			"file" : "/Users/kevinho/Desktop/Lab10/build/gmp/src/gmp-stamp/gmp-mkdir.rule"
+		},
+		{
+			"file" : "/Users/kevinho/Desktop/Lab10/build/gmp/src/gmp-stamp/gmp-patch.rule"
+		},
+		{
+			"file" : "/Users/kevinho/Desktop/Lab10/build/gmp/src/gmp-stamp/gmp-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"gmp"
+		],
+		"name" : "gmp"
+	}
+}

@@ -1,0 +1,12 @@
+# This is a generated file and its contents are an internal implementation detail.
+# The download step will be re-executed if anything in this file changes.
+# No other meaning or use of this file is supported.
+
+method=url
+command=/opt/homebrew/Cellar/cmake/3.30.5/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/Users/kevinho/Desktop/Lab10/build/gmp/src/gmp-stamp/download-gmp.cmake;COMMAND;/opt/homebrew/Cellar/cmake/3.30.5/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/Users/kevinho/Desktop/Lab10/build/gmp/src/gmp-stamp/verify-gmp.cmake;COMMAND;/opt/homebrew/Cellar/cmake/3.30.5/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/Users/kevinho/Desktop/Lab10/build/gmp/src/gmp-stamp/extract-gmp.cmake
+source_dir=/Users/kevinho/Desktop/Lab10/build/gmp/src/gmp
+work_dir=/Users/kevinho/Desktop/Lab10/build/gmp/src
+url(s)=https://gmplib.org/download/gmp/gmp-6.2.1.tar.bz2
+hash=
+      no_extract=
+

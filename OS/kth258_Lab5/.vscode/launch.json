@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Lab5",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Lab5",
+            "args": ["../data/config.json"],
+            "preLaunchTask": "CMake: build",
+            "cwd": "${workspaceFolder}/build/"
+        }
+    ]
+}
+

@@ -1,0 +1,11 @@
+# Hashes of file build rules.
+b8cbdcaaf276246e693599a82a69135a CMakeFiles/gmp
+053ee27bd439b4ce7c3efe481723af00 CMakeFiles/gmp-complete
+2acc8b8f5572dbe8231556c34623712a CMakeFiles/zip
+fcc0e4d93741eb0422ed17cea3bfaaa1 gmp/src/gmp-stamp/gmp-build
+9404bc8fb1e907787278953946e3420f gmp/src/gmp-stamp/gmp-configure
+e68370a21abc799c5a564c6718a69f0d gmp/src/gmp-stamp/gmp-download
+8b0d61d49fc66001b288466ba25fabc6 gmp/src/gmp-stamp/gmp-install
+e9fece7e454a59ffc4d350f98b99ae01 gmp/src/gmp-stamp/gmp-mkdir
+cb87a01ce0188e6fea4d86185620daa4 gmp/src/gmp-stamp/gmp-patch
+bd64c565b4a4bb3e947b8d537365b8fd gmp/src/gmp-stamp/gmp-update

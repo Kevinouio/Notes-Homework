@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -g -O0 -shared -Wl,-soname,libLab1_lib.so -o libLab1_lib.so CMakeFiles/Lab1_lib.dir/src/process.cpp.o CMakeFiles/Lab1_lib.dir/src/system_calls.cpp.o 

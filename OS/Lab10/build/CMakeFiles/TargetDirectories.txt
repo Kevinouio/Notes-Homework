@@ -1,0 +1,5 @@
+/Users/kevinho/Desktop/Lab10/build/CMakeFiles/gmp.dir
+/Users/kevinho/Desktop/Lab10/build/CMakeFiles/Lab10.dir
+/Users/kevinho/Desktop/Lab10/build/CMakeFiles/zip.dir
+/Users/kevinho/Desktop/Lab10/build/CMakeFiles/edit_cache.dir
+/Users/kevinho/Desktop/Lab10/build/CMakeFiles/rebuild_cache.dir

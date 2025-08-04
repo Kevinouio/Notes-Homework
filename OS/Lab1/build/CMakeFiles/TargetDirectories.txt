@@ -1,0 +1,5 @@
+/home/kth258/Lab1/build/CMakeFiles/Lab1_lib.dir
+/home/kth258/Lab1/build/CMakeFiles/Lab1.dir
+/home/kth258/Lab1/build/CMakeFiles/zip.dir
+/home/kth258/Lab1/build/CMakeFiles/edit_cache.dir
+/home/kth258/Lab1/build/CMakeFiles/rebuild_cache.dir

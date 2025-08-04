@@ -1,0 +1,4 @@
+/Users/kevinho/Desktop/Lab11/build/CMakeFiles/Lab11.dir
+/Users/kevinho/Desktop/Lab11/build/CMakeFiles/zip.dir
+/Users/kevinho/Desktop/Lab11/build/CMakeFiles/edit_cache.dir
+/Users/kevinho/Desktop/Lab11/build/CMakeFiles/rebuild_cache.dir

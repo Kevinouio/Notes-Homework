@@ -1,0 +1,13 @@
+# Target labels
+ gmp
+# Source files and their labels
+/Users/kevinho/Desktop/Lab10/build/CMakeFiles/gmp
+/Users/kevinho/Desktop/Lab10/build/CMakeFiles/gmp.rule
+/Users/kevinho/Desktop/Lab10/build/CMakeFiles/gmp-complete.rule
+/Users/kevinho/Desktop/Lab10/build/gmp/src/gmp-stamp/gmp-build.rule
+/Users/kevinho/Desktop/Lab10/build/gmp/src/gmp-stamp/gmp-configure.rule
+/Users/kevinho/Desktop/Lab10/build/gmp/src/gmp-stamp/gmp-download.rule
+/Users/kevinho/Desktop/Lab10/build/gmp/src/gmp-stamp/gmp-install.rule
+/Users/kevinho/Desktop/Lab10/build/gmp/src/gmp-stamp/gmp-mkdir.rule
+/Users/kevinho/Desktop/Lab10/build/gmp/src/gmp-stamp/gmp-patch.rule
+/Users/kevinho/Desktop/Lab10/build/gmp/src/gmp-stamp/gmp-update.rule

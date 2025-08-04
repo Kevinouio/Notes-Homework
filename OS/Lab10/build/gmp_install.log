@@ -1,0 +1,51 @@
+Making install in tests
+Making install in .
+Making install in devel
+Making install in mpn
+Making install in mpz
+Making install in mpq
+Making install in mpf
+Making install in rand
+Making install in misc
+Making install in cxx
+Making install in mpn
+Making install in mpz
+Making install in mpq
+Making install in mpf
+Making install in printf
+Making install in scanf
+Making install in rand
+Making install in cxx
+Making install in demos
+Making install in calc
+Making install in expr
+Making install in tune
+Making install in doc
+ .././install-sh -c -d '/Users/kevinho/Desktop/Lab10/build/gmp/share/info'
+ /usr/bin/install -c -m 644 ./gmp.info ./gmp.info-1 ./gmp.info-2 '/Users/kevinho/Desktop/Lab10/build/gmp/share/info'
+ ./install-sh -c -d '/Users/kevinho/Desktop/Lab10/build/gmp/lib'
+ /bin/sh ./libtool   --mode=install /usr/bin/install -c   libgmp.la '/Users/kevinho/Desktop/Lab10/build/gmp/lib'
+libtool: install: /usr/bin/install -c .libs/libgmp.10.dylib /Users/kevinho/Desktop/Lab10/build/gmp/lib/libgmp.10.dylib
+libtool: install: (cd /Users/kevinho/Desktop/Lab10/build/gmp/lib && { ln -s -f libgmp.10.dylib libgmp.dylib || { rm -f libgmp.dylib && ln -s libgmp.10.dylib libgmp.dylib; }; })
+libtool: install: /usr/bin/install -c .libs/libgmp.lai /Users/kevinho/Desktop/Lab10/build/gmp/lib/libgmp.la
+libtool: install: /usr/bin/install -c .libs/libgmp.a /Users/kevinho/Desktop/Lab10/build/gmp/lib/libgmp.a
+libtool: install: chmod 644 /Users/kevinho/Desktop/Lab10/build/gmp/lib/libgmp.a
+libtool: install: ranlib /Users/kevinho/Desktop/Lab10/build/gmp/lib/libgmp.a
+ ./install-sh -c -d '/Users/kevinho/Desktop/Lab10/build/gmp/include'
+ /usr/bin/install -c -m 644 gmp.h '/Users/kevinho/Desktop/Lab10/build/gmp/include'
+ ./install-sh -c -d '/Users/kevinho/Desktop/Lab10/build/gmp/lib/pkgconfig'
+ /usr/bin/install -c -m 644 gmp.pc '/Users/kevinho/Desktop/Lab10/build/gmp/lib/pkgconfig'
+
++-------------------------------------------------------------+
+| CAUTION:                                                    |
+|                                                             |
+| If you have not already run "make check", then we strongly  |
+| recommend you do so.                                        |
+|                                                             |
+| GMP has been carefully tested by its authors, but compilers |
+| are all too often released with serious bugs.  GMP tends to |
+| explore interesting corners in compilers and has hit bugs   |
+| on quite a few occasions.                                   |
+|                                                             |
++-------------------------------------------------------------+
+

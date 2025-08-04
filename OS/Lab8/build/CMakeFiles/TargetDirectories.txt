@@ -1,0 +1,5 @@
+/Users/kevinho/Desktop/Lab8/build/CMakeFiles/Lab8_Lib.dir
+/Users/kevinho/Desktop/Lab8/build/CMakeFiles/Lab8.dir
+/Users/kevinho/Desktop/Lab8/build/CMakeFiles/zip.dir
+/Users/kevinho/Desktop/Lab8/build/CMakeFiles/edit_cache.dir
+/Users/kevinho/Desktop/Lab8/build/CMakeFiles/rebuild_cache.dir

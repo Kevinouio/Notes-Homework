@@ -1,0 +1,4 @@
+/Users/kevinho/Desktop/Lab9/build/CMakeFiles/Lab9.dir
+/Users/kevinho/Desktop/Lab9/build/CMakeFiles/zip.dir
+/Users/kevinho/Desktop/Lab9/build/CMakeFiles/edit_cache.dir
+/Users/kevinho/Desktop/Lab9/build/CMakeFiles/rebuild_cache.dir

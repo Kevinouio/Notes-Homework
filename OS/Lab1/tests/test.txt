@@ -1,0 +1,98 @@
+To test the C++ project using Google Test, you'll need to set up a separate CMakeLists.txt file for the test configuration. Here's an example of how you can modify the CMakeLists.txt file to include Google Test:
+
+1. Create a `tests` directory in the project root directory.
+
+2. Inside the `tests` directory, create a new file called `CMakeLists.txt` with the following content:
+
+```cmake
+cmake_minimum_required(VERSION 3.0)
+project(ProcessExampleTests)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Set the path to Google Test
+set(GTEST_ROOT "/path/to/googletest")
+
+# Find Google Test package
+find_package(GTest REQUIRED)
+
+# Include Google Test headers
+include_directories(${GTEST_INCLUDE_DIRS})
+
+# Add the test executable target
+add_executable(ProcessExampleTests tests.cpp)
+
+# Link the test executable with Google Test
+target_link_libraries(ProcessExampleTests ${GTEST_BOTH_LIBRARIES} pthread)
+```
+
+Make sure to replace `/path/to/googletest` with the actual path to your Google Test installation directory.
+
+3. Inside the `tests` directory, create a new file called `tests.cpp` and add your test cases. Here's an example of how the `tests.cpp` file might look:
+
+```cpp
+#include <gtest/gtest.h>
+
+// Include the header file for the class/functions you want to test
+#include "../main.cpp"
+
+// Example test case
+TEST(ProcessExampleTest, ExampleTest) {
+    // Write your test assertions
+    ASSERT_EQ(2 + 2, 4);
+}
+
+int main(int argc, char** argv) {
+    // Initialize Google Test
+    ::testing::InitGoogleTest(&argc, argv);
+
+    // Run all the tests
+    return RUN_ALL_TESTS();
+}
+```
+
+4. Modify the original `CMakeLists.txt` file in the project root directory to include the test configuration. Add the following lines to the end of the file:
+
+```cmake
+# Include the 'tests' directory
+add_subdirectory(tests)
+```
+
+The updated `CMakeLists.txt` file in the project root directory should look like this:
+
+```cmake
+cmake_minimum_required(VERSION 3.0)
+project(ProcessExample)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Add the executable target
+add_executable(ProcessExample main.cpp)
+
+# Include the 'tests' directory
+add_subdirectory(tests)
+```
+
+5. Open a terminal, navigate to the project root directory, and create a `build` directory (if not already present). Inside the `build` directory, run CMake to generate the build files:
+
+```shell
+cmake ..
+```
+
+6. Build the project and tests:
+
+```shell
+cmake --build .
+```
+
+7. Run the tests:
+
+```shell
+ctest
+```
+
+Google Test will execute the test cases defined in `tests.cpp`, and you should see the test results displayed in the terminal.
+
+Make sure you have Google Test installed and the correct path to the library set in the `CMakeLists.txt` file for the tests to build successfully.
