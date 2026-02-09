@@ -1,0 +1,36 @@
+% LTeX: enabled=false
+
+\documentclass[openany]{book}
+\usepackage[utf8]{inputenc}
+
+\newcommand{\nirpdftitle}{18.917 Notes}
+\usepackage{import}
+\inputfrom{..}{nir}
+% \usepackage{mathabx}
+
+\pagestyle{contentpage}
+
+\title{Ma }
+\author{Kevin Ho}
+\date{Spring 2026}
+\rhead{\textit{18.917: CHROMATIC HOMOTOPY THEORY}}
+
+\begin{document}
+
+\maketitle
+
+\nirtableofcontents
+
+\newpage
+
+\chapter{Introduction}
+
+\foreach \n in {2}
+{
+	\subfile{feb/\n}
+}
+
+\nirprintbib
+\nirprintindex
+
+\end{document}
