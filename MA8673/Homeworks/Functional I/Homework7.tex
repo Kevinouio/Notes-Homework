@@ -1,0 +1,177 @@
+\documentclass[]{article}
+
+% Packages for mathematics
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{bm}
+\usepackage{authblk}
+
+% Package for graphics
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{subcaption}
+\usepackage{placeins}
+
+
+% Package for page layout and headers/footers
+%\usepackage{geometry}
+%\geometry{margin=1in}
+
+
+% Package for clickable links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+}
+
+% Package for algorithms
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{matlab-prettifier}
+\usepackage{tabularx}
+\usepackage{amsmath, physics}
+
+% Custom theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\title{Functional Analysis Homework 7}
+\author{Kevin Ho}
+\date{October 3rd}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Construct a bounded linear functional on $C[0,1]$ which does not attain its norm. 
+    \begin{proof}
+        
+        Define the functional $\varphi$ on $C[0,1]$ as:
+        $$\varphi(f) = \int_0^{1/2} f(t)dt - \int_{1/2}^1 f(t)dt = \int_0^1 f(t)g(t)dt$$
+        where $g(t)$ is the step function:
+        $$
+        g(t) =
+        \begin{cases}
+        1 & \text{if } t \in [0, 1/2] \\
+        -1 & \text{if } t \in (1/2, 1]
+        \end{cases}
+        $$
+        
+        
+        
+        By the Riesz Representation Theorem, the norm of $\varphi$ is the total variation of its representing measure, which is calculated as $\|\varphi\| = \int_0^1 |g(t)|dt$.
+        
+        Since $|g(t)| = 1$ everywhere on $[0,1]$, the norm is:
+        $$\|\varphi\| = \int_0^1 1 dt = 1$$
+        
+        
+        The norm is attained if there exists a function $f_0 \in C[0,1]$ with $\|f_0\|_\infty = 1$ such that $|\varphi(f_0)| = 1$. This occurs only if $f_0(t)$ "aligns" perfectly with $g(t)$, meaning $f_0(t) = \text{sgn}(g(t))$ almost everywhere.
+        
+        This requires $f_0(t)$ to be the step function $g(t)$. However, $g(t)$ has a jump discontinuity at $t=1/2$ and is therefore not in $C[0,1]$.
+        
+        Since the only function that could attain the norm is discontinuous, we conclude that the norm is not attained by any function in $C[0,1]$. 
+    \end{proof}
+
+    \item Let $K$ be a subset of a normed space s.t. $0\in \mathring{K}$. Then $K$ is an absorbing set. 
+    \begin{proof}
+        So with $0\in \mathring{K}$, With this let $\epsilon >0, \text{ }   B(0,\epsilon)\in K.$
+        We need to show that for $x\in X, \text{ }\alpha>0 \text{ be a scalar} ,\alpha x \in K$. So we are already given the origin point , $x=0$, is already in K so we only need to consider the case to where $x \ne 0$. So we need to choose an $\alpha$ such that it is in the $B(0,\epsilon)$. So for this to be true, $\|y\| < \epsilon$. So we need to choose $\alpha > 0$ so $\|\alpha x\| < \epsilon$. With this we can modify this ineqality as follows:
+        $$\|\alpha x\| < \epsilon \rightarrow a\|x\| < \epsilon \rightarrow \alpha < \frac{\epsilon}{\|x\|}$$
+        With this we can choose $\alpha = \frac{\epsilon}{2\|x\|}$. This get is the following:
+        $$\|\alpha x\| = \frac{\epsilon}{2\|x\|}\|x\| = \frac{\epsilon}{2} < \epsilon $$
+        Since $\frac{\epsilon}{2} < \epsilon$, the vector $\alpha x$ is in the open ball $B(0, \epsilon)$. And because $B(0, \epsilon) \subseteq K$, it follows that $\alpha x \in K$.Since we have found a suitable $\alpha$ for any $x \in X$, the set $K$ is absorbing by definition. 
+      
+    \end{proof}
+
+    \item Show that the openness assumption in Theorem 2.3.25 is essential. 
+    
+    To this end, consider the linear space $P$ of all polynomials in one
+    variable and with real coefficients. Let the subset $A$ consist of polynomials with negative leading coefficient, and let the subset $B$ consists of polynomials with all non-negative coefficients. Show that $A$ and $B$ are disjoint convex subsets of $P$, and that there does not exist a nonzero
+    linear functional $f$ on $P$ such that
+    \begin{proof}
+Disjoint:
+Assume $p(t) \in A \cap B$.
+If $p(t) = 0$, then $p \in B$ (all coeffs are $0 \ge 0$). But $p \notin A$, as it does not have a negative leading coefficient. This is a contradiction.
+If $p(t) \neq 0$, let $\deg(p)=n$ with leading coefficient $p_n$.
+Since $p \in B$, all coefficients are non-negative, so $p_n \ge 0$.
+Since $p \in A$, the leading coefficient is negative, so $p_n < 0$.
+This is a contradiction ($p_n \ge 0$ and $p_n < 0$). Thus, $A \cap B = \emptyset$.
+
+Convexity: 
+\text{B is convex:} Let $p(t), q(t) \in B$ and $\lambda \in [0,1]$. Let $r(t) = \lambda p(t) + (1-\lambda) q(t)$. The $k$-th coefficient of $r$ is $r_k = \lambda p_k + (1-\lambda) q_k$. Since $p_k, q_k \ge 0$ and $\lambda, (1-\lambda) \ge 0$, we have $r_k \ge 0$ for all $k$. Thus $r(t) \in B$.
+
+\text{A is convex:} Let $p(t), q(t) \in A$ with $\deg(p)=n, \deg(q)=m$ and leading coefficients $p_n < 0, q_m < 0$. Let $\lambda \in [0,1]$ and $r(t) = \lambda p(t) + (1-\lambda) q(t)$.
+\begin{itemize}
+    \item If $n > m$, $\deg(r)=n$ and its leading coeff is $\lambda p_n < 0$.
+    \item If $m > n$, $\deg(r)=m$ and its leading coeff is $(1-\lambda) q_m < 0$.
+    \item If $n = m$, the $n$-th coeff is $r_n = \lambda p_n + (1-\lambda) q_m$. As a convex combination of two negative numbers, $r_n < 0$. This is the leading coefficient.
+\end{itemize}
+In all cases, $r(t) \in A$.
+
+Seperation:
+Assume for contradiction there exists a \text{nonzero} functional $f \in P^*$ and $C \in \mathbb{R}$ s.t. $f(a) \le C \le f(b)$ for all $a \in A, b \in B$.
+A functional $f$ on $P$ is defined by the sequence $c_k = f(t^k)$, so $f(\sum p_i t^i) = \sum p_i c_i$.
+
+Since $0 \in B$, we have $f(0) \ge C$, which implies $0 \ge C$.
+For any $k \ge 0$, $t^k \in B$, so $f(t^k) = c_k \ge C$.
+Also, $M t^k \in B$ for any $M > 0$. Thus $f(M t^k) = M c_k \ge C$. If $c_k$ were negative, we could choose a large $M$ s.t. $M c_k < C$. This is a contradiction, so we must have $c_k \ge 0$ for all $k \ge 0$.
+
+Since $f$ is nonzero, there must exist at least one $k_0$ such that $c_{k_0} > 0$.
+Choose an integer $n > k_0$. For any $M > 0$, construct the polynomial $a(t) = -t^n + M t^{k_0}$.
+The leading coefficient of $a(t)$ is $-1$, so $a(t) \in A$.
+By our assumption, $f(a) \le C$.
+$$f(a) = f(-t^n + M t^{k_0}) = -f(t^n) + M f(t^{k_0}) = -c_n + M c_{k_0}$$
+So, we must have $-c_n + M c_{k_0} \le C$, or $M c_{k_0} \le C + c_n$ for all $M > 0$.
+But $C+c_n$ is a fixed constant, and $c_{k_0}$ is a fixed positive constant. The left side $M c_{k_0}$ can be made arbitrarily large by increasing $M$, and will eventually exceed $C+c_n$.
+This is a contradiction.
+
+The only way to avoid this contradiction is if all $c_k = 0$, which means $f$ is the zero functional. This contradicts our assumption that $f$ was nonzero. Thus, no such functional exists.
+    \end{proof}
+
+    \item Let $X_0$ be a closed subspace of a normed space $X$. Prove that there exists a functional $f\in X^*$ s.t.
+    $$f(x) = 0, \forall x\in X_0$$
+    You may deduce this from Hanh-Banach theorem directly or from a seperation theorem.
+    \begin{proof}
+        Assume $X_0$ is a proper closed subspace of $X$. Let $y \in X \setminus X_0$.
+Define the set $K = \{y\}$.
+\begin{itemize}
+    \item $X_0$ is a closed convex set (as it is a subspace).
+    \item $K$ is a compact convex set (as it is a singleton).
+    \item $X_0 \cap K = \emptyset$ since $y \notin X_0$.
+\end{itemize}
+By the Hahn-Banach, there exists a continuous linear functional $f \in X^*$ and a scalar $C \in \mathbb{R}$ such that:
+$$f(x) < C < f(y) \quad \text{for all } x \in X_0$$
+
+We must show that this $f$ vanishes on $X_0$.
+Let $x \in X_0$. Since $X_0$ is a subspace, $tx \in X_0$ for all scalars $t \in \mathbb{R}$.
+Therefore, the separation inequality must hold for $tx$:
+$$f(tx) < C \implies t \cdot f(x) < C, \quad \forall t \in \mathbb{R}$$
+
+This inequality must hold for all $t$. Assume for contradiction that $f(x) \neq 0$.
+\begin{itemize}
+    \item \textbf{Case 1: $f(x) > 0$.}
+    Choose a large positive $t$, for example $t = \frac{|C| + 1}{f(x)}$.
+    Then $t \cdot f(x) = |C| + 1$. This is $\ge C$, which contradicts $t \cdot f(x) < C$.
+    
+    \item \textbf{Case 2: $f(x) < 0$.}
+    Choose a large negative $t$, for example $t = \frac{|C| + 1}{f(x)}$.
+    Then $t \cdot f(x) = |C| + 1$. This again contradicts $t \cdot f(x) < C$.
+\end{itemize}
+Both cases lead to a contradiction. The only remaining possibility is $f(x) = 0$.
+Since $x$ was an arbitrary element of $X_0$, $f(x) = 0, \forall x \in X_0$.
+    \end{proof}
+
+\end{enumerate}
+
+\end{document}

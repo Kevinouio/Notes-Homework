@@ -1,0 +1,99 @@
+\documentclass[]{article}
+
+% Packages for mathematics
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{bm}
+\usepackage{authblk}
+
+% Package for graphics
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{subcaption}
+\usepackage{placeins}
+
+
+% Package for page layout and headers/footers
+%\usepackage{geometry}
+%\geometry{margin=1in}
+
+\usepackage{mathrsfs}
+% Package for clickable links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+}
+
+% Package for algorithms
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{matlab-prettifier}
+\usepackage{tabularx}
+\usepackage{amsmath, physics}
+
+% Custom theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\title{Functional Analysis (MA 8673) Homework 4}
+\author{Kevin Ho}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Consider the one-parameter unitary group given by $U(t)f(x) = f(x-t \text{ mod } 2\pi)$ for $f\in L^2(0,2\pi).$ What is the generator of $U$?
+
+
+    \item Suppose $M$ is the Riemann surface of $\sqrt{z}$ and $\mathcal{H}  \in L^2(M)$ with Lebesgue measure locally. Define the following two operators:
+
+    $$
+    A = -i\frac{\partial}{\partial x} \text{ and } -i\frac{\partial}{\partial x} 
+    $$
+
+    both with domain $\mathcal{D} = \{ f \in C^\infty(M): \text{supp}(f) \text{ is compact}, 0\notin \text{supp}(f)\}$. Prove that both $A$ and $B$ are essentially self-adjoint, both $A,B:\mathcal D \rightarrow \mathcal D$, and $(AB)f = (BA)f, \text{ } \forall f\in \mathcal D$. However show that exp($it\overline{A}$) and exp($it\overline{B}$) do not commute.
+
+    \item Let $\mu$ be a finite complex Borel measure on $\mathbb{R}$ and let 
+
+    $$
+    \hat{\mu}(t) = \int_\mathbb{R} e^{-it\lambda} d\mu(\lambda).
+    $$
+    Prove that 
+    $$
+    \lim_{c\rightarrow\infty} \frac{1}{c} \int_0^c|\hat{\mu}(t)|^2dt = \sum_{\lambda \in \mathbb{R}} |\mu (\{\lambda\})|^2
+    $$
+
+    where the sum on the right hand side is finite.
+
+
+
+
+    \begin{proof}
+        So let's start by decomposing the LHS.
+    \end{proof}
+
+    \item Let $A$ be a self-adjoint operator. Using the previous problem, prove that $\lim_{t\rightarrow \infty}U(t)= 0$ where $U(t) = exp($-it{A}$)$
+    
+    \item Let $X$ be a infinite dimensional locally convex space and $X^*$ its dual space. Prove that no weakly continuous semi-norm is actually a norm. (This shows semi-norms are essential tools.)
+
+    \item Let $\{\rho_\alpha\}_{\alpha \in A}$ be a family of semi-norms so that some finite sum $\rho_{\alpha_1} + \dots + \rho_{\alpha_n}$ is actually a norm. Prove that $\{\rho_\alpha\}_{\alpha \in A}$ is equivalent to a family of norms. 
+
+
+
+
+
+\end{enumerate}
+
+\end{document}

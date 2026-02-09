@@ -1,0 +1,300 @@
+\documentclass[]{article}
+
+% Packages for mathematics
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{bm}
+\usepackage{authblk}
+
+% Package for graphics
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{subcaption}
+\usepackage{placeins}
+
+
+% Package for page layout and headers/footers
+%\usepackage{geometry}
+%\geometry{margin=1in}
+
+\usepackage{mathrsfs}
+% Package for clickable links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+}
+
+% Package for algorithms
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{matlab-prettifier}
+\usepackage{tabularx}
+\usepackage{amsmath, physics}
+
+% Custom theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\title{Functional Analysis (MA 8673) Homework 1}
+\author{Kevin Ho}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Define 
+
+    $$
+    A = i\frac{d}{dx}
+    $$
+    on $L^2$[0,1]. Define two domains for $A: \mathcal{D}_1 (A) = AC[0,1]$ and $\mathcal{D}_2(A) = \{f \in AC[0,1] : f(0) = 0\}.$ Prove that $A$ is closed on $\mathcal{D}_1(A)$. Prove or disprove A is closed on $\mathcal{D}_2(A)$
+
+    \begin{proof}
+    Let $\{f_n\} \in AC[0,1]$ such that ${f_n}\rightarrow f \in  L^2[0,1]$ and $Af_n \rightarrow g \in L^2$. Note that $Af_n = if_n'$ and so $if_n' \rightarrow g = f_n'\rightarrow -ig$.
+    
+    For simplicity let $-ig = h.$ Another thing to note, since we are in a finite space of $[0,1]$, by Holder's inequality, $f'_n\rightarrow h\in L^1[0,1]$. So now let's observe the integration of the sequence of $f_n$. By FTOC we get,
+
+    \begin{equation}
+    \label{1}
+         \int_0^x f'_n(t)dt = f_n(x)-f_n(0) 
+    \end{equation}
+   
+
+
+    $$
+    \rightarrow f_n(0) = f_n(x) -  \int_0^x f'_n(t)dt
+    $$
+    Since we know this converges in $L^1$, we integrate both sides w.r.t. x to get 
+
+    $$
+    \int_0^1 f_n(0)dx = \int_0^1f_n(x)dx -  \int_0^1\int_0^x f'_n(t)dtdx
+    $$
+    
+    $$
+    \rightarrow f_n(0) = \int_0^1f_n(x)dx -  \int_0^1\int_0^x f'_n(t)dtdx
+    $$
+   
+    Let $c = \lim_{n \to \infty} f_n(0)$. (We know this limit exists because the RHS terms converge).
+    
+    Now let's go back to \eqref{1} to get the relation
+    $$ f_n(x) = f_n(0) + \int_0^x f_n'(t) dt $$
+    Taking the limit as $n \to \infty$:
+    $$ f(x) = c + \int_0^x h(t) dt $$
+    
+    This equation tells us two things:
+    \begin{enumerate}
+        \item The function $f$ is absolutely continuous (since it is an integral of an $L^1$ function), so $f \in \mathcal{D}_1(A)$.
+        \item Differentiating both sides gives $f'(x) = h(x)$.
+    \end{enumerate}
+    
+    Recall that $h = -ig$. Therefore:
+    $$ f' = -ig \implies i f' = g \implies Af = g $$
+    
+    Thus, $A$ is closed on $\mathcal{D}_1(A)$.
+    
+    So now let's observe  $\{f_n\} \in D_2(A)$. Assume all the earlier assumptions as shown for $D_1(A)$. Since $f_n \in D_2(A),$ we have $f_n(0) = 0$. By FTOC we have
+    $$
+    f_n(x) = \int^x_0f'_n(t)dt.
+    $$
+
+    Now for any $x \in [0,1]$, we bound the difference by 
+    $$
+    |f_n(x) - \int_0^xh(t)dt| \leq \int^x_0|f'_n(t) -h(t)|dt \leq \|f'_n-h\|_{L^1}
+    $$
+
+    Now assume $f_n\in \mathcal D_2(A)$, so $f_n(0)=0$ for all $n$.
+Hence $c=\lim_{n\to\infty} f_n(0)=0$, and so the function
+\[
+F(x)=c+\int_0^x h(t)\,dt
+\]
+satisfies $F(0)=0$, i.e. $F\in\mathcal D_2(A)$.
+From the estimate above we already have $f_n\to F$ in $L^2$, hence $f=F$ a.e.
+Also $F'=h=-ig$ a.e., so $Af=g$. Therefore $A$ is closed on $\mathcal D_2(A)$.
+
+    
+   
+    \end{proof}
+
+    \item Let $A$ and $B$ be operators defined on a Hilbert space $\mathcal{H}$. 
+    Show that $(\alpha A)^* = \bar{\alpha}A^*$ for scalar $\alpha$.
+    Moreover show $A^* + B^* \subseteq (A+B)^*$ where $\mathcal{D}(A^* + B^*) = \mathcal{D}(A^*) \cap \mathcal{D}(B^*).$ 
+    Show that $(A+B)^* = A^* + B^*$ only if one of the operators is bounded. Give an example where equality doesn't hold.
+
+    \begin{proof}
+        Define $x,y \in \mathcal{H}$ s.t. $x\in \mathcal D(A)$ and $y\in \mathcal D(A^*) $ and $\alpha$ be a scalar. We can manipulate
+        $
+        \langle (\alpha A) x,y  \rangle 
+        $ as follows.
+         
+        $$
+        \alpha \langle  x,A^*y  \rangle =  \langle  x,\bar{\alpha}A^*y  \rangle 
+        $$
+        This implies that $y \in ((\alpha A)^*)$ and so $(\alpha A)^*y = \bar \alpha A^*y$
+
+        Now let's show that  $A^* + B^* \subseteq (A+B)^*$.
+
+         \begin{align*}
+         \langle  (A+B)x,y  \rangle &= \langle  Ax,y  \rangle +  \langle  Bx,y  \rangle \\ 
+         &= \langle  x,A^*y  \rangle + \langle  x,B^*y  \rangle \\
+         &= \langle  x,(A+B)^*y  \rangle 
+        \end{align*}
+
+        This holds $\forall x\in \mathcal D(A+B),$ it follows that $y \in ((A+B)^*)$ and $(A+B)^*y = (A^*+B^*)y .$
+
+
+        Assume $A$ is bounded. Then $\mathcal{D}(A) = \mathcal{H}$, which implies $\mathcal{D}(A^*) = \mathcal{H}$.
+Consequently, the domain of the sum simplifies to $\mathcal{D}(A+B) = \mathcal{D}(B)$.
+
+From Part 2, we already know $A^* + B^* \subseteq (A+B)^*$. We must now show the reverse inclusion $(A+B)^* \subseteq A^* + B^*$.
+
+Let $y \in \mathcal{D}((A+B)^*)$. By definition, there exists a vector $z \in \mathcal{H}$ such that for all $x \in \mathcal{D}(A+B) = \mathcal{D}(B)$:
+$$
+\langle (A+B)x, y \rangle = \langle x, z \rangle
+$$
+Using the linearity of the inner product, we expand the left side:
+$$
+\langle Ax, y \rangle + \langle Bx, y \rangle = \langle x, z \rangle
+$$
+Since $A$ is bounded and defined on all of $\mathcal{H}$, we know that $y \in \mathcal{D}(A^*)$ so $\langle Ax, y \rangle = \langle x, A^*y \rangle$. Substituting this into the equation, we get
+$$
+\langle x, A^*y \rangle + \langle Bx, y \rangle = \langle x, z \rangle
+$$
+$$
+\langle Bx, y \rangle = \langle x, z \rangle - \langle x, A^*y \rangle
+$$
+$$
+\langle Bx, y \rangle = \langle x, z - A^*y \rangle
+$$
+This equation holds for all $x \in \mathcal{D}(B)$. By the definition of the adjoint, this implies that $y \in \mathcal{D}(B^*)$ and $B^*y = z - A^*y$.
+
+Since $y \in \mathcal{D}(B^*)$ and $y \in \mathcal{D}(A^*)$, we have $y \in \mathcal{D}(A^*) \cap \mathcal{D}(B^*) = \mathcal{D}(A^* + B^*)$.
+
+Thus, $(A+B)^* \subseteq A^* + B^*$ and so we have $(A+B)^* = A^* + B^*$.
+
+
+        \textbf{Counter Example: }An example of where the inequality doesn't hold is let $A=-B.$ Also let $A$ be an unbounded operator. 
+        We have the following to occur of $A+B = 0$ on $D(A),$ so $(A+B)^* = 0$ on the entire space $\mathcal{H}$. Now observing the adjoint of $(A+B)^*$, we get $A^*+B^* = A^* - A^* = 0$. This implies that the domain is restricted to $\mathcal D(A^*)$. This implies that the domain of $A^*+B^*$ is restricted to $\mathcal{D}(A^*)$. However, the domain of $(A+B)^*$ is the entire space $\mathcal{H}$. This mismatch between $\mathcal{D}(A^*+B^*)$ and $\mathcal{D}((A+B)^*)$ shows that equality does not hold.
+        
+
+        
+
+    
+    \end{proof}
+    
+
+    \item Let $A$ and $B$ be operators defined on a Hilbert space $\mathcal{H}$ such that $AB$ is densely defined. Prove that $(AB)^* \supset B^*A^*.$ Moreover if $B$ is bounded then show $(BA)^*=A^*B^*.$
+    \begin{proof}
+        Let $y \in \mathcal D(A^*)$ and  $A^*y \in \mathcal D(B^*)$. Let $x\in \mathcal D(AB)$ so that we have $Bx\in \mathcal D(A)$. We then have the following 
+        $$
+         \langle  (AB)x,y  \rangle  = \langle  A(Bx),y  \rangle  = \langle  Bx,A^*y  \rangle
+        $$
+        $$
+        \langle  x,B^*A^*y  \rangle
+        $$
+
+
+        This shows that $y\in \mathcal D((AB)^*)$ and that $(AB)^* \supset B^*A^*$. Now we then want to show the other direction of $(AB)^* \subset B^*A^*.$
+        
+        Let $y\in (BA)^*$, then $\exists z\in \mathcal H $ such that 
+        $$
+        \langle BA x, y\rangle = \langle  x, z\rangle 
+        $$
+        We can rewrite as follows:
+        $$
+        \langle  Ax,B^* y\rangle = \langle x,z \rangle, \forall x \in \mathcal{D}(A). 
+        $$
+        This means that $B^*y \in \mathcal{D}(A^*) $ and $ A^*(B^*y) = z = (BA)^*y.$ Leading to the equality of $(BA)^*=A^*B^*.$
+        
+    \end{proof}
+
+    \item An alternative way to define a normal operator (to allow for unboundedness) is the following: $A$ is called \textbf{normal} if $\|Af\| = \|A^*f\|$ for all $f \in \mathcal{D}(A) = \mathcal{D}(A^*)$. Prove that if $A$ is normal then so is $A+z$ for all $z \in \mathbb{C}$
+    \begin{proof}
+
+    So to satisfy this, we must show that $ \mathcal{D}(A+z) = \mathcal{D}((A+z)^*)$ and $\|(A+z)f\| = \|(A+z)^*f\|, \forall f\in \mathcal D$. 
+    
+    So first let's show the domain equality.  
+    $$ 
+    (A+z)^* = A^* + \bar{z}
+    $$
+    Thus, the domain is given as follows.
+
+    $$
+    \mathcal{D}((A+z)^*) = \mathcal{D}(A^* + \bar z) = \mathcal D(A^*)
+    $$
+    Since $A$ is normal, $\mathcal D(A+z) =\mathcal D(A) =\mathcal D(A^*) =  \mathcal D(
+    (A+z)^*)$
+
+    Now we want to show the Norm equality. Let $f \in \mathcal D(A)$. Let's expand out both sides of the equality
+    $$
+    \|(A+z)f\| = \|(A+z)^*f\|
+    $$
+
+    LHS:
+    \begin{align*}
+        |(A+z)f\|^2  &= \langle (A+z)f, (A+z)f \rangle \\
+        &=\langle Af+zf, Af+zf \rangle  \\
+        &= \langle Af, Af\rangle + \langle Af, zf\rangle + \langle zf, Af\rangle +\langle zf, zf\rangle \\
+        &=\|Af\|^2 + \bar{z}\langle Af,f\rangle + {z}\langle Af,f\rangle + |z|^2\|f\|^2
+    \end{align*}
+
+
+     RHS:
+    \begin{align*}
+        |(A+z)^*f\|^2  &= \langle (A+z)^*f, (A+z)^*f \rangle \\
+        &=\langle A^*f+\bar{z}f, A^*f+\bar{z}f \rangle  \\
+        &= \langle A^*f, A^*f\rangle + \langle A^*f, \bar{z}f\rangle + \langle \bar{z}f, A^*f\rangle +\langle \bar{z}f, \bar{z}f\rangle \\
+        &=\|A^*f\|^2 + {z}\langle A^*f,f\rangle + \bar{z}\langle A^*f,f\rangle + |z|^2\|f\|^2
+    \end{align*}
+    Note that both sides expand to the same term except the first term of both. Note that $A$ is normal. With that $\|Af\|^2 = \|A^*f\|^2$. Thus $A+z$ is normal.
+
+        
+    \end{proof}
+        % complex ocnjucation or polarization identity most likely so just like computational stuff
+        
+
+    \item Using the above definition, prove that normal operators are always closed.
+    \begin{proof}Let $\{x_n\}$ be a sequence in $\mathcal{D}(A)$ such that $x_n \to x$ and $Ax_n \to y$ in $\mathcal{H}$. To prove that $A$ is closed, we must show that $x \in \mathcal{D}(A)$ and $Ax = y$. Since $\{Ax_n\}$ is a convergent sequence, it is a Cauchy sequence. By the normality condition $\|Ah\| = \|A^*h\|$, we have for any $n, m$:
+$$
+\|A^*x_n - A^*x_m\| = \|A^*(x_n - x_m)\| = \|A(x_n - x_m)\| = \|Ax_n - Ax_m\|
+$$
+Since $\{Ax_n\}$ is Cauchy, $ \|Ax_n - Ax_m\|\rightarrow0$ as $n,m \to \infty$. Therefore, $\{A^*x_n\}$ is also a Cauchy sequence in $\mathcal{H}$ and must converge to some limit $z$.
+
+We now have:
+$$
+x_n \to x \quad \text{and} \quad A^*x_n \to z
+$$
+Recall that the adjoint operator $A^*$ is always closed. By the definition of closedness applied to $A^*$, this implies that $x \in \mathcal{D}(A^*)$ and $A^*x = z$.
+
+Since $A$ is normal, we are given that $\mathcal{D}(A) = \mathcal{D}(A^*)$. Therefore, $x \in \mathcal{D}(A)$.
+
+Finally, we must show that $Ax = y$. We apply the norm equality to the vector $x_n - x$ to get
+$$
+\|Ax_n - Ax\| = \|A^*(x_n - x)\| = \|A^*x_n - A^*x\|.
+$$
+When we take the limit as $n \to \infty$, on the right side, since $A^*x_n \to z$ and we found $A^*x = z$, the term $\|A^*x_n - A^*x\| \to 0$. Thus the left side $\|Ax_n - Ax\| \to 0$, which implies $Ax_n \to Ax$.
+
+Since we originally assumed $Ax_n \to y$, by the uniqueness of limits, we must have $Ax = y$.
+
+Thus, $x \in \mathcal{D}(A)$ and $Ax = y$, proving that $A$ is closed.
+\end{proof}
+    
+    
+
+
+    
+
+\end{enumerate}
+
+\end{document}

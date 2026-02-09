@@ -1,0 +1,416 @@
+\documentclass[]{article}
+
+% Packages for mathematics
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{bm}
+\usepackage{authblk}
+
+% Package for graphics
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{subcaption}
+\usepackage{placeins}
+
+
+% Package for page layout and headers/footers
+%\usepackage{geometry}
+%\geometry{margin=1in}
+
+
+% Package for clickable links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+}
+
+% Package for algorithms
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{matlab-prettifier}
+\usepackage{tabularx}
+\usepackage{amsmath, physics}
+
+% Custom theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\title{Functional Analysis Homework 8}
+\author{Kevin Ho}
+\date{October 3rd}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Prove that a linear operator $T:X\rightarrow Y $ is bounded iff it maps sequences that converge to zero to bounded sequences.
+    
+
+    \begin{proof}
+($\Rightarrow$) Suppose $T$ is bounded. Then there exists $M>0$ such that $\|Tx\|\le M\|x\|$ for all $x\in X$. Let $(x_n)\subset X$ with $x_n\to 0$. Then
+\[
+\|Tx_n\|\le M\|x_n\|\longrightarrow 0,
+\]
+so in particular $(Tx_n)$ is bounded.
+
+($\Leftarrow$) Now assume that for every sequence $(x_n)\subset X$ with $x_n\to 0$, the image sequence $(Tx_n)$ is bounded in $Y$. We will show $T$ is bounded by contradiction. Suppose $T$ were unbounded. Then for each $n\in\mathbb{N}$ there exists $u_n\in X$ with $\|u_n\|=1$ and $\|Tu_n\|\ge n^3$ (since $\sup_{\|x\|=1}\|Tx\|=\infty$ when $T$ is unbounded). Define
+\[
+x_n := \frac{1}{n^2}\,u_n.
+\]
+Then $\|x_n\|=\frac{1}{n^2}\to 0$, but
+\[
+\|Tx_n\|=\frac{1}{n^2}\|Tu_n\|\;\ge\;\frac{1}{n^2}\cdot n^3 \;=\; n,
+\]
+so $(Tx_n)$ is unbounded. This contradicts the assumption. Hence $T$ must be bounded.
+\end{proof}
+
+
+    
+
+    \item Compute the norm of Volterra operator. (tldr the test question) Let $T:L_2[0,1]\rightarrow L_2[0,1]$ is defined as 
+    $$(Tf)(t) = \int_0^tf(s)ds$$
+    \begin{proof}
+        $$
+        \|Tf(t)\|^2 = \abs{\int_0^1\int_0^tf(s)dsdt}^2 \leq \int_0^1\abs{\int_0^tf(s)ds}^2dt $$
+        $$ 
+        \rightarrow\int_0^1\abs{\int_0^t\frac{f(s)}{\sqrt{\cos({\frac{\pi}{2}s})}}{\sqrt{\cos({\frac{\pi}{2}s})}}}^2dsdt 
+        $$
+        $$\leq \int_0^1\left(\abs{\int_0^t\frac{f(s)}{\sqrt{\cos({\frac{\pi}{2}s})}}}^2ds\right) \left(\abs{\int_0^t{\sqrt{\cos({\frac{\pi}{2}s})}}}^2ds\right)dt 
+        $$
+
+        $$
+        = \int_0^1{\int_0^t\frac{|f(s)|^2}{\cos({\frac{\pi}{2}s})}}{\int_0^t{{\cos({\frac{\pi}{2}s})}}}ds = \frac{2}{\pi}\int_0^1{\sin({\frac{\pi}{2}t})}\int_0^t\frac{|f(s)|^2}{\cos({\frac{\pi}{2}s})}
+        $$
+        
+        By Fubini's Theorem
+        $$
+        = \frac{2}{\pi}\int_0^1{\int_s^1\left(\sin({\frac{\pi}{2}t})dt\right)}\frac{|f(s)|^2}{\cos({\frac{\pi}{2}s})}ds
+        = \frac{2}{\pi}\int_0^1\frac{2}{\pi}\frac{|f(s)|^2}{\cos({\frac{\pi}{2}s})}{\cos({\frac{\pi}{2}s})}ds
+        $$
+        
+        $$
+        = \left(\frac{2}{\pi}\right)^2\int_0^1|f(s)|^2ds = \left(\frac{2}{\pi}\right)^2\|f\|^2_2 \geq \|Tf(t)\|^2
+        $$
+        We can show that this ineqality is an equality by letting $f(s) = \cos(\frac{\pi}{2}s)$
+        $$
+        \|Tf(t)\|^2 = \abs{\int_0^1\int_0^tf(s)dsdt}^2  = \abs{\int_0^1\int_0^t\cos \left(\frac{\pi}{2}s\right)dsdt}^2
+        $$ 
+        $$
+        = \abs{\int_0^1\frac{2}{\pi}\left(\sin({\frac{\pi}{2}t})dt\right) }^2 
+        = \left(\frac{2}{\pi}\right)^2\int_0^1\sin^2({\frac{\pi}{2}t}) dt
+        $$
+        $$ 
+        = \left(\frac{2}{\pi}\right)^2\int_0^1\frac{1-\cos(\frac{\pi}{2}t)}{2}dt = \left(\frac{2}{\pi}\right)^2\frac{1}{2}
+        $$
+        $$\|f\|^2 =\int_0^1\cos^2({\frac{\pi}{2}t}) dt  = \int_0^1\frac{1 +\cos(\frac{\pi}{2}t)}{2}dt  = \frac{1}{2}
+        $$
+        And so 
+        $$\|T\| = \frac{\|Tf\|}{\|f\|} = \frac{2}{\pi}
+         $$
+
+        
+
+        
+    \end{proof}
+
+    \item Show that a surjective linear map $T: X \rightarrow Y$ between normed spaces is an isomorphism iff $\exists c,C>0$ s.t. 
+    $$c\|x\| \leqslant \|Tx\| \leqslant C\|x\|, \forall x\in X.$$
+    \begin{proof}
+        ($\Rightarrow$): So with $T$ being a isomorphism, we know that $T$ is continuous and so giving us that T is bounded by $C$ s.t. $\|Tx\| \leq C\|x\|$. So we need to showing a bounded below by a constant $c$. By definition of $T$ being an isomorphism, we have that $T^{-1}$ is continuous. With that in mind, we have $\|T^{-1}y\| \leq M\|y\|$ as $Tx = y, T^{-1}y =x$ and so this lead to  
+        $$\|T^{-1}y\| \leq c\|y\| \rightarrow \|x\| \leq M\|Tx\|$$ giving us 
+        $c \|x\| \leq \|Tx\|$
+
+
+        ($\Leftarrow$): Now let's assume the inequality is true. To show that T is an isomorphism given the inequality and surjectivity of T. This mean we need to show that T is continuous, injective, and that $T^{-1}$ is continuous. From the inequality of $\|Tx\| \leq C\|x\|$ we have that $T$ is bounded and so thus is continuous. Now let's show injectivity. Let $Tx=0$ and $x\in ker(T)$. If we plug that into our inequality, we have:
+        $$c\|x\| \leq \|Tx\| \rightarrow c\|x\| \leq 0$$ and so $x$ must equal $0$. Giving us injectivity. So now we want to show that $T^{-1}$ is continuous/bounded. So we know that $T^{-1}$ exists as there is a bijection and so let $y\in Y, T^{-1}y = x, Tx = y$. If we look at our inequality of $c\|x\| \leq \|Tx\| \rightarrow c\|T^{-1}y\| \leq \|y\|$
+        which gives us boundedness and so continuous. 
+        
+    \end{proof}
+
+    \item Let $T\in L(X,Y)$ and $S\in L(Y,Z)$. Show that $(ST)^* = T^*S^*$. 
+
+    \begin{proof}
+        Let$ X,Y,Z$ be Hilbert spaces and $(T\in L(X,Y))$, $(S\in L(Y,Z))$.
+        By definition of the adjoint, for all $x\in X$ and $z\in Z$,
+        $$
+        \langle STx, z\rangle_Z
+        =\langle Tx, S^* z\rangle_Y
+        =\langle x, T^*(S^* z)\rangle_X
+        =\langle x, (T^*S^*) z\rangle_X 
+        $$
+        
+        Thus the operator $(T^*S^*:Z\to X)$ satisfies the adjoint identity for (ST).
+        By uniqueness of adjoints, $((ST)^*=T^*S^*)$. 
+        
+    \end{proof} 
+    
+
+    \item Let $S,T \in L(X,Y),$ and $a,b\in \mathbb{C}$. Show that $(aS+bT)^* = \bar{a}S^*+\bar{b}T^* .$
+    \begin{proof}
+By the definition of the adjoint, for any $x \in X, y \in Y$, we have:
+
+$$
+\langle (aS+bT)x,y\rangle_Y
+= \langle aSx + bTx, y\rangle_Y 
+= a,\langle Sx,y\rangle_Y + b,\langle Tx,y\rangle_Y  
+$$
+$$
+= a,\langle x,S^*y\rangle_X + b,\langle x,T^*y\rangle_X 
+= \langle x,\overline{a},S^*y + \overline{b},T^*y\rangle_X.
+$$
+
+
+Since this holds for all $x, y$, the uniqueness of the adjoint implies $(aS+bT)^* = \bar{a}S^* + \bar{b}T^*$.
+\end{proof}
+
+    \item Let $T \in L(X,Y)$ be such that $T^{-1} \in L(Y,X)$. Show that $(T^{-1})^* = (T^*)^{-1}$
+    \begin{proof}
+        
+       $$(TT^{-1})^*=I_Y \;\Rightarrow\; (T^{-1})^*T^*=I_Y,\qquad$$
+       $$(T^{-1}T)^*=I_X \;\Rightarrow\; T^*(T^{-1})^*=I_X.$$
+        
+
+    \end{proof}
+
+    \item Assume that a kernel function $k(t,s)$ satisfies
+    $$\sup_{t\in[0,1]}\int_0^1|k(t,s)|ds =: M_1<\infty,$$
+    $$\sup_{s\in[0,1]}\int_0^1|k(t,s)|ds =: M_2<\infty,$$
+    Show that the integral operator (2.11) $T: L_2[0,1]\rightarrow L_2[0,1] $with kernel $k(t,s)$ is bounded and 
+    $$\|T\| \leqslant\sqrt{M_1M_2}.$$
+    \begin{proof}
+        $$
+        \|Tx\|^2 
+        = \int_0^1|(Tx)(t)|^2dt
+        = \int_0^1\left|\int_0^1k(t,s)x(s)ds\right|^2dt
+        $$
+        
+        $$
+        \leq \int_0^1\left(\int_0^1|k(t,s)||x(s)|ds\right)^2dt 
+        \leq \int_0^1\left(\int_0^1|k(t,s)|ds\right)\left(\int_0^1|k(t,s)||x(s)|^2ds\right)dt
+        $$
+        With Fubini's and definition of our kernel we get
+        $$
+        \leq M_1 \int_0^1\left(\int_0^1|k(t,s)||x(s)|^2ds\right)dt 
+        = M_1 \int_0^1\left(\int_0^1|k(t,s)||x(s)|^2dt\right)ds
+        $$
+        $$
+        = M_1 \int_0^1|x(s)|^2\left(\int_0^1|k(t,s)|dt\right)ds
+        \leq M_1M_2\int_0^1|x(s)|^2ds 
+        $$
+        $$
+        = M_1M_2\|x\|^2 \implies \|Tx\| \leq \sqrt{M_1M_2}\|x\|
+        $$
+        
+        
+    \end{proof}
+\newpage
+    \item Let $A,B \subseteq X$ normed space. Prove the following:
+    \begin{enumerate}
+        \item $A^\perp$ is a closed linear subspace of $X^*.$
+        \item If $A\subseteq B$ then $A^\perp \supseteq B^\perp$.
+        \item $(A\cup B)^\perp = A^\perp \cap B^\perp.$ Give an example where $(A\cap B)^\perp \neq A^\perp \cup B^\perp.$
+        \item $A^\perp = (\text{Span } A)^\perp$.
+        \item $(\bar{A})^\perp = A^\perp$.
+        \item Suppose $X_0$ is a closed linear subspace of $X$. Then $X_0^\perp = \{0\}$ is equivalent to $X_0=X$.
+    \end{enumerate}
+
+
+    \begin{proof}
+        (a) let $f,g \in A^\perp$ and $\alpha, \beta$ be a scalar. For any $a\in A$.
+        $$(\alpha f+ \beta g)(a) = \alpha f(a)+\beta g(a) = \alpha * 0 + \beta * 0 = 0$$ so thus is a linear subspace of $X^*$. Now to show closed, let $\{f_n\} \in A^\perp$ and $f_n\rightarrow f \in X^*$ With continuity of $f$, ${a_n} \rightarrow x \implies f(a_n) \rightarrow f(x)$ and so $$f(a) = \lim_{n\rightarrow \infty}f(a_n) =0 $$
+
+        This holds for all $a \in A$, so $f \in A^\perp$. $A^\perp$ contains all its limit points.
+
+        (b) let $f\in B^\perp$. This gives us that $f(b) = 0, b\in B$. Since $A\subseteq B \implies a \in A, a\in B$. This gives us that $f(a) = 0,  \forall a\in A \implies f\in A^\perp$. Thus $A^\perp \supseteq B^\perp$. 
+
+        (c)
+$$f \in (A \cup B)^\perp \iff f(x) = 0, \forall x \in A \cup B$$
+$$\iff f(a) = 0 ,\forall a \in A, f(b) = 0, \forall b \in B$$
+$$\iff f \in A^\perp , f \in B^\perp \iff f \in A^\perp \cap B^\perp.$$
+Example:
+ Let $X = \mathbb{R}^2$, $A = \text{Span}\{(1,0)\}$, $B = \text{Span}\{(0,1)\}$.
+ 
+ LHS: $A \cap B = \{0\}$, so $(A \cap B)^\perp = \{0\}^\perp = X^* \cong \mathbb{R}^2$.
+ 
+ RHS: $A^\perp = \{f(x,y)=c_2 y\}$ (functionals zero on x-axis). $B^\perp = \{f(x,y)=c_1 x\}$ (functionals zero on y-axis).
+ 
+ $A^\perp \cup B^\perp$ is only the set of functionals that depend on just one axis, which is not all of $X^*$. For example, $f(x,y) = x+y$ is in the LHS but not the RHS.
+
+
+        (d)
+ ($\supseteq$): $A \subseteq \text{Span } A$. By property (b), $A^\perp \supseteq (\text{Span } A)^\perp$.
+ 
+ ($\subseteq$): Let $f \in A^\perp$. Let $x \in \text{Span } A$, so $x = \sum_{i=1}^n \alpha_i a_i$ for $a_i \in A$.
+     By linearity, $f(x) = f(\sum \alpha_i a_i) = \sum \alpha_i f(a_i)$.
+     Since $f \in A^\perp$, $f(a_i) = 0, \forall i$.
+     $f(x) = \sum \alpha_i (0) = 0$. Thus $f \in (\text{Span } A)^\perp$.
+
+        (e)
+ ($\supseteq$): $A \subseteq \bar{A}$. By property (b), $A^\perp \supseteq (\bar{A})^\perp$.
+ 
+ ($\subseteq$): Let $f \in A^\perp$. Let $x \in \bar{A}$.
+    Then $\exists\{a_n\} \in A$ s.t. $a_n \to x$.
+     Since $f \in X^*$, $f$ is continuous,
+     $$f(x) = f(\lim_{n \to \infty} a_n) = \lim_{n \to \infty} f(a_n).$$
+     Since $a_n \in A$, $f(a_n) = 0, \forall n$.
+     $f(x) = \lim_{n \to \infty} 0 = 0$. Thus $f \in (\bar{A})^\perp$.
+
+
+
+        (f)
+($\Longleftarrow$): If $X_0 = X$, then $X_0^\perp = X^\perp$. The only functional $f \in X^*$ that annihilates all of $X$ is the zero functional. So $X^\perp = \{0\}$.
+
+ ($\Longrightarrow$): Assume $X_0^\perp = \{0\}$. Suppose for contradiction $X_0 \neq X$.
+     Then there exists some $ x_0 \in X \setminus X_0$.
+     By Hahn-Banach, since $X_0$ is a closed subspace and $x_0 \notin X_0$, $\exists f \in X^*$ such that $f(X_0) = 0$ and $f(x_0) \neq 0$.
+     $f(X_0) = 0$ means $f \in X_0^\perp$.
+     $f(x_0) \neq 0$ means $f \neq 0$.
+     This $f$ is a non-zero element of $X_0^\perp$, which contradicts the assumption $X_0^\perp = \{0\}$.
+     Therefore, $X_0 = X$.
+    \end{proof}
+\newpage
+
+    \item Let $H$ be a Hilbert space. A sequlinear form on $H$ is a function $B:H \times H\rightarrow\mathbb{C}  $ which is linear in the first argument and conjugate-linear in the second argument, i.e.
+    $$B(a_1x_1 + a_2x_2,y) = a_1B(x_1,y)+a_2B(x_2,y),$$
+    $$B(x,b_1y_1+b_2y_2) = \overline{b_1}B(x,y_1)+\overline{b_2}B(x,y_2).$$
+    An example of a sesquilinear form is $B(X,y) = \langle Tx,y\rangle $ where $T\in L(H,H).$
+    Consider a sesquilinear form $B(x,y)$ which satisfies
+    $$|B(x,y)|\leqslant M\|x\|\|y\|, \text{ }x,y\in H$$
+    for some number $M.$ Show that $\exists T\in L(H,H) $ with $\|T\|\leqslant M$ and such that 
+    $$B(x,y) = \langle Tx, y\rangle, \forall x,y\in H.$$
+    \begin{proof}
+    Let $H$ be a Hilbert space and $B:H\times H\to\mathbb C$ be sesquilinear (linear in the first argument and conjugate-linear in the second) with
+\[
+|B(x,y)|\le M\|x\|\|y\|\qquad(x,y\in H).
+\]
+Fix $x\in H$ and define $\psi_x:H\to\mathbb C$ by $\psi_x(y):=\overline{B(x,y)}$. Since $B$ is conjugate-linear in $y$, $\psi_x$ is linear; moreover,
+\[
+|\psi_x(y)|=|B(x,y)|\le M\|x\|\,\|y\|,
+\]
+so $\psi_x$ is a bounded linear functional with $\|\psi_x\|\le M\|x\|$.
+
+By the Riesz representation theorem, there exists a unique $z\in H$ such that
+\[
+\psi_x(y)=\langle y,z\rangle\qquad\text{for all }y\in H.
+\]
+Define $T:H\to H$ by $T(x):=z$. Then for all $x,y\in H$,
+\[
+B(x,y)=\overline{\psi_x(y)}=\overline{\langle y,T(x)\rangle}=\langle T(x),y\rangle,
+\]
+which is the desired representation.
+
+Linearity of $T$ follows from the linearity of $B$ in its first argument: for $a_1,a_2\in\mathbb C$ and $x_1,x_2,y\in H$,
+\[
+\langle T(a_1x_1+a_2x_2),y\rangle
+= B(a_1x_1+a_2x_2,y)
+= a_1B(x_1,y)+a_2B(x_2,y)
+= \langle a_1T(x_1)+a_2T(x_2),y\rangle,
+\]
+hence $T(a_1x_1+a_2x_2)=a_1T(x_1)+a_2T(x_2)$.
+
+Finally, for each $x\in H$,
+\[
+\|T(x)\|
+=\sup_{\|y\|=1}|\langle T(x),y\rangle|
+=\sup_{\|y\|=1}|B(x,y)|
+\le M\|x\|,
+\]
+so $T$ is bounded and $\|T\|\le M$.
+\end{proof}
+
+    \item Let $X,Y$ be normed spaces and $p\in [1,\infty].$ Define the direct sim of $X\oplus_pY$ as the Cartesian product $X \times Y$ equipped with the norm 
+    $$\|(x,y)\| := (\|x\|^p+\|y\|^p)^\frac{1}{p} \text{ if } p<\infty,\text{ }
+    \|(x,y)\| := (\max(\|x\|,\|y\|)\text{ if } p=\infty. $$
+    Show that $X \oplus_pY$ is a normed space, and all norms $\|(x,y)\|_p, \text{ }p\in [1,\infty],$ are equivalent to each other. 
+
+    For this reason, the index $p$ is usually omitted from notional and the space $X \oplus Y $ is called the direct sum of $X,Y$.
+\begin{proof}
+    
+
+We first show $X\oplus_p Y$ is a normed space.
+
+{Positive definiteness and homogeneity} are immediate from the corresponding properties on $X$ and $Y$.
+
+{Triangle inequality.}
+For $p=\infty$,
+\[
+\|(x_1+x_2,y_1+y_2)\|_\infty
+=\max\{\|x_1+x_2\|,\|y_1+y_2\|\}
+\le \max\{\|x_1\|+\|x_2\|,\|y_1\|+\|y_2\|\}
+\]
+\[
+\le \max\{\|x_1\|,\|y_1\|\}+\max\{\|x_2\|,\|y_2\|\}
+=\|(x_1,y_1)\|_\infty+\|(x_2,y_2)\|_\infty.
+\]
+For $1\le p<\infty$, using $\|x_1+x_2\|\le \|x_1\|+\|x_2\|$ and $\|y_1+y_2\|\le \|y_1\|+\|y_2\|$, we get
+\[
+\|(x_1+x_2,y_1+y_2)\|_p
+=\big(\|x_1+x_2\|^p+\|y_1+y_2\|^p\big)^{1/p}
+\le \big((\|x_1\|+\|x_2\|)^p+(\|y_1\|+\|y_2\|)^p\big)^{1/p}.
+\]
+Applying Minkowski’s inequality in $\mathbb R^2$ with the $\ell_p$ norm to $u=(\|x_1\|,\|y_1\|)$ and $v=(\|x_2\|,\|y_2\|)$ gives
+\[
+\big((\|x_1\|+\|x_2\|)^p+(\|y_1\|+\|y_2\|)^p\big)^{1/p}
+\le (\|x_1\|^p+\|y_1\|^p)^{1/p}+(\|x_2\|^p+\|y_2\|^p)^{1/p},
+\]
+i.e.,
+\[
+\|(x_1+x_2,y_1+y_2)\|_p\le \|(x_1,y_1)\|_p+\|(x_2,y_2)\|_p.
+\]
+Thus $X\oplus_p Y$ is a normed space.
+
+We now prove the norms are equivalent. Fix $1\le p<\infty$ and set
+$M:=\|(x,y)\|_\infty=\max\{\|x\|,\|y\|\}$. Then
+\[
+\|(x,y)\|_\infty = M \le (\|x\|^p+\|y\|^p)^{1/p}=\|(x,y)\|_p,
+\]
+since $M^p\le \|x\|^p+\|y\|^p$. Also,
+\[
+\|(x,y)\|_p=(\|x\|^p+\|y\|^p)^{1/p}\le (M^p+M^p)^{1/p}=2^{1/p}M=2^{1/p}\|(x,y)\|_\infty.
+\]
+Hence for all $(x,y)\in X\oplus Y$,
+\[
+\|(x,y)\|_\infty \;\le\; \|(x,y)\|_p \;\le\; 2^{1/p}\,\|(x,y)\|_\infty.
+\]
+Therefore $\|\cdot\|_p$ and $\|\cdot\|_\infty$ are equivalent. By transitivity of norm equivalence, all $\|\cdot\|_p$ for $p\in[1,\infty]$ are pairwise equivalent.
+
+
+
+\end{proof}
+
+    \item Let $X,Y$ be normed spaces, and $X$ be finite dimensional. Show that every linear operator $T:X\rightarrow Y$ is bounded. 
+    \begin{proof}
+        Since X is finite dim, let $dim(X) = n$ and let $\{e_n\}$ be the canonical basis for $X$. With this we can write each $x\in X$ to be $x = \sum_{i=1}^n\alpha_ie_i$ for $\alpha_i$ being scalars. So now let's observe the op norm of T.
+        $$
+        \|Tx\| = \|T\left(\sum_{i=1}^n\alpha_ie_i\right)\| 
+        \leq \sum_{i=1}^n\|\alpha_iTe_i\| 
+        = \sum_{i=1}^n|\alpha_i|\|Te_i\|
+        = C\sum_{i=1}^n|\alpha_i|
+        $$
+        with C = $\|Te_i\|$.Now, define a new norm on $X$ by $\|x\|_1 = \sum_{i=1}^n |\alpha_i|$. Since $X$ is finite-dimensional, all norms on $X$ are equivalent. Thus, there exists a constant $K > 0$ such that $\|x\|_1 \le K \|x\|_X$ for all $x \in X$.
+
+        Combining these inequalities:
+        $$\|T(x)\|_Y \le C \|x\|_1 \le C (K \|x\|_X)$$
+        Let $M = C K$. Since $C$ and $K$ are finite, $M$ is a finite constant. We have found an $M$ such that $\|T(x)\|_Y \le M \|x\|_X$ for all $x \in X$.
+
+        Therefore, $T$ is bounded. 
+        
+    \end{proof}
+
+    
+
+
+\end{enumerate}
+
+\end{document}

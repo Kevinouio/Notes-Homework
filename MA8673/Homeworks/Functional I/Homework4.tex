@@ -1,0 +1,151 @@
+\documentclass[]{article}
+
+% Packages for mathematics
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{bm}
+\usepackage{authblk}
+
+% Package for graphics
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{subcaption}
+\usepackage{placeins}
+
+
+% Package for page layout and headers/footers
+%\usepackage{geometry}
+%\geometry{margin=1in}
+
+
+% Package for clickable links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+}
+
+% Package for algorithms
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{matlab-prettifier}
+\usepackage{tabularx}
+
+% Custom theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\title{Functional Analysis Homework 4}
+\author{Kevin Ho}
+\date{September 20th}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Show that the orthogonal projection $P_Y$ is a linear map. Check that $Im(P_Y) = Y$ and $ker(P_Y) = Y^\perp$. Also check that the identity map $I_X$ on $X$ can be decomposed as 
+    \begin{equation*}
+        I_X = P_Y + P_{Y^\perp}.
+    \end{equation*}
+    \begin{enumerate}
+        \item [Proof:] So first let's show the linearity of the orthogonal Projection $P_Y$. so $P_Y$ is defines as 
+        \begin{equation*}
+            P_Y: X \rightarrow X, P_Yx=y
+        \end{equation*}
+        where it is the projection of X onto Y
+        \begin{enumerate}
+            \item [(1)] let $\alpha$ be a scalar. Write x as the orthogonal decomposition $x = y + z$ where $y\in Y$ and $z \in Y^\perp$. 
+            By the uniqueness of the projection, we just need to check two conditions for the vector $\alpha y$ of whether $\alpha y \in Y$ and $(\alpha x - \alpha y) \in Y^\perp$. So it is obvious that $\alpha y \in Y$ as we know $y\in Y$. For the second condition we get 
+            \begin{equation*}
+                (\alpha x - \alpha y) = \alpha(x-y) \in Y^\perp
+            \end{equation*}
+            so Homogeneity is there.
+
+
+            
+            \item [(2)] Let $x_0,x_1 \in X$. We then get two different decompositions of $x_0 = y_0 + z_0$ and $x_1 = y_1 + z_1$ very similarly with homogeneity, we get a similar result of $y_0 +y_1  \in Y$ and $(x_0 - y_0) + (x_1 - y_1) \in Y^\perp$. as each term is in $Y^\perp$.
+            
+        \end{enumerate}
+        Thus we have shown that $P_Y$ is a linear map. So now let's check $Im(P_Y) = Y$ and $ker(P_Y) = Y^\perp$
+        So since $P_Y = y \in Y$  we know the first part is true. So let's show this by showing each space is in each other. So let $y \in Y$. We want to find a vector $x$ s.t. $P_Yx=y$ so we can choose x=y to where $x=y+0$ is the orthogonal decomposition. Since $P_Yx \in Y$ we can conclude that $Y \subseteq Im(P_Y)$. So now let's see the other direction. Let $v \in Im(P_Y)$ be any vector. This means that $v = P_Yx = y$ so  $Im(P_Y) \subseteq Y$ so $Im(P_Y) = Y$.
+
+
+        
+        For the $ker(P_Y) = Y^\perp$, let $z \in Y^\perp$. With this, if we take the orthogonal decomposition of v, we get that $z=0 + z$. Because $0 \in Y $ and $z \in Y^\perp$, we get that the Y component of the decomposition is 0 leading to $P_Yz = 0$ meaning $z\in ker(P_Y)$ so $Y^\perp\subseteq ker(P_Y)$. Now let $v\in ker(P_Y)$. Then we get the decomposition of $v$ to be $v = 0+z$. This leads to $v=z\in Y^\perp$ thus $ker(P_Y) \subseteq Y^\perp$ so then $ker(P_Y) = Y^\perp$.
+
+        Now let us check the identity map. So let $x\in X$ be any vector. Then we get the equation $I_x(x) = x = y+z$ where $y\in Y, z\in Y^\perp$. When we apply $P_Y + P_{Y^\perp}$ we get the following: 
+        \begin{equation*}
+        (P_Y + P_{Y^\perp})(x) = (P_Y)(x) + (P_{Y^\perp})(x) = y + z.
+        \end{equation*}
+        \qed
+
+
+
+
+
+
+        
+    \end{enumerate}
+
+
+
+    \item Let $A$ be a subset of a Hilbert space. Show that 
+    \begin{equation*}
+        A^\perp = \bar{A}^\perp
+    \end{equation*}
+    where $\bar{A}$ denotes the closure of A.
+    
+    \begin{enumerate}
+        \item[($A^\perp \subseteq \bar{A}^\perp$)] 
+        Let $x\in A^\perp$. By definition,  $\langle x,a\rangle = 0, a\in {A}$. Let $v\in \bar{A}$ arbitrary. By definition of the closure, there is a sequence $\{a_n\}$ s.t. $a_n \rightarrow v$. So with $x\in A^\perp$, we get that  $\langle x,a_n\rangle = 0, \forall n \in \mathbb{N}$. Because the inner product on the Hilbert Space is a continuous function, we can take the limit as $n \rightarrow \infty$.
+        \begin{equation*}
+            \lim_{n\rightarrow \infty}\langle x,a_n \rangle = \langle x,\lim_{n\rightarrow \infty}a_n  \rangle = \langle x,v\rangle = 0 
+        \end{equation*}
+        Thus we have shown $A^\perp \subseteq \bar{A}^\perp$.
+
+
+        \item[($\bar{A}^\perp\subseteq A^\perp $)] 
+        Let $x\in \bar{A}^\perp$.By definition, $\langle x,y\rangle = 0, y\in \bar{A}$. So with $A \subseteq \bar{A}$, this means that  $\langle x,v\rangle = 0, v\in {A}$ so thus $\bar{A}^\perp\subseteq A^\perp $.  \qed
+        
+        
+    \end{enumerate}
+  
+
+
+
+    \item Let $Y$ denote the subspace of constant functions in $L_2 = L_2(\Omega,\Sigma, \mu)$. Compute $P_Yf$ for an arbitrary function $f\in L_2$
+    \item[Proof:] So let $c \in Y$ to where $P_Yf = c$. This means that there must be an orthogonal decomposition of f where $f = c+g$ where $f-c \in Y^\perp$. So then we must find where $\langle f-c,g\rangle = 0. $ So wlog, let $g = 1$. Then we get 
+    
+
+    \begin{equation*}
+       \langle f-c, 1 \rangle = \int_\Omega (f - c)*(1)d\mu  = 0 
+    \end{equation*}
+    \begin{equation*}
+        \Rightarrow \int_\Omega fd\mu - \int_\Omega c(1)d\mu = 0
+    \end{equation*}
+    \begin{equation*}
+        \Rightarrow \int_\Omega fd\mu - c\int_\Omega 1d\mu = 0
+    \end{equation*}
+    \begin{equation*}
+        \Rightarrow \int_\Omega fd\mu = c* \mu(\Omega) 
+    \end{equation*}
+    \begin{equation*}
+        \Rightarrow\frac{ \int_\Omega fd\mu}{\mu(\Omega) }= c  = P_Yf
+    \end{equation*}
+    \qed
+    
+    
+
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,720 @@
+\documentclass[]{article}
+
+% Packages for mathematics
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{bm}
+\usepackage{authblk}
+
+% Package for graphics
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{subcaption}
+\usepackage{placeins}
+
+
+% Package for page layout and headers/footers
+%\usepackage{geometry}
+%\geometry{margin=1in}
+
+
+% Package for clickable links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+}
+
+% Package for algorithms
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{matlab-prettifier}
+\usepackage{tabularx}
+\usepackage{amsmath, physics}
+
+% Custom theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\title{Functional Analysis Homework 11}
+\author{Kevin Ho}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Show that $T$ is compact iff it maps $B_X$ to a precompact set in $Y$.
+
+
+    \begin{proof}
+Let $X,Y$ be normed spaces and $T:X\to Y$ linear and bounded. Write
+\[
+B_X:=\{x\in X:\|x\|\le 1\}.
+\]
+Recall that a set $M\subset Y$ is \emph{precompact} if its closure
+$\overline{M}$ is compact in $Y$.
+
+We show the two implications separately.
+
+\medskip\noindent
+($\Rightarrow$): Suppose $T$ is compact in the sense that it maps
+bounded subsets of $X$ into precompact subsets of $Y$. Since $B_X$ is
+bounded in $X$, it follows immediately that $T(B_X)$ is precompact in
+$Y$.
+
+\medskip\noindent
+($\Leftarrow$): Now assume that $T(B_X)$ is precompact in $Y$. We must
+show that $T$ maps any bounded subset of $X$ to a precompact subset of
+$Y$.
+
+Let $A\subset X$ be bounded. Then there exists $R>0$ such that
+$\|x\|\le R$ for all $x\in A$, i.e.
+\[
+A\subset R B_X:=\{x\in X:\|x\|\le R\}.
+\]
+By linearity,
+\[
+T(RB_X)=\{T(Rx):\|x\|\le 1\}
+=\{R\,T(x):\|x\|\le 1\}
+=R\,T(B_X).
+\]
+
+Since $T(B_X)$ is precompact, its closure $K:=\overline{T(B_X)}$ is
+compact in $Y$. Consider the map $S_R:Y\to Y$, $S_R(y)=Ry$ for the
+fixed scalar $R>0$. This is a homeomorphism with continuous inverse
+$S_R^{-1}(y)=\frac1R y$, so it sends compact sets to compact sets.
+Hence
+\[
+\overline{R\,T(B_X)}
+= \overline{S_R(T(B_X))}
+\subset S_R(\overline{T(B_X)})
+= R K
+\]
+is compact as a closed subset of the compact set $R K$. Therefore
+$R\,T(B_X)$ is precompact in $Y$.
+
+Now $T(A)\subset T(RB_X)=R\,T(B_X)$, and any subset of a precompact
+set is again precompact (its closure is contained in the compact
+closure of the larger set). Thus $T(A)$ is precompact in $Y$.
+
+Since $A\subset X$ was an arbitrary bounded set, we have shown that
+$T$ maps every bounded subset of $X$ to a precompact subset of $Y$.
+By definition, this means $T$ is compact.
+
+\end{proof}
+
+    \item Show that Volterra operator is compact on $C[0,1],$ even though its kernel is discontinous.
+
+
+    \begin{proof}
+First, $T:C[0,1]\to C[0,1]$ is linear by properties of the integral. If $\|f\|_\infty\le M$, then for all $x\in[0,1]$,
+\[
+|(Tf)(x)| = \left|\int_0^x f(t)\,dt\right|
+\le \int_0^x |f(t)|\,dt
+\le M x \le M,
+\]
+so $\|Tf\|_\infty\le M$ and therefore $\|T\|\le 1$; in particular, $T$ is bounded.
+
+To prove compactness, it suffices (by the previous exercise) to show that $T$ maps the unit ball
+\[
+B:=\{f\in C[0,1]:\|f\|_\infty\le 1\}
+\]
+into a precompact subset of $C[0,1]$. By Arzelà–Ascoli, it is enough to show $\{Tf:f\in B\}$ is uniformly bounded and equicontinuous.
+
+Uniform boundedness: for $f\in B$ and $x\in[0,1]$,
+\[
+|(Tf)(x)| \le \int_0^x |f(t)|\,dt \le \int_0^x 1\,dt = x \le 1,
+\]
+so $\|Tf\|_\infty\le 1$ for all $f\in B$.
+
+Equicontinuity: let $f\in B$ and $0\le x<y\le 1$. Then
+\[
+|(Tf)(y)-(Tf)(x)|
+= \left|\int_0^y f(t)\,dt - \int_0^x f(t)\,dt\right|
+= \left|\int_x^y f(t)\,dt\right|
+\le \int_x^y |f(t)|\,dt
+\le \int_x^y 1\,dt
+= |y-x|.
+\]
+This bound does not depend on $f\in B$, so the family $\{Tf:f\in B\}$ is equicontinuous.
+
+Thus $T(B)$ is uniformly bounded and equicontinuous, hence its closure is compact in $C[0,1]$ by Arzelà–Ascoli. Therefore $T$ maps $B$ to a precompact set, so $T$ is compact.
+
+\end{proof}
+
+    \item Fix a sequence of real numbers $\{\lambda_k\}^\infty_{k=1}$, and define the linear operator $T:\ell_2\rightarrow\ell_2$ by 
+    $$
+    Tx = \{\lambda_kx_k\}^\infty_{k=1}.
+    $$
+    For what multiplier sequences $\{\lambda_k\}^\infty_{k=1}$ is the operator $T$, (a) well defined? (b) bounded? (c) compact?
+
+    \begin{proof}
+(a) \emph{Well defined.}
+First assume $(\lambda_k)$ is bounded, say $M:=\sup_k|\lambda_k|<\infty$. Then for $x\in\ell_2$,
+\[
+\|Tx\|_2^2
+= \sum_{k=1}^\infty |\lambda_k x_k|^2
+\le M^2 \sum_{k=1}^\infty |x_k|^2
+= M^2 \|x\|_2^2 <\infty,
+\]
+so $Tx\in\ell_2$ and $T$ is well defined.
+
+Conversely, suppose $T$ is well defined but $(\lambda_k)$ is unbounded. Then we can pick indices $k_j$ with
+$|\lambda_{k_j}|\ge j$. Define $x\in\ell_2$ by
+\[
+x_{k_j} = \frac{1}{j}, \qquad x_k=0 \text{ otherwise.}
+\]
+Then $\|x\|_2^2=\sum_{j=1}^\infty \frac1{j^2}<\infty$, so $x\in\ell_2$. But
+\[
+|\lambda_{k_j}x_{k_j}|^2 \ge j^2 \cdot \frac{1}{j^2} = 1,
+\]
+hence
+\[
+\sum_{k=1}^\infty |\lambda_k x_k|^2 \ge \sum_{j=1}^\infty 1 = \infty,
+\]
+so $Tx\notin\ell_2$, contradicting that $T$ is well defined. Thus $(\lambda_k)$ must be bounded.
+Therefore
+\[
+\text{$T$ is well defined} \iff (\lambda_k)\in \ell_\infty.
+\]
+
+\medskip
+(b) \emph{Bounded.}
+If $(\lambda_k)$ is bounded with $M=\sup_k|\lambda_k|$, the estimate above gives
+\[
+\|Tx\|_2 \le M \|x\|_2,\qquad x\in\ell_2,
+\]
+so $T$ is bounded and $\|T\|\le M$. For the reverse inequality, let $e_k$ be the standard basis of $\ell_2$.
+Then
+\[
+\|T e_k\|_2 = |\lambda_k|
+\]
+and $\|e_k\|_2=1$, so
+\[
+|\lambda_k| = \|T e_k\|_2 \le \|T\|\quad\text{for all }k.
+\]
+Taking the supremum in $k$ gives $\sup_k|\lambda_k|\le\|T\|$. Hence
+\[
+\|T\| = \sup_k |\lambda_k|,
+\]
+and in particular $T$ is bounded iff $(\lambda_k)$ is bounded. 
+\medskip
+(c) \emph{Compact.}
+Suppose first that $\lambda_k\to 0$. For $N\in\mathbb{N}$ define the finite-rank operator
+\[
+T_N x := (\lambda_1 x_1,\dots,\lambda_N x_N,0,0,\dots).
+\]
+Then for $\|x\|_2\le 1$,
+\[
+\|(T-T_N)x\|_2^2 = \sum_{k>N} |\lambda_k x_k|^2
+\le \big(\sup_{k>N} |\lambda_k|\big)^2 \sum_{k>N} |x_k|^2
+\le \big(\sup_{k>N} |\lambda_k|\big)^2,
+\]
+so $\|T-T_N\|\le \sup_{k>N}|\lambda_k|\to 0$ as $N\to\infty$. Thus $T$ is a norm limit of finite-rank
+operators, hence compact.
+
+Conversely, assume $T$ is compact but $\lambda_k\not\to 0$. Then there exists $\varepsilon>0$ and a subsequence
+$(\lambda_{k_j})$ with $|\lambda_{k_j}|\ge\varepsilon$ for all $j$. Consider the bounded sequence
+$(e_{k_j})$ in $\ell_2$. Compactness of $T$ implies that $(Te_{k_j})$ has a convergent subsequence in $\ell_2$,
+but
+\[
+Te_{k_j} = \lambda_{k_j} e_{k_j},\qquad \|Te_{k_j}\|_2 = |\lambda_{k_j}|\ge \varepsilon,
+\]
+and these vectors are pairwise orthogonal. An orthogonal sequence with norms bounded away from $0$ cannot have a
+convergent subsequence, a contradiction. Hence we must have $\lambda_k\to 0$.
+
+
+\end{proof}
+
+    \item Consider an intergal operator $T$ with kernel $k(t,s) : [0,1]^2\rightarrow \mathbb{R}$ which satisfies the following:
+    \begin{enumerate}
+        \item for each $s\in [0,1],$ the function $k_s(t) = k(t,s)$ is intergrable in $t$;
+        \item the map $s\rightarrow k_s$ is a continuous map from $[0,1] $ to $L_1[0,1].$
+    \end{enumerate}
+     Show that the integral operator $T$ is compact in $C[0,1].$
+
+     \begin{proof}
+First note $s\mapsto k_s\in L_1[0,1]$ is continuous on a compact set, so
+\[
+M:=\sup_{s\in[0,1]} \|k_s\|_{L_1}<\infty.
+\]
+Let $f\in C[0,1]$. Then for each $s\in[0,1]$,
+\[
+|(Tf)(s)| = \left|\int_0^1 k(t,s)f(t)\,dt\right|
+\le \|f\|_\infty \int_0^1 |k(t,s)|\,dt
+= \|f\|_\infty \|k_s\|_{L_1}
+\le M\|f\|_\infty.
+\]
+Hence $Tf$ is bounded and $\|T\|\le M$.
+
+We also get continuity: if $s_n\to s$, then
+\[
+|(Tf)(s_n)-(Tf)(s)|
+= \left|\int_0^1 \big(k(t,s_n)-k(t,s)\big) f(t)\,dt\right|
+\le \|f\|_\infty\,\|k_{s_n}-k_s\|_{L_1}\to 0,
+\]
+since $s\mapsto k_s$ is continuous in $L_1$. Thus $Tf\in C[0,1]$ and $T:C[0,1]\to C[0,1]$ is bounded.
+
+To prove compactness, it suffices to show $T$ maps the unit ball
+\[
+B:=\{f\in C[0,1]:\|f\|_\infty\le 1\}
+\]
+into a precompact subset of $C[0,1]$. By Arzelà–Ascoli, it is enough to prove that $\{Tf:f\in B\}$ is uniformly bounded and equicontinuous.
+
+Uniform boundedness: for $f\in B$ and $s\in[0,1]$,
+\[
+|(Tf)(s)| \le \|f\|_\infty \|k_s\|_{L_1} \le \|k_s\|_{L_1} \le M,
+\]
+so $\sup_{f\in B}\|Tf\|_\infty\le M$.
+
+Equicontinuity: let $f\in B$ and $s,s_0\in[0,1]$. Then
+\[
+|(Tf)(s)-(Tf)(s_0)|
+= \left|\int_0^1 \big(k(t,s)-k(t,s_0)\big)f(t)\,dt\right|
+\le \|f\|_\infty\,\|k_s-k_{s_0}\|_{L_1}
+\le \|k_s-k_{s_0}\|_{L_1}.
+\]
+Since $s\mapsto k_s$ is continuous into $L_1$ and $[0,1]$ is compact, this map is uniformly continuous. Thus for every $\varepsilon>0$ there exists $\delta>0$ such that
+\[
+|s-s_0|<\delta \implies \|k_s-k_{s_0}\|_{L_1}<\varepsilon,
+\]
+and hence
+\[
+|(Tf)(s)-(Tf)(s_0)|<\varepsilon
+\]
+for all $f\in B$ whenever $|s-s_0|<\delta$. This shows $\{Tf:f\in B\}$ is equicontinuous.
+
+By Arzelà–Ascoli, the closure of $T(B)$ is compact in $C[0,1]$, so $T$ is compact.
+\end{proof}
+
+    \item Let $X$ be a Banach space and $T \in K(X,X)$. Show that operator $A=I-T$ satisfies
+    $$
+    dim(ker(A)) = dim(ker(A^*)) = codim(Im(A)) = codim(Im(A^*)).    
+    $$
+
+\begin{proof}
+We work in several steps.
+
+\medskip\noindent
+\textbf{1. $\ker(A)$ and $\ker(A^*)$ are finite dimensional.}
+
+Note that
+\[
+Ax=0 \iff x-Tx=0 \iff Tx=x,
+\]
+so $\ker(A)$ is the eigenspace of $T$ for eigenvalue $1$.
+
+If $\ker(A)$ were infinite dimensional, we could choose a sequence
+$(x_n)\subset\ker(A)$ with $\|x_n\|=1$ and no convergent subsequence (possible
+because the unit ball of an infinite dimensional Banach space is not
+compact). But then
+\[
+T x_n = x_n\quad\text{for all }n,
+\]
+so $(Tx_n)$ has no convergent subsequence either. This contradicts the
+compactness of $T$. Hence $\ker(A)$ is finite dimensional.
+
+The adjoint $T^*:X^*\to X^*$ is also compact (image of the unit ball under
+$T^*$ is norm-compact in $X^*$ because $T$ is compact). Applying the same
+argument to $A^*=I-T^*$ on $X^*$ shows $\ker(A^*)$ is finite dimensional.
+
+\medskip\noindent
+\textbf{2. $\operatorname{Im}(A)$ and $\operatorname{Im}(A^*)$ are closed.}
+
+Let $N:=\ker(A)$, which is finite dimensional. There exists a closed
+complement $M\subset X$ with
+\[
+X = N \oplus M.
+\]
+On $M$ the restriction $A|_M : M\to X$ is injective. We claim there is
+$c>0$ such that
+\begin{equation}\label{eq:lowerbound}
+    \|Ax\|\ge c\|x\|\qquad\forall x\in M.
+\end{equation}
+
+If not, we can find $(x_n)\subset M$ with $\|x_n\|=1$ and $\|Ax_n\|\to 0$.
+Then
+\[
+Ax_n = x_n - T x_n \to 0
+\quad\Rightarrow\quad
+x_n - Tx_n \to 0.
+\]
+Since $(x_n)$ is bounded and $T$ is compact, $(Tx_n)$ has a convergent
+subsequence $Tx_{n_k}\to y$. Then
+\[
+x_{n_k} = Ax_{n_k} + Tx_{n_k} \to 0 + y = y,
+\]
+so $x_{n_k}\to y\in M$. Passing to the limit in $Ax_{n_k}\to 0$ gives
+$Ay=0$, i.e.\ $y\in N\cap M = \{0\}$. Thus $y=0$, but $\|x_{n_k}\|=1$
+forces $\|y\|=1$, a contradiction. Hence \eqref{eq:lowerbound} holds.
+
+Now let $(Ax_n)$ be a convergent sequence in $A(M)$. Then for $m,n$,
+\[
+\|x_n - x_m\|
+\le \frac{1}{c}\|A x_n - A x_m\|,
+\]
+so $(x_n)$ is Cauchy in $M$ and converges to some $x\in M$. Continuity of
+$A$ gives $Ax_n\to Ax$, so $\lim Ax_n \in A(M)$. Thus $A(M)$ is closed.
+
+Since $X=N\oplus M$ and $A(N)=\{0\}$, we have
+\[
+\operatorname{Im}(A)=A(X)=A(M).
+\]
+Therefore $\operatorname{Im}(A)$ is closed.
+
+The same argument, applied to $A^*=I-T^*$ on the Banach space $X^*$, shows
+that $\operatorname{Im}(A^*)$ is closed.
+
+\medskip\noindent
+\textbf{3. Relating codimension and adjoint kernels.}
+
+We use a standard duality fact: if $Y$ is Banach and $M\subset Y$ is closed,
+then
+\[
+(Y/M)^*\cong M^\perp := \{f\in Y^*: f|_M=0\}.
+\]
+
+Apply this with $Y=X$, $M=\operatorname{Im}(A)$. Then
+\[
+(X/\operatorname{Im}(A))^*
+\cong \operatorname{Im}(A)^\perp.
+\]
+But
+\[
+\operatorname{Im}(A)^\perp
+= \{f\in X^*: f(Ax)=0\ \forall x\}
+= \ker(A^*).
+\]
+Hence
+\[
+(X/\operatorname{Im}(A))^* \cong \ker(A^*).
+\]
+So $(X/\operatorname{Im}(A))^*$ is finite dimensional, and therefore
+$X/\operatorname{Im}(A)$ is finite dimensional with
+\[
+\dim(X/\operatorname{Im}(A))
+= \dim\big((X/\operatorname{Im}(A))^*\big)
+= \dim\ker(A^*).
+\]
+That is,
+\begin{equation}\label{eq:codimA}
+\operatorname{codim}\operatorname{Im}(A)
+= \dim\ker(A^*).
+\end{equation}
+
+Now apply the same reasoning to $Y=X^*$ and $M=\operatorname{Im}(A^*)$. We
+get
+\[
+(X^*/\operatorname{Im}(A^*))^*
+\cong \operatorname{Im}(A^*)^\perp
+= \ker\big((A^*)^*\big)
+= \ker(A^{**}).
+\]
+The canonical embedding $J:X\to X^{**}$ satisfies $A^{**}J=J A$, so
+$J(\ker(A))\subset\ker(A^{**})$, and conversely if $A^{**}u=0$ with
+$u=Jx$, then $J(Ax)=0$, hence $Ax=0$ and $x\in\ker(A)$. Thus
+$\ker(A^{**})\cong\ker(A)$ and
+\[
+\dim\ker(A^{**}) = \dim\ker(A).
+\]
+Therefore
+\begin{equation}\label{eq:codimAstar}
+\operatorname{codim}\operatorname{Im}(A^*)
+= \dim\ker(A^{**})
+= \dim\ker(A).
+\end{equation}
+
+So far we have
+\[
+\operatorname{codim}\operatorname{Im}(A) = \dim\ker(A^*),
+\qquad
+\operatorname{codim}\operatorname{Im}(A^*) = \dim\ker(A).
+\]
+
+\medskip\noindent
+\textbf{4. Equality of $\dim\ker(A)$ and $\dim\ker(A^*)$.}
+
+We have
+\[
+\ker(A) = \ker(I-T),\qquad
+\ker(A^*) = \ker(I-T^*),
+\]
+which are the eigenspaces of $T$ and $T^*$ for the (nonzero) eigenvalue
+$\lambda=1$.
+
+For compact operators it is a standard fact that for every nonzero
+$\lambda$, the eigenspaces $\ker(\lambda I - T)$ and $\ker(\lambda I - T^*)$
+have the same (finite) dimension.
+
+Applying this with $\lambda=1$ gives
+\[
+\dim\ker(A) = \dim\ker(A^*).
+\]
+
+\medskip
+
+Combining this with \eqref{eq:codimA} and \eqref{eq:codimAstar}, we obtain
+\[
+\dim\ker(A)
+= \dim\ker(A^*)
+= \operatorname{codim}\operatorname{Im}(A)
+= \operatorname{codim}\operatorname{Im}(A^*),
+\]
+as required.
+\end{proof}
+
+
+
+
+
+
+
+
+    
+    \item Prove the claims about the spectra of shirt operators made in Example 4.3.8
+    \[
+\sigma_p(R)=\varnothing,\quad
+\sigma_c(R)=\{\lambda:|\lambda|=1\},\quad
+\sigma_r(R)=\{\lambda:|\lambda|<1\};
+\]
+\[
+\sigma_p(L)=\{\lambda:|\lambda|<1\},\quad
+\sigma_c(L)=\{\lambda:|\lambda|=1\},\quad
+\sigma_r(L)=\varnothing.
+\]
+
+\begin{proof}
+Let $(e_n)_{n\ge1}$ be the standard orthonormal basis of $\ell_2$.
+
+\medskip\noindent
+\textbf{1. Basic facts.}
+For $x\in\ell_2$,
+\[
+\|Rx\|_2^2=\sum_{n\ge1}|(Rx)_n|^2=\sum_{n\ge1}|x_n|^2=\|x\|_2^2,
+\]
+so $R$ is an isometry and $\|R\|=1$. Similarly
+\[
+\|Lx\|_2^2=\sum_{n\ge1}|x_{n+1}|^2\le \sum_{n\ge1}|x_n|^2=\|x\|_2^2,
+\]
+and taking $x_1=0$ shows $\|L\|=1$. Hence for both operators the spectral
+radius satisfies $r(\cdot)\le 1$, so
+\[
+\sigma(R),\sigma(L)\subset\{\lambda:|\lambda|\le 1\}.
+\]
+
+For $|\lambda|>1$ we have $\|R/\lambda\|<1$ and $\|L/\lambda\|<1$, so
+\[
+\lambda I - R = \lambda\Big(I-\tfrac1\lambda R\Big),\quad
+\lambda I - L = \lambda\Big(I-\tfrac1\lambda L\Big)
+\]
+are invertible with inverses given by the Neumann series
+$\sum_{n\ge0}(\tfrac1\lambda R)^n$ and $\sum_{n\ge0}(\tfrac1\lambda L)^n$.
+Thus $|\lambda|>1$ lies in the resolvent set of both $R$ and $L$, and so
+\[
+\sigma(R),\sigma(L)\subset\{\lambda:|\lambda|\le 1\}.
+\]
+
+It is easy to check that $R^*=L$ and $L^*=R$, so $\sigma(R)=\sigma(L)$.
+
+\medskip\noindent
+\textbf{2. Eigenvalues of $R$ and $L$ (point spectrum).}
+
+\emph{Right shift.} If $Rx=\lambda x$, then
+\[
+(0,x_1,x_2,\dots)=(\lambda x_1,\lambda x_2,\dots).
+\]
+From the first coordinate $\lambda x_1=0$, so for any $\lambda$ we get
+$x_1=0$. Then $x_1=\lambda x_2$ gives $x_2=0$, and inductively $x_n=0$ for
+all $n$. Hence $\ker(R-\lambda I)=\{0\}$ for every $\lambda\in\mathbb C$, so
+\[
+\sigma_p(R)=\varnothing.
+\]
+
+\emph{Left shift.} If $Lx=\lambda x$, we have
+\[
+(x_2,x_3,\dots)=(\lambda x_1,\lambda x_2,\dots),
+\]
+so $x_{n+1}=\lambda x_n$ for all $n\ge1$. Thus
+\[
+x_n=\lambda^{n-1}x_1,\qquad n\ge1.
+\]
+Then
+\[
+\|x\|_2^2 = |x_1|^2\sum_{n\ge1}|\lambda|^{2(n-1)}.
+\]
+This is finite iff $|\lambda|<1$. So for $|\lambda|<1$ we obtain a
+one-dimensional eigenspace spanned by
+\[
+v^{(\lambda)}=(1,\lambda,\lambda^2,\dots),
+\]
+while for $|\lambda|\ge1$ the only solution is $x=0$. Therefore
+\[
+\sigma_p(L)=\{\lambda\in\mathbb C:|\lambda|<1\}.
+\]
+
+\medskip\noindent
+\textbf{3. $0$ in the residual spectrum of $R$.}
+
+$\operatorname{Im}R$ consists of all sequences whose first coordinate is $0$.
+This is a closed subspace of codimension $1$, hence not dense in $\ell_2$.
+Since $R$ is injective, $0$ belongs to the residual spectrum of $R$.
+
+\medskip\noindent
+\textbf{4. Residual / continuous spectrum via the adjoint.}
+
+For any bounded operator $T$ on a Hilbert space and any $\lambda\in\mathbb C$,
+\[
+\overline{\operatorname{Im}(T-\lambda I)}^\perp
+= \ker\big((T-\lambda I)^*\big)
+= \ker(T^*-\overline{\lambda} I).
+\]
+In particular, if $T-\lambda I$ is injective, then
+\[
+\lambda\in\sigma_r(T)
+\iff \overline{\operatorname{Im}(T-\lambda I)}\ne H
+\iff \ker(T^*-\overline{\lambda}I)\ne\{0\}.
+\]
+
+We apply this with $T=R$ and $T=L$, using $R^*=L$, $L^*=R$.
+
+\medskip\noindent
+\textbf{5. Spectra for $R$.}
+
+We already know $R-\lambda I$ is injective for all $\lambda$ (no eigenvalues).
+For $|\lambda|<1$ we have $\overline{\lambda}\in\sigma_p(L)$ by Step~2, so
+\[
+\ker(L-\overline{\lambda} I)\ne\{0\}.
+\]
+Hence
+\[
+\overline{\operatorname{Im}(R-\lambda I)}^\perp
+= \ker(L-\overline{\lambda}I)\ne\{0\},
+\]
+and $\operatorname{Im}(R-\lambda I)$ is not dense. Thus for $|\lambda|<1$,
+$\lambda$ lies in the residual spectrum of $R$:
+\[
+\sigma_r(R)=\{\lambda:|\lambda|<1\}.
+\]
+
+For $|\lambda|=1$, we still have $\ker(R-\lambda I)=\{0\}$, but now
+$\overline{\lambda}$ is not in $\sigma_p(L)$, so
+\[
+\ker(L-\overline{\lambda}I)=\{0\}
+\quad\Rightarrow\quad
+\overline{\operatorname{Im}(R-\lambda I)}^\perp=\{0\},
+\]
+so $\operatorname{Im}(R-\lambda I)$ is dense. On the other hand, for
+$|\lambda|=1$ the vector $e_1$ is not in the range of $R-\lambda I$:
+if $(R-\lambda I)x=e_1$, then coordinatewise
+\[
+-\lambda x_1 = 1,\quad x_1-\lambda x_2=0,\quad x_2-\lambda x_3=0,\dots
+\]
+which forces $x_n=-\lambda^{-n}$ and thus $x\notin\ell_2$. So
+$R-\lambda I$ is not surjective. Therefore
+\[
+|\lambda|=1 \implies \lambda\in\sigma_c(R).
+\]
+
+Combining with $\sigma_p(R)=\varnothing$ and $\sigma(R)\subset\{|\lambda|\le1\}$,
+we obtain
+\[
+\sigma_p(R)=\varnothing,\quad
+\sigma_c(R)=\{\lambda:|\lambda|=1\},\quad
+\sigma_r(R)=\{\lambda:|\lambda|<1\}.
+\]
+
+\medskip\noindent
+\textbf{6. Spectra for $L$.}
+
+We already have $\sigma_p(L)=\{\lambda:|\lambda|<1\}$. For residual spectrum,
+note that if $\lambda\in\sigma_r(L)$ then $L-\lambda I$ is injective but
+$\operatorname{Im}(L-\lambda I)$ is not dense, so
+\[
+\ker\big((L-\lambda I)^*\big)
+= \ker(R-\overline{\lambda}I)\ne\{0\},
+\]
+which would make $\overline{\lambda}$ an eigenvalue of $R$. But $R$ has no
+eigenvalues, so this is impossible; hence
+\[
+\sigma_r(L)=\varnothing.
+\]
+
+It remains to analyze $|\lambda|=1$. First, for $|\lambda|=1$ we saw in
+Step~2 that $\ker(L-\lambda I)=\{0\}$ (no eigenvectors). We now show
+$\lambda\in\sigma(L)$ by constructing approximate eigenvectors.
+
+Fix $\lambda$ with $|\lambda|=1$. For each $N\in\mathbb N$ define
+$x^{(N)}\in\ell_2$ by
+\[
+x^{(N)}_k=
+\begin{cases}
+\lambda^{k-1}, & 1\le k\le N,\\
+0, & k>N.
+\end{cases}
+\]
+Then
+\[
+(Lx^{(N)})_k = x^{(N)}_{k+1} =
+\begin{cases}
+\lambda^k, & 1\le k\le N-1,\\
+0, & k\ge N,
+\end{cases}
+\]
+so
+\[
+\big((L-\lambda I)x^{(N)}\big)_k=
+\begin{cases}
+0, & 1\le k\le N-1,\\
+-\lambda^N, & k=N,\\
+0, & k>N.
+\end{cases}
+\]
+Hence $\|(L-\lambda I)x^{(N)}\|_2 = 1$. Meanwhile
+\[
+\|x^{(N)}\|_2^2 = \sum_{k=1}^N|\lambda|^{2(k-1)} = N,
+\]
+so for the unit vectors $u^{(N)}:=x^{(N)}/\sqrt{N}$ we get
+\[
+\|u^{(N)}\|_2=1,\qquad
+\|(L-\lambda I)u^{(N)}\|_2 = \frac{1}{\sqrt{N}}\to 0.
+\]
+If $\lambda$ were in the resolvent of $L$, then $(L-\lambda I)^{-1}$ would be
+bounded, say $\|(L-\lambda I)^{-1}\|\le C$, which would imply
+\[
+1=\|u^{(N)}\|
+\le C\,\|(L-\lambda I)u^{(N)}\|\xrightarrow[N\to\infty]{}0,
+\]
+a contradiction. Thus $|\lambda|=1\Rightarrow \lambda\in\sigma(L)$.
+
+Finally, for such $\lambda$,
+\[
+\overline{\operatorname{Im}(L-\lambda I)}^\perp
+= \ker((L-\lambda I)^*)
+= \ker(R-\overline{\lambda}I)
+= \{0\},
+\]
+since $R$ has no eigenvalues. So $\operatorname{Im}(L-\lambda I)$ is dense.
+We already know $L-\lambda I$ is not invertible (since $\lambda\in\sigma(L)$)
+and has trivial kernel, so it cannot be surjective. Therefore
+\[
+|\lambda|=1 \implies \lambda\in\sigma_c(L).
+\]
+
+\end{proof}
+    
+
+
+\end{enumerate}
+
+\end{document}

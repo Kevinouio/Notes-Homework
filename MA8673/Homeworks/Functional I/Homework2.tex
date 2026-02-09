@@ -1,0 +1,358 @@
+\documentclass[]{article}
+
+% Packages for mathematics
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{bm}
+\usepackage{authblk}
+
+% Package for graphics
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{subcaption}
+\usepackage{placeins}
+
+
+% Package for page layout and headers/footers
+%\usepackage{geometry}
+%\geometry{margin=1in}
+
+
+% Package for clickable links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+}
+
+% Package for algorithms
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{matlab-prettifier}
+\usepackage{tabularx}
+
+% Custom theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\title{Functional Analysis Homework 1}
+\author{Kevin Ho}
+\date{August 29th}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Many of linear vector spaces introduced in Section 1.1.2 and Example 1.1.12 are in fact normed spaces. Check the norm axioms for them:
+
+
+    
+    \begin{enumerate}
+        \item The space of bounded sequences $\ell_\infty$ is a normed space, with the normed defined as 
+        \begin{equation*}
+            \left\lVert x \right\rVert _\infty := \sup_i|x_i|.
+        \end{equation*}
+        \item[Proof:] 
+            So for the first property for Positive definiteness, since we take the absolute value of each $x_i$ term, it checks the Positive part. 
+            
+           Definiteness ($\implies$ direction): Assume $||x||_\infty = 0$. By definition of supremum, $\sup_i |x_i| = 0$. Since the supremum is the least upper bound, $0$ must be an upper bound for the set $\{|x_i|\}$. This means $|x_i| \le 0$ for all $i$. Combining this with $|x_i| \ge 0$, we conclude that $|x_i| = 0$ for all $i$. This implies $x_i = 0$ for all $i$, so $x = \mathbf{0}$
+\newline
+
+            Definiteness ($\impliedby$ direction): Assume $x = \mathbf{0}$. Then $x_i = 0$ for all $i$. The set of values $\{|x_i|\}$ is simply $\{0\}$. The supremum of $\{0\}$ is $0$. Therefore, $||x||_\infty = 0$.
+
+            So for the homogeneity, be the properties of the norm being defined as the sup, the following happens.
+
+            \begin{equation*}
+                \|cx\|_\infty = \sup_i|cx_i| = |c|\sup_i|x_i| = |c|\|x\|_\infty
+            \end{equation*}
+
+            And finally for the Triangle Inequality axiom, we have the following:
+
+            For any specific index $k$, we apply the standard triangle inequality for real numbers:
+            $$|x_k + y_k| \le |x_k| + |y_k|$$
+            By definition of the supremum norm, $|x_k| \le \sup_i |x_i| = ||x||_\infty$ and $|y_k| \le \sup_i |y_i| = ||y||_\infty$. Substituting these into the inequality above gives:
+            $$|x_k + y_k| \le ||x||_\infty + ||y||_\infty$$
+            This inequality holds true for every index $k$. The term on the right side, $||x||_\infty + ||y||_\infty$, is therefore an upper bound for the set $\{|x_k + y_k| \mid k \in \mathbb{N}\}$. Since the supremum ($||x+y||_\infty$) is the least upper bound, it must be less than or equal to any other upper bound.
+            Therefore:
+            $$||x + y||_\infty = \sup_k |x_k + y_k| \le ||x||_\infty + ||y||_\infty$$
+    \qed
+
+
+
+
+        
+        \item The space $c$ and $c_0$ are normed spaces, with the same sup-norm as above
+        \item[Proof:] So the norm axioms are as exactly as written for proving $\ell_\infty$ is a normed space so I am not going to rewrite them but instead I will show that $c $ and $c_0$ are a subspace of $\ell_\infty$ , we need to show that the zero vector exist in both, closed under addition and multiplication. 
+        No problem. Your approach is exactly right. Since the norm axioms are inherited from $\ell_\infty$, we just need to confirm that $c$ and $c_0$ are valid vector subspaces.
+
+
+\textbf{Proof for $c$:}
+The zero sequence is $\mathbf{0} = (0, 0, 0, \dots)$. Since $\lim_{i \to \infty} 0 = 0$, the limit exists, which means $\mathbf{0} \in c$.
+
+We check if the sum $x + y$ is in $c$. Using the properties of limits:
+    $$\lim_{i \to \infty} (x_i + y_i) = \lim_{i \to \infty} x_i + \lim_{i \to \infty} y_i = L_1 + L_2$$
+    Since $L_1 + L_2$ is a finite value, the limit exists. Therefore, $x + y \in c$.
+    
+    We check if $\alpha x$ is in $c$ for a scalar $\alpha$. Using the properties of limits:
+    $$\lim_{i \to \infty} (\alpha x_i) = \alpha \left( \lim_{i \to \infty} x_i \right) = \alpha L_1$$
+    Since $\alpha L_1$ is a finite value, the limit exists. Therefore, $\alpha x \in c$.
+
+
+ \textbf{Proof for $c_0$:} We show that $c_0$ is a subspace of $\ell_\infty$. Let $x = (x_i)$ and $y = (y_i)$ be sequences in $c_0$. By definition, $\lim_{i \to \infty} x_i = 0$ and $\lim_{i \to \infty} y_i = 0$.
+
+The zero sequence $\mathbf{0} = (0, 0, 0, \dots)$ converges to 0, so $\mathbf{0} \in c_0$.
+
+We check the sum $x + y$:
+    $$\lim_{i \to \infty} (x_i + y_i) = \lim_{i \to \infty} x_i + \lim_{i \to \infty} y_i = 0 + 0 = 0$$
+    Since the limit is 0, $x + y \in c_0$.
+
+We check $\alpha x$ for a scalar $\alpha$:
+    $$\lim_{i \to \infty} (\alpha x_i) = \alpha \left( \lim_{i \to \infty} x_i \right) = \alpha \cdot 0 = 0$$
+    Since the limit is 0, $\alpha x \in c_0$. \qed
+
+        
+        \item The space of summable sequences $\ell_1$ is a normed space, with the norm defined as 
+        \begin{equation*}
+            \left\lVert x \right\rVert _1 := \sum^\infty_{i=1} |x_i|.
+        \end{equation*}
+        \item[Proof:]  So the first axiom of positiveness is satisfied as we are taking the sum of absolute values of each term $x_i$ so thus always positive. For definiteness, let $x=0$. If that is the case then each term within the sum is 0 therefore $\|x\|_1 = 0$. And if $\|x\|_1 = 0$, this would imply that each $|x_i|$ term has to equal 0 so for $\|x\|_1 = 0$ so thus positive definiteness is satisfied.
+
+        For homogeneity, the following occurs.
+        \begin{equation*}
+            \left\lVert cx \right\rVert _1 := \sum^\infty_{i=1} |cx_i| = |c|\sum^\infty_{i=1} |x_i| = |c|\|x\|_1
+        \end{equation*}
+
+        Now to show triangle inequality is straightforward. 
+
+        \begin{equation*}
+            \left\lVert x+y \right\rVert _1 := \sum^\infty_{i=1} |x_i + y_i| \leq \sum^\infty_{i=1} |x_i| +\sum^\infty_{i=1} |y_i| = \|x\|_1 + \|y\|_1
+        \end{equation*}
+\qed
+        
+        \item The space $C(K)$ of continuous functions on a compact topological space $K$ is a normed space with the norm 
+        \begin{equation*}
+           \|f\|_{\infty} := \max_K |f(x)|.
+        \end{equation*}
+        \item[Proof:]For any $x \in K$, $|f(x)| \ge 0$. The maximum of a set of non-negative numbers must also be non-negative, so $\|f\|_\infty \ge 0$. Assume $\|f\|_\infty = 0$. This means $\max_{x \in K} |f(x)| = 0$. Since $|f(x)| \ge 0$ for all $x$, and the maximum value is 0, we must have $|f(x)| = 0$ for every single point $x \in K$. This implies $f(x) = 0$ for all $x$, meaning $f$ is the zero function $\mathbf{0}$. Assume $f = \mathbf{0}$. Then $f(x) = 0$ for all $x \in K$. Therefore, $\|f\|_\infty = \max_{x \in K} |0| = 0$. Thus satisfying Positive Definiteness Axiom.
+        
+        So now lets check homogeneity. Let $\alpha$ be a scalar.
+        \begin{equation*}
+            \|\alpha f\|_{\infty} := \max_K |\alpha f(x)| = |\alpha|  \max_K |f(x)| = |\alpha|\|f\|_\infty
+        \end{equation*}
+
+        Now let's check the triangle inequality. let $g\in K$
+        
+        Let $f, g \in C(K)$. For any point $x \in K$, apply the standard triangle inequality for real numbers:
+        $$|f(x) + g(x)| \le |f(x)| + |g(x)|$$
+        By definition of the maximum norm, $|f(x)| \le \max_{y \in K} |f(y)| = \|f\|_\infty$ and $|g(x)| \le \max_{y \in K} |g(y)| = \|g\|_\infty$. Substitute these into the inequality:
+        $$|f(x) + g(x)| \le \|f\|_\infty + \|g\|_\infty$$
+        This inequality holds true for every $x \in K$. Therefore, the term $\|f\|_\infty + \|g\|_\infty$ is an upper bound for all values of $|f(x) + g(x)|$. The maximum value of $|f(x) + g(x)|$ cannot exceed this upper bound.
+        $$\|f + g\|_\infty = \max_{x \in K} |f(x) + g(x)| \le \|f\|_\infty + \|g\|_\infty$$
+        \qed
+        
+        \item The space $L_1 = L_1(\Omega, \Sigma, \mu)$ is a normed space, with the norm defined as 
+        \begin{equation*}
+           \|f\|_1 := \int_{\Omega} |f(x)| \, d\mu.
+        \end{equation*}
+        Note that $\ell_1$ us a partial case of the space $L_1(\Omega, \Sigma, \mu)$ where $\Omega = \mathbb{N}$ and $\mu$ is the counting measure on $\mathbb{N}$.
+
+
+
+        \item[Proof:] So for the first axiom, positive definiteness, we first check non-negativity. Since the norm is defined as the integral of an absolute value, and $|f(x)| \ge 0$ for all $x$, the integral must be non-negative.
+
+        Now for definiteness, first let $f = \mathbf{0}$ be the zero function. Then $\|f\|_1 = \int_{\Omega} |0| \, d\mu = 0$. For the other direction, let $\|f\|_1 = 0$. This means $\int_{\Omega} |f(x)| \, d\mu = 0$. A fundamental property of integration states that for a non-negative function $|f(x)|$, the integral is zero if and only if $f(x) = 0$ almost everywhere. In the context of $L_1$ spaces, functions that are equal almost everywhere are considered the same element. Thus, $f$ is equivalent to the zero function in this space. So positive definiteness is satisfied.
+
+        For homogeneity we have the following. Let $\alpha$ be a scalar.
+
+        \begin{equation*}
+            \|cf\|_1 = \int_{\Omega} |cf(x)| \, d\mu= |c|\int_{\Omega} |f(x)| \, d\mu = |c|\|f\|_1
+        \end{equation*}
+
+
+        Let $f, g \in L_1$. We start with the pointwise triangle inequality for real numbers, which holds for every $x \in \Omega$:
+        $$|f(x) + g(x)| \le |f(x)| + |g(x)|$$
+        
+        Next, we integrate both sides over $\Omega$. By the monotonicity property of the Lebesgue integral, we have:
+        $$\int_{\Omega} |f(x) + g(x)| \, d\mu \le \int_{\Omega} (|f(x)| + |g(x)|) \, d\mu = \int_{\Omega} |f(x)| \, d\mu + \int_{\Omega} |g(x)| \, d\mu$$
+        
+        Combining these steps and substituting the norm definition gives:
+        $$\|f + g\|_1 \le \|f\|_1 + \|g\|_1$$
+        \qed
+
+
+
+        
+        \item The space $L_\infty = L_\infty(\Omega, \Sigma, \mu)$ is a normed space, with the norm defined the **essential supremum**
+        \begin{equation*}
+            \|f\|_{\infty} := \underset{t \in \Omega}{\operatorname{ess\,sup}} |f(t)| := \inf_{g=f \text{ a.e.}} \sup_{t \in \Omega} |g(t)|.
+        \end{equation*}
+        \item[Proof:]  So for the first axiom, positive definiteness, we first check non-negativity. The norm $\|f\|_\infty$ represents the essential supremum for $|f(x)|$. Since $|f(x)| \ge 0$ for all $x$, any upper bound for it must also be non-negative. Therefore it is non-negative. 
+        
+        Now for definiteness, first let $f = \mathbf{0}$. This means $f(x) = 0$ almost everywhere. The smallest value $C$ such that $|f(x)| \le C$ almost everywhere is $C=0$. Thus, $\|f\|_\infty = 0$.
+        
+        For the other direction, assume $\|f\|_\infty = 0$. This means the essential supremum of $|f(x)|$ is $0$. If the function $|f(x)|$ were greater than zero on a set of positive measure, the essential supremum would also have to be greater than zero. Therefore, we must have $f(x) = 0$ almost everywhere. As with $L_1$, functions that are equal almost everywhere are considered the same element in $L_\infty$, so $f$ is equivalent to the zero vector. Thus, positive definiteness is satisfied.
+        
+
+
+
+
+Let $C = \|f\|_\infty$ and $\alpha$ be a scalar. By definition, this means $|f(x)| \le C$ almost everywhere.
+Let's multiply this inequality by $|\alpha|$:
+$$|\alpha f(x)| = |\alpha| \cdot |f(x)| \le |\alpha| \cdot C$$
+This shows that $|\alpha|C$ is an essential upper bound for the function $\alpha f$. Since the norm $\|\alpha f\|_\infty$ is the smallest possible essential upper bound, it must be less than or equal to the bound we just found:
+$$\|\alpha f\|_\infty \le |\alpha|C = |\alpha|\|f\|_\infty$$
+
+To show equality, we can apply this result again. If $\alpha \neq 0$:
+$$\|f\|_\infty = \|\frac{1}{\alpha}(\alpha f)\|_\infty \le \left|\frac{1}{\alpha}\right| \|\alpha f\|_\infty = \frac{1}{|\alpha|} \|\alpha f\|_\infty$$
+Rearranging this gives $|\alpha| \|f\|_\infty \le \|\alpha f\|_\infty$. Since we have proved both directions ($\le$ and $\ge$), homogeneity holds.
+
+
+Finally, let's check the triangle inequality. 
+
+Let $\|f\|_\infty = C_1$ and $\|g\|_\infty = C_2$.
+From the definition of essential supremum, we know:
+1.  $|f(x)| \le C_1$ almost everywhere.
+2.  $|g(x)| \le C_2$ almost everywhere.
+
+The set where condition 1 fails has measure zero, and the set where condition 2 fails has measure zero. The union of these two sets also has measure zero. Therefore, both conditions hold simultaneously almost everywhere.
+
+Now, apply the standard triangle inequality for numbers at every point $x$ where both bounds hold:
+$$|f(x) + g(x)| \le |f(x)| + |g(x)| \le C_1 + C_2$$
+
+This shows that $C_1 + C_2$ serves as an essential upper bound for the function $|f + g|$. Since $\|f + g\|_\infty$ is the greatest lower bound of all possible essential upper bounds, it must be less than or equal to this specific upper bound.
+$$\|f + g\|_\infty \le C_1 + C_2 = \|f\|_\infty + \|g\|_\infty$$
+Thus, the triangle inequality holds. 
+\qed
+        
+    \end{enumerate}
+        
+
+    
+
+    \item Prove that the norm assignment $x \mapsto \|x\|$ is a continuous function on the normed space. Specifically, show that if $\|x_n - x\| \rightarrow0$ then $\|x_n\| \rightarrow \|x\|$.
+    \item[Proof:] So let's start with the inequality below as we know the inequality to be true as due to the triangle inequality.
+    
+    $$0 \le |\|x_n\| - \|x\|| \le \|x_n - x\|$$
+
+    We are given that $\|x_n - x\| \to 0$ as $n \to \infty$. By the Squeeze Theorem, since $|\|x_n\| - \|x\||$ is trapped between $0$ and a sequence converging to $0$, it must also converge to $0$.
+    $$\lim_{n \to \infty} |\|x_n\| - \|x\|| = 0$$
+    This is precisely the definition of convergence for real numbers, so $\lim_{n \to \infty} \|x_n\| = \|x\|$. \qed
+    
+
+
+    \item Let $X$ and $Y$ be two normed spaces. Consider their direct (Cartesion) product 
+    \begin{equation*}
+        X \oplus_1 Y = \{ (x, y) \ : \ x \in X, y \in Y \}.
+    \end{equation*}
+    Show that $X \oplus_1 Y$ is a normed space, with the norm defined as 
+    \begin{equation*}
+        \|(x,y)\| := \|x\| + \|y\|.
+    \end{equation*}
+    \item[Proof:] So we mainly need to show the three norm axioms.
+    Of course. Here is a clear verification of the norm axioms for the product space $X \oplus_1 Y$.
+
+Let $X$ and $Y$ be normed spaces. We need to verify that $\|(x,y)\| := \|x\|_X + \|y\|_Y$ satisfies the three norm axioms for the space $X \oplus Y$.
+
+Since $\|\cdot\|_X$ and $\|\cdot\|_Y$ are norms on their respective spaces, we know that $\|x\|_X \ge 0$ and $\|y\|_Y \ge 0$. The sum of two non-negative numbers is non-negative, so $\|(x,y)\| = \|x\|_X + \|y\|_Y \ge 0$.
+
+ We must show equivalence with the zero vector $\mathbf{0} = (\mathbf{0}_X, \mathbf{0}_Y)$.
+If $(x,y) = \mathbf{0}$, Then $x = \mathbf{0}_X$ and $y = \mathbf{0}_Y$. The norm is $\|(\mathbf{0}_X, \mathbf{0}_Y)\| = \|\mathbf{0}_X\|_X + \|\mathbf{0}_Y\|_Y = 0 + 0 = 0$.
+   
+    If $\|(x,y)\| = 0$: This means $\|x\|_X + \|y\|_Y = 0$. Since $\|x\|_X \ge 0$ and $\|y\|_Y \ge 0$, their sum can only be zero if both terms are zero individually. Thus, $\|x\|_X = 0$ and $\|y\|_Y = 0$. By the definiteness property on spaces $X$ and $Y$, this implies $x = \mathbf{0}_X$ and $y = \mathbf{0}_Y$. Therefore, $(x,y) = \mathbf{0}$.
+
+
+Now let's check for homogeneity:
+$$\|\alpha(x,y)\| = \|(\alpha x, \alpha y)\| = \|\alpha x\|_X + \|\alpha y\|_Y$$
+Using the homogeneity property on $X$ and $Y$:
+$$= |\alpha|\|x\|_X + |\alpha|\|y\|_Y = |\alpha| (\|x\|_X + \|y\|_Y) = |\alpha| \|(x,y)\|$$
+
+
+
+First, calculate the left side using the definition of vector addition and the product norm:
+$$\|(x_1, y_1) + (x_2, y_2)\| = \|(x_1 + x_2, y_1 + y_2)\| = \|x_1 + x_2\|_X + \|y_1 + y_2\|_Y$$
+Now, apply the triangle inequality separately to the terms from space $X$ and space $Y$:
+$$\|x_1 + x_2\|_X \le \|x_1\|_X + \|x_2\|_X$$
+$$\|y_1 + y_2\|_Y \le \|y_1\|_Y + \|y_2\|_Y$$
+Substitute these inequalities back into the expression for the sum:
+$$\|x_1 + x_2\|_X + \|y_1 + y_2\|_Y \le (\|x_1\|_X + \|x_2\|_X) + (\|y_1\|_Y + \|y_2\|_Y)$$
+Finally, rearrange the terms on the right side to match the definition of the product norm for each vector:
+$$= (\|x_1\|_X + \|y_1\|_Y) + (\|x_2\|_X + \|y_2\|_Y) = \|(x_1, y_1)\| + \|(x_2, y_2)\|$$
+Thus, $\|(x_1, y_1) + (x_2, y_2)\| \le \|(x_1, y_1)\| + \|(x_2, y_2)\|$. \qed
+
+
+    
+
+
+    \item A seminorm on a linear vector space $E$ is a function $\| \cdot \| : E \to \mathbb{R}$ which satisfies all norm axioms except the second part of axiom (i). That is, there may exist nonzero vectors $\|x\| = 0$.
+   
+    Show that one can convert a seminorm into a norm by factoring out the zero directions. Mathematically, show that $kep(p) := {x \in E : \|x\| = 0}$ is a linear subspace of E. Show that the quotient space $E/ker(p)$ is a normed space, with the norm defined as 
+    \begin{equation*}
+        \|[x]\| := \|x\| ,  x \in E
+    \end{equation*}
+    Illustrate this procedure by constructing the normed space $L_\infty$ from the semi-normed space of all essentially bounded functions with the essential sup-norm. 
+
+\item[Proof:]So first let's show that $\ker(p)$ is a linear subspace
+
+Let $p(x) = \|x\|$ be the seminorm on space $E$. We need to show that the kernel, $\ker(p) $ satifies of it containing the zero vector, and closed under addition and multiplication
+ Using the homogeneity property of the seminorm, we have $\|\mathbf{0}\| = \|0 \cdot x\| = |0| \cdot \|x\| = 0$. Since $\|\mathbf{0}\| = 0$, the zero vector belongs to $\ker(p)$.
+
+Let $x$ and $y$ be two elements in $\ker(p)$. This means $\|x\| = 0$ and $\|y\| = 0$. We check the norm of their sum using the triangle inequality for seminorms:
+    $$0 \le \|x + y\| \le \|x\| + \|y\| = 0 + 0 = 0$$
+    Since $\|x + y\|$ is bounded above and below by 0, we must have $\|x + y\| = 0$. Therefore, $x + y \in \ker(p)$.
+
+Let $x \in \ker(p)$ (so $\|x\| = 0$) and let $\alpha$ be any scalar. Using the homogeneity property:
+    $$\|\alpha x\| = |\alpha| \cdot \|x\| = |\alpha| \cdot 0 = 0$$
+    Therefore, $\alpha x \in \ker(p)$.
+
+Since all conditions hold, $\ker(p)$ is a linear subspace of $E$.
+
+
+Before checking the axioms, we must ensure the norm value $\|[x]\| = \|x\|$ is independent of which representative $x$ we choose from the class $[x]$.
+
+Assume $[x] = [y]$. This implies that $x - y \in \ker(p)$, so $\|x - y\| = 0$. We must show that $\|x\| = \|y\|$.
+\begin{equation*}
+    
+
+  \|x\| = \|(x - y) + y\| \le \|x - y\| + \|y\| = 0 + \|y\| = \|y\|$. So, $\|x\| \le \|y\|.
+\end{equation*}
+\begin{equation*}
+    
+  \|y\| = \|(y - x) + x\| \le \|y - x\| + \|x\| = \|x - y\| + \|x\| = 0 + \|x\| = \|x\|. 
+  \end{equation*}
+  So, $\|y\| \le \|x\|$.
+Since $\|x\| \le \|y\|$ and $\|y\| \le \|x\|$, we conclude $\|x\| = \|y\|$. The norm definition is well-defined.
+
+Now we need to show the norm axioms. Assume $\|[x]\| = 0$. By definition, this means $\|x\| = 0$. By definition of the kernel, this implies $x \in \ker(p)$. The zero element $[\mathbf{0}]$ in the quotient space $E/\ker(p)$ is precisely the set $\ker(p)$. Thus, $[x] = [\mathbf{0}]$.
+
+    $$\|\alpha [x]\| = \|[\alpha x]\| = \|\alpha x\| = |\alpha| \|x\| = |\alpha| \|[x]\|$$
+    The properties pass directly from the seminorm on $x$ to the norm on $[x]$.
+
+    $$\|[x] + [y]\| = \|[x+y]\| = \|x+y\| \le \|x\| + \|y\| = \|[x]\| + \|[y]\|$$
+    The inequality passes directly from the seminorm on $x$ and $y$ to the norm on $[x]$ and $[y]$.
+
+
+
+    \newline
+    \textbf{Illustration:}
+    Let $E$ be the space of all essentially bounded functions. The function $p(f) = \|f\|_\infty = \operatorname{ess\,sup} |f(x)|$ is a seminorm on $E$.
+    The kernel $\ker(p)$ is the set of functions where $\|f\|_\infty = 0$. As we proved in problem 1f, this corresponds exactly to the set of functions where $f(x) = 0$ almost everywhere.
+    By forming the quotient space $E/\ker(p)$, we identify all functions that are equal almost everywhere. This process constructs the true normed space $L_\infty$ from the seminormed space of essentially bounded functions.
+\qed
+
+    
+
+
+
+\end{enumerate}
+
+\end{document}

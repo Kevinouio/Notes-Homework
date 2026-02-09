@@ -1,0 +1,136 @@
+\documentclass[]{article}
+
+% Packages for mathematics
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{bm}
+\usepackage{authblk}
+
+% Package for graphics
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{subcaption}
+\usepackage{placeins}
+
+
+% Package for page layout and headers/footers
+%\usepackage{geometry}
+%\geometry{margin=1in}
+
+
+% Package for clickable links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+}
+
+% Package for algorithms
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{matlab-prettifier}
+\usepackage{tabularx}
+
+% Custom theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\title{Functional Analysis Homework 1}
+\author{Kevin Ho}
+\date{August 29th}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Show that the intersection of an arbitrary collection
+of subspaces of a linear vector space E is again a subspace of E.
+    \item[Proof:] Let E be a vector space, and let $\{E_k\}_{k=1}^n$  ,for n being total subspaces in E, be an arbitrary colection of subspaces of E. Let $v = \bigcap_{k=1}^nE_k$. So to show that v is a subspace of E, we need to satisfy three different conditions of making sure that w is non-empty, closed under addition and closed under scalar multiplication.
+    
+    So for the first condition, by definition, every subspace must contain the zero vector, lets denote as 0. This implies that $0 \in \bigcap_{k=1}^nE_k$. 
+    
+    For the second condition, let $x,y \in v$. If that is the case then that would mean $x \in E_k$ and $y \in E_k$ for each k and since $E_k$ is a subspace, it is closed under vector addition and so  $x+y \in v$ thus condition is satisfied.
+
+    For the last condition, let $x \in v$ and $c$ be a scalar. Similar to the second condition, $E_k$ is a subspace so is closed under scalar multiplication so $cx \in v$ so last condition is satisfied. \qed
+
+    
+
+    \item Consider a linear operator $T : E \rightarrow F$ acting between linear spaces E and F. The operator T may not be injective; we would like to make it into an injective operator. To this end, we consider the map $\tilde{T} : X/kerT \rightarrow Y$ which sends every coset [x] into a vector Tx, i.e. $\tilde{T}[x] = Tx$
+    \begin{enumerate}
+        \item Prove that $\tilde{T}$ is well defined, i.e. $[x_1] = [x_2]$ implies $Tx_1 = Tx_2$.
+        \item[Proof:] Let $[x_1]$ and $[x_2]$ be two cosets in the quotient space $E/kerT$ such that $[x_1] = [x_2]$. By the definition of coset equality, $[x_1] = [x_2]$ if and only if the difference between their representatives, $x_1 - x_2$, is an element of the kernel of $T$.
+
+        $$[x_1] = [x_2] \iff x_1 - x_2 \in kerT$$
+
+        Let $z = x_1 - x_2$. Since $z \in kerT$, by the definition of the kernel, we have $T(z) = 0$. Now, we apply the linear operator $T$ to the expression $x_1 - x_2$:
+
+        $$T(x_1 - x_2) = T(z)$$
+
+        Since $T$ is a linear operator, it respects vector addition and scalar multiplication. Thus, we can write:
+
+        $$T(x_1) - T(x_2) = T(z)$$
+
+        We know that $T(z) = 0$, so we substitute this into the equation:
+
+        $$T(x_1) - T(x_2) = 0$$
+    
+        Rearranging the equation, we get:
+
+        $$T(x_1) = T(x_2)$$
+
+        This shows that if $[x_1] = [x_2]$, then $T(x_1) = T(x_2)$. Since $\tilde{T}[x_1] = T(x_1)$ and $\tilde{T}[x_2] = T(x_2)$, we have $\tilde{T}[x_1] = \tilde{T}[x_2]$. Therefore, the map $\tilde{T}$ is well-defined. \qed
+        
+        \item Check that $\tilde{T}$ is a linear and injective operator.
+        \item[Proof:] To show that $\tilde{T}$ is a linear operator, we must prove it preserves vector addition and scalar multiplication.
+
+        Let $[x_1]$ and $[x_2]$ be two cosets in the domain $E/kerT$.
+        $$\tilde{T}([x_1] + [x_2]) = \tilde{T}[x_1+x_2] = T(x_1+x_2)$$
+        Since $T$ is a linear operator, we know $T(x_1+x_2) = T(x_1) + T(x_2)$.
+        $$T(x_1) + T(x_2) = \tilde{T}[x_1] + \tilde{T}[x_2]$$
+        Thus, $\tilde{T}$ preserves vector addition.
+        
+        Let $[x]$ be a coset in $E/kerT$ and $c$ be a scalar.
+        $$\tilde{T}(c[x]) = \tilde{T}[cx] = T(cx)$$
+        Since $T$ is a linear operator, we know $T(cx) = cT(x)$.
+        $$cT(x) = c\tilde{T}[x]$$
+        Thus, $\tilde{T}$ preserves scalar multiplication.
+    
+        Since both conditions are satisfied, $\tilde{T}$ is linear.
+        
+        To show $\tilde{T}$ is injective, we must show $ker(\tilde{T}) = \{[0]\}$.
+        
+        Let $[x] \in ker(\tilde{T})$. By definition, $\tilde{T}[x] = 0$.
+        By the definition of $\tilde{T}$, this implies $T(x) = 0$.
+        By the definition of the kernel of $T$, this means $x \in kerT$.
+        By the definition of a coset, if $x \in kerT$, then the coset $[x] = [0]$.
+        Therefore, $\tilde{T}$ is injective. \qed
+
+
+        
+        \item Check that $T$ is surjective then $\tilde{T}$ is also surjective, and thus $\tilde{T}$ is a linear isomorphism between $X/kerT $ and $Y$.
+        \item[Proof:] 
+
+
+        Let $y \in F$. Since $T$ is surjective,there exists a vector $x \in E$ such that $T(x) = y$. Consider the coset $[x] \in E/kerT$. By the definition of $\tilde{T}$, we have $\tilde{T}[x] = T(x)$.Since we know $T(x)=y$, we see that $\tilde{T}[x] = y$. Therefore, $\tilde{T}$ is surjective.
+        
+        Since $\tilde{T}$ is both linear, injective, and surjective, it is a linear isomorphism between $E/kerT$ and $F$. \qed
+
+
+        
+        \item Show that $T = \tilde{T} \circ q$ where $q: X \rightarrow X/kerT$ is the quotient map. In other words every linear operator can be represented as a composition of a surjective and injective operator.
+        \item[Proof:] So let's observe what results from the composition of $\tilde{T} \circ g$. This is equivalent to $\tilde{T}(g(x))$  with $x \in X$. $g(x) = [x]$ so we get $\tilde{T}[x]$. and then $\tilde{T}[x] = Tx$ so thus $T = \tilde{T} \circ q$. \qed     
+    \end{enumerate}
+
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,310 @@
+\documentclass[]{article}
+
+% Packages for mathematics
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{bm}
+\usepackage{authblk}
+
+% Package for graphics
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{subcaption}
+\usepackage{placeins}
+
+
+% Package for page layout and headers/footers
+%\usepackage{geometry}
+%\geometry{margin=1in}
+
+\usepackage{mathrsfs}
+% Package for clickable links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+}
+
+% Package for algorithms
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{matlab-prettifier}
+\usepackage{tabularx}
+\usepackage{amsmath, physics}
+
+% Custom theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\title{Functional Analysis (MA 8673) Homework 1}
+\author{Kevin Ho}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Suppose $A$ is self-adjoint and $B$ is any operator such that $\|B-z_0\| \leq r$ for some $z_0 \in \mathbb{C}$ and $r > 0.$ Show that $\sigma(A+B) \subseteq \sigma(A)+ \overline{B_r(z_0)}$ where $ \overline{B_r(z_0)}$ is the ball centered at $z_0$ with radius $r$.
+
+    \begin{proof}
+        Let being by observing the properties of the operator $A+B-\lambda I$ with $\lambda \in \sigma(A+B)$. Note that this operator is not invertible due to the $\lambda$ term. So let's rearrange the operator. 
+
+    \begin{align*}
+    A+B-\lambda I &= A + B - \lambda I +z_0I-z_0I \\
+    &=  (A-\lambda I +z_0I) + (B-z_0I) \\
+    &=  (A - (\lambda - z_0  )I)  + (B-z_0I) 
+    \end{align*}
+    With this rearrangement, let's now observe the spectral radius of both of the operators. First let's look at the $A$ operator and for simplicity sake, let $\lambda  - z_0 = \mu$. So we need to look at two cases of whether $\mu $ is in the spectrum of $A$ or not.
+
+    \textbf{Case 1: ($\mu \in \sigma(A)$)} So this case is trivial since if $\mu$ is in the spectrum of A, then the distance to the spectrum is 0. 
+
+
+    
+    
+    \textbf{Case 2: ($\mu \notin \sigma(A)$)} If $\mu$ is not in the spectrum of A, then then we know the operator $A - \mu I$ is an invertible operator. With that in mind, we go back to the original operator to factor as shown below.
+
+\begin{align*}
+        A+B-\lambda I &= (A - \mu I)[I  + (A - \mu I)^{-1}(B-z_0I)]
+\end{align*}
+    From this we find that the operator $[I  + (A - \mu I)^{-1}(B-z_0I)]$ is not invertible. Since it is not invertible, then we also know that the norm (Von Neumann's Series Theorem) is greater than 1. With taht we get the following.
+
+    $$
+    \|(A - \mu I)^{-1}(B-z_0I)\| \geq 1
+    $$
+    With our stated fact about the operator $B$ being  $\|B-z_0\| \leq r$ for some $z_0 \in \mathbb{C}$, we have the following inequality.
+
+
+    \begin{align*}
+         \|(A - \mu I)^{-1}(B-z_0I)\| \geq 1 &\rightarrow  \|(A - \mu I)^{-1}\|r \geq 1 \\ 
+        &\rightarrow \|(A - \mu I)^{-1}\| \geq \frac{1}{r}
+    \end{align*}
+
+
+    So now I want to the rewrite the norm on the LHS. 
+    
+    \textbf{Claim:} $\|(A - \mu I)^{-1}\| = \frac{1}{dist(\mu,\sigma(A))}$.
+
+    So first, note that $A$ is a self-adjoint operator. With that in mind, we can rewrite the norm as below. 
+
+    
+   $$ 
+    \|(A - \mu I)^{-1}\|  = \sup_{\lambda\in\sigma(A)}|\frac{1}{\lambda - \mu}|
+   $$
+   by spectral mapping theorem, we can do the following.
+   
+    $$ 
+    \sup_{\lambda\in\sigma(A)}|\frac{1}{\lambda - \mu}| = {\lambda\in\sigma(A)}\frac{1}{\inf_{\lambda\in\sigma(A)}|\lambda - \mu|} = \frac{1}{dist(\mu,\sigma(A))}
+   $$
+
+   With this we have shown our claim and now we plug that into our earlier inequality to get
+
+   
+   \begin{align*}
+         \|(A - \mu I)^{-1}\| \geq \frac{1}{r} &\rightarrow \frac{1}{dist(\mu,\sigma(A))} \geq \frac{1}{r} \\
+            &\rightarrow {dist(\mu,\sigma(A))}   \leq r   
+    \end{align*}
+   
+    This implies that there exists an $a\in \sigma(A)$ s.t. $|\mu - a| \leq r$. Let $w = z_0 + (\mu -a)$. Then $|w - z_0 | = |\mu - a| \leq r$ and so $w \in \overline{B_r(z_0)}.$ And 
+    $$
+    \lambda = z_0+\mu = a + (z_0(\mu-a)) 
+    = a + w \in \sigma(A) + \overline{B_r(z_0)}
+    $$
+    
+    
+
+        
+    \end{proof}
+
+
+
+    \item Let $A$ be an self-adjoint operator and let $P_A$ be its corresponding projection valued measures. Prove that:
+    $$
+    \sigma(A) = \{  \lambda \in \mathbb{R}: P_A(\lambda-\epsilon, \lambda + \epsilon) \neq0, \forall\epsilon>0 \}.
+    $$
+
+    \begin{proof}
+
+
+\noindent\textbf{($\Rightarrow$)} Assume there exists $\varepsilon>0$ such that
+\[
+P_A\bigl((\lambda-\varepsilon,\lambda+\varepsilon)\bigr)=0.
+\]
+Fix $\psi\in\mathcal D(A)$. By the spectral theorem,
+\[
+\|(A-\lambda I)\psi\|^2=\int_{\mathbb R}|t-\lambda|^2\,d\mu_\psi(t),
+\qquad
+\mu_\psi(E):=\langle \psi, P_A(E)\psi\rangle.
+\]
+Since $P_A((\lambda-\varepsilon,\lambda+\varepsilon))=0$, we have
+$\mu_\psi((\lambda-\varepsilon,\lambda+\varepsilon))=0$, hence the integral is supported on
+$\{t:\ |t-\lambda|\ge \varepsilon\}$. Therefore
+\begin{align*}
+\|(A-\lambda I)\psi\|^2
+&=\int_{|t-\lambda|\ge \varepsilon}|t-\lambda|^2\,d\mu_\psi(t) \\
+&\ge \int_{|t-\lambda|\ge \varepsilon}\varepsilon^2\,d\mu_\psi(t) \\
+&=\varepsilon^2\int_{\mathbb R}1\,d\mu_\psi(t)\\
+&=\varepsilon^2\|\psi\|^2,
+\end{align*}
+so
+\begin{equation}\label{eq:lowerbound}
+\|(A-\lambda I)\psi\|\ge \varepsilon\|\psi\|\qquad(\forall\,\psi\in\mathcal D(A)).
+\end{equation}
+
+To conclude $\lambda\in\rho(A)$, we construct the inverse using functional calculus.
+Define a bounded Borel function
+\[
+g(t)=
+\begin{cases}
+\dfrac{1}{t-\lambda}, & |t-\lambda|\ge \varepsilon,\\[6pt]
+0, & |t-\lambda|<\varepsilon.
+\end{cases}
+\]
+Then $\|g\|_\infty\le 1/\varepsilon$, hence $B:=g(A)$ is a bounded operator and
+$\|B\|\le 1/\varepsilon$. Let $f(t)=t-\lambda$, so $f(A)=A-\lambda I$.
+Since $P_A((\lambda-\varepsilon,\lambda+\varepsilon))=0$, we have $g(t)=1/(t-\lambda)$
+$P_A$-a.e., and thus $f(t)g(t)=1$ $P_A$-a.e. By the multiplicative property of the
+functional calculus,
+\[
+(A-\lambda I)B=f(A)g(A)=(fg)(A)=I.
+\]
+Similarly,
+\[
+B(A-\lambda I)=I
+\]
+(on $\mathcal D(A)$, the natural domain of $A-\lambda I$). Hence $B=(A-\lambda I)^{-1}$
+is a bounded everywhere-defined inverse, so $\lambda\in\rho(A)$.
+
+\medskip
+\noindent\textbf{($\Leftarrow$)} Conversely, assume $\lambda\in\rho(A)$.
+Then $\sigma(A)$ is closed, so $\rho(A)=\mathbb C\setminus\sigma(A)$ is open. Because
+$\lambda\in\mathbb R\cap\rho(A)$, there exists $\varepsilon>0$ such that
+\[
+(\lambda-\varepsilon,\lambda+\varepsilon)\cap\sigma(A)=\varnothing.
+\]
+For a self-adjoint operator, the spectral measure $P_A$ is supported on $\sigma(A)$, i.e.,
+\[
+E\cap\sigma(A)=\varnothing\quad\Longrightarrow\quad P_A(E)=0.
+\]
+Applying this with $E=(\lambda-\varepsilon,\lambda+\varepsilon)$ yields
+\[
+P_A\bigl((\lambda-\varepsilon,\lambda+\varepsilon)\bigr)=0.
+\]
+
+\medskip
+Combining the two directions proves the equivalence, and thus
+\[
+\sigma(A)=\Bigl\{\lambda\in\mathbb R:\ P_A\bigl((\lambda-\epsilon,\lambda+\epsilon)\bigr)\neq 0,\ \forall\,\epsilon>0\Bigr\}.
+\end{proof}
+
+
+    \item Let A be a closed operator and set $|A| = \sqrt{A^*A}.$ Prove that $\||A|f\|=\|Af\|.$ Deduce that $\text{Ker}(A)=\text{Ker}(|A|)=\text{Ran}(|A|)^\perp$ and that 
+    $$
+    U = \begin{cases}
+    g=|A|f \rightarrow  Af& \text{if } g \in \text{Ran}(|A|) \\
+    g\rightarrow  0& \text{if } g \in \text{Ker}(|A|)
+    \end{cases}
+    $$
+    extends to a well-defined partial isometry. Conclude that $A=U|A|.$ (This is an extension of the polar decomposition for not necessarily bounded operators)
+
+    \begin{proof}
+    \textbf{($\||A|f\|=\|Af\|.$):} So let's derive it be decomposing the norms. Also note that the abs operator is self-adjoint as well.
+
+    \begin{align*}
+        \||A|f\|^2&= \langle |A|f , |A|f\rangle \\
+        &= \langle f , |A|^2f\rangle \\ 
+        &= \langle f , A^*Af\rangle \\ 
+        &= \langle Af , Af\rangle \\ 
+        &= \|Af\| ^2\\ 
+    \end{align*}
+    Thus we have shown the equality.
+
+    
+    {$\text{(Ker}(A)=\text{Ker}(|A|)=\text{Ran}(|A|)^\perp$):} So for the first equality, note that if $f \in \text{Ker}(|A|)$, then $\||A|f\| = 0$ . Since from the previous statement of the two norms being equal, then $f \in \text{Ker}(|A|)$. We also get a similar result if we assume if $f \in \text{Ker}(A)$.
+    
+    For the second part of the equality, we use the fact that $A$ is a self-adjoint operator. So a property for any operator is that $ \text{Ran}(|A|)^\perp = \text{Ker}(|A^*|)$. Since A is s.a., we have $ \text{Ran}(|A|)^\perp = \text{Ker}(|A|)$
+
+
+    (\textbf{Showing $U$ extends to a well-defined partial isometry}):
+
+    Well-Defined: let $f_1,f_2$ be vector such that $|A|f_1=|A|f_2$. Then $$|A|(f_1-f_2) = 0$$ Implying that  $f_1,f_2 \in \text{Ker}(|A|)$. Since $\text{Ker}(|A|) = \text{Ker}(A)$, then $(f_1 - f_2) \in \text{Ker}(A)$. Therefore, $A(f_1 - f_2) = 0 \implies Af_1 = Af_2$. So the mapping $g \mapsto Af$ (where $g=|A|f$) is consistent.
+    
+    
+    (Partial Isometry:) For any vector $g \in \text{Ran}(|A|)$, let $g = |A|f$.
+    
+    $$
+    \|Ug\| = \|U(|A|f)\| = \|Af\|  = \||A|f\| = \|g\|
+    $$
+    
+    Since $\|Ug\| = \|g\|$, the operator $U$ preserves lengths on the range of $|A|$. Since $U$ is an isometry on $\text{Ran}(|A|)$, it extends continuously to the closure $\overline{\text{Ran}(|A|)}$. On the orthogonal complement ($\text{Ran}(|A|)^\perp = \text{Ker}(|A|)$), we defined $U$ to be 0. An operator that is an isometry on a subspace and 0 on its orthogonal complement is the definition of a Partial Isometry.
+
+
+    ($A=U|A|.$): We first analyze the RHS by letting $g \in \text{Ran}(|A|)$. Then by our definition of $U$, $Ug = Af$. Thus showing the equality. 
+
+    \end{proof}
+
+
+
+
+    
+    \item Let $A$ be a self-adjoint operator. Prove that the resolvent operator can be realized as the following representation:
+
+    $$
+    R_A(z) = \int_\mathbb{R}\frac{1}{\lambda - z} dP_\lambda.
+    $$
+
+    Deduce that the quadratic form $F_\psi(z) = \langle\psi, R_A(z)\psi\rangle$ is a holomorphic function from the upper half plane to itself. (These types of functions are called \textbf{Herglotz} functions and this process is called the \textbf{Borel} transforms of measures.)
+
+    \begin{proof}
+        (Resolvent Representation): Our goal is to show that the usual definition of the resolvent operator being $R_A(z) = (A - zI)^{-1}$, with $z\in \rho(A)$, can be rewritten as the intergal in the statement. So to do this, note that $A$ is a s.a. operator. Then by the Spectral Theorem for self adjoint operators, we can rewrite $A$ as
+
+        $$
+        A = \int_\mathbb{R}\lambda dP_\lambda.
+        $$
+
+        Since $A$ is self-adjoint, its spectrum $\sigma(A)$ is real, so any non-real $z$ belongs to $\rho(A)$. Applying the Borel Functional Calculus, we can define the operator $f(A)$ to be 
+
+
+        $$
+        f(A) =\int_\mathbb{R}f(\lambda) dP_\lambda.
+        $$
+        To find the integral representation, we look for the function $f(\lambda)$ that corresponds to this operator, We define it to be
+        $$f(\lambda) = \frac{1}{\lambda - z}$$
+        Therefore, by the functional calculus:$$R_A(z) = (A - zI)^{-1} = \int_{\mathbb{R}} \frac{1}{\lambda - z} \, dP_\lambda$$
+        
+        (Herglotz): Using the result from Part 1, we substitute the integral representation into the inner product:
+        $$F_\psi(z) = \left\langle \psi, \left( \int_{\mathbb{R}} \frac{1}{\lambda - z} dP_\lambda \right) \psi \right\rangle$$
+        The scalar measure associated with the vector $\psi$ is defined as $d\mu_\psi(\lambda) = d\langle \psi, P_\lambda \psi \rangle$. This is a positive measure.$$F_\psi(z) = \int_{\mathbb{R}} \frac{1}{\lambda - z} d\mu_\psi(\lambda)$$
+        
+        Let $z$ be in the upper half-plane, so $z = x + iy$ with $y > 0$. We want to see if the imaginary part of $F_\psi(z)$ is also positive.
+        
+        Substitute $z$ into the integrand. $$\frac{1}{\lambda - (x + iy)} = \frac{1}{(\lambda - x) - iy}$$
+        
+        Multiply numerator and denominator by the conjugate $((\lambda - x) + iy)$ to get
+        
+        $$\frac{(\lambda - x) + iy}{(\lambda - x)^2 + y^2} = \frac{\lambda - x}{(\lambda - x)^2 + y^2} + i \frac{y}{(\lambda - x)^2 + y^2}$$
+        
+        Now, look at the imaginary part of the integral. $$\text{Im}(F_\psi(z)) = \int_{\mathbb{R}} \text{Im}\left( \frac{1}{\lambda - z} \right) d\mu_\psi(\lambda)$$
+        
+        $$\text{Im}(F_\psi(z)) = \int_{\mathbb{R}} \frac{y}{(\lambda - x)^2 + y^2} d\mu_\psi(\lambda)$$
+        
+        From this we have that $y > 0$ (because $z$ is in the upper half-plane), the denominator $(\lambda - x)^2 + y^2$ is always positive, and the measure $d\mu_\psi$ is a positive measure (since $\langle \psi, P_\lambda \psi \rangle$ is a norm squared). Therefore, the integral is positive. $$\text{Im}(F_\psi(z)) > 0$$Since $\text{Im}(z) > 0$ implies $\text{Im}(F_\psi(z)) > 0$, $F_\psi(z)$ maps the upper half plane to itself.
+    \end{proof}
+
+
+
+
+
+
+\end{enumerate}
+
+\end{document}

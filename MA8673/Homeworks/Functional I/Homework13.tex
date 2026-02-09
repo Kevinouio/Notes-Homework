@@ -1,0 +1,191 @@
+\documentclass[]{article}
+
+% Packages for mathematics
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{bm}
+\usepackage{authblk}
+
+% Package for graphics
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{subcaption}
+\usepackage{placeins}
+
+
+% Package for page layout and headers/footers
+%\usepackage{geometry}
+%\geometry{margin=1in}
+
+
+% Package for clickable links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+}
+
+% Package for algorithms
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{matlab-prettifier}
+\usepackage{tabularx}
+\usepackage{amsmath, physics}
+
+% Custom theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\title{Functional Analysis Homework 13}
+\author{Kevin Ho}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Prove that the set of self-adjoint operators forms a closed linear subspace in $L(H,H).$
+    \begin{proof}
+        Let S be the set of self-adjoint operators and $A, B \in S$. To show that the self adjoint operators forms a closed linear subspace in $L(H)$, we first show that it forms a linear subspace in $L(H)$ by showing closure in addition and multiplication. So first let's show closure under addition of $(A+B)^*$ is a self adjoint operator. $$(A+B)^* = A^*+B^* = A+B$$ Which gives us self adjoint under addition. Now for  scalar multiplication we want to show $(cA)^*$ is self adjoint for $c\in \mathbb{R}$. $$(cA)^* = \bar{c}A^* = cA$$. Since c is a real number we have the equality above. So this we know that the set of self-adjoint operators is a linear subspace over the reals. Now we want to show that the full set is closed. To do this, we must show that the limit of any convergent sequence of self-adjoint operators is also a self-adjoint operator. Let $\{T_n\} \in S$ that converges to $T$ as $n\rightarrow\infty$ meaning we have $\|T-T_n\| = 0$ We want to show that $T = T^*$. 
+        $$\|T - T^*\| = \|T - T_n + T_n - T^*_n + T^*_n -T^*\| $$
+        $$\leq \|T - T_n\| +\|T_n - T^*_n\| + \|T^*_n - T^*\|$$
+        By definition the first term converges to 0 as $n\rightarrow \infty$ by definition of our sequence. For the second term, since each $T_n$ is self adjoint, we know that $T_n = T^*_n$ so the second term is zero. For the final term, we have $$\lim_{n\rightarrow \infty}\|T^*_n - T^*\| = \lim_{n\rightarrow \infty}\|(T_n-T)^*)\| \rightarrow 0$$ Thus since $\|T-T^*\| = 0 \rightarrow T = T^*$ meaning that the set of self-adjoint operators is a closed linear subspace of $L(H)$
+    \end{proof}
+
+
+    
+    \item Consider a self-adjoint operator $P \in L(H,H)$ such that $P^2 = P$. Prove that $P$ is an orthogonal projection.
+    \begin{proof}
+        So let $x \in H$ and $y\in ran(P)$. Since $y$ is in the range of $P$ we can rewrite $y$ as $y = Py$. This is shown as follows. 
+        $$y = Pz \rightarrow Py = P^2z \rightarrow Py = Pz \rightarrow Py = y$$ 
+        Our main goal is to show that $x- Px$ is orthogonal to any y. So we write out the inner product and get the following. 
+        $$\langle x-Px,y \rangle = \langle x,y \rangle - \langle Px,y \rangle = \langle x,y \rangle - \langle x,Py \rangle$$
+        $$ = \langle x,y \rangle - \langle x,y \rangle = 0$$
+        Which means that given an arbitrary vector x and a vector y in the range of the operator, we have that P is an orthogonal projection.
+    \end{proof}
+
+    
+    \item Let $T$ be a compact linear operator on a separable Hilbert space $H$. Show that there exist an orthonormal basis ($\phi_k$) of H, an orthonormal system ($\psi_k$) in $H$, and a sequence of numbers $\lambda_k \geqslant 0, \lambda_k\rightarrow0$ such that 
+    $$T = \sum_n\lambda_n\phi_k\otimes\psi_k.$$
+    The numbers $\lambda_k$ are called singular values of $T$ and the vectors $\phi_k$ and $\psi_k$ are called left (resp.right) singular vectors of $T$.
+    (Hint: Choose ($\psi_k$) to be an orthonormal basis of eigenvectors of $T^*T.$ Write the basis expansion of $x\in H$ and apply $T$ to both sides.)
+
+  \begin{proof}
+        Let's consider the operator $S = T^*T$. Since $T$ is compact and $T^*$ is bounded, the product $S$ is compact. Furthermore, $S$ is self-adjoint because $(T^*T)^* = T^*T^{**} = T^*T$. Finally, let's observe that $S$ is a positive operator.
+        $$\langle Sx, x \rangle = \langle T^*Tx, x \rangle = \langle Tx, Tx \rangle = \|Tx\|^2 \geq 0$$
+        Since $S$ is a compact, self-adjoint, positive operator, we can apply the Spectral Theorem. This guarantees the existence of an orthonormal basis $\{\psi_k\}$ of eigenvectors of $S$ with corresponding eigenvalues $\mu_k \geq 0$ such that $\mu_k \to 0$.
+        
+        Now, let's define the singular values $\lambda_k = \sqrt{\mu_k}$. Since $\mu_k \to 0$, we also have $\lambda_k \to 0$. For indices where $\lambda_k > 0$, we define the vectors $\phi_k$ as follows:
+        $$\phi_k = \frac{T\psi_k}{\lambda_k}$$
+        
+        We need to show that these $\phi_k$ form an orthonormal system so let's check the inner product of each $\phi$.
+        
+        $$\langle \phi_i, \phi_j \rangle = \left\langle \frac{T\psi_i}{\lambda_i}, \frac{T\psi_j}{\lambda_j} \right\rangle = \frac{1}{\lambda_i \lambda_j} \langle T^*T\psi_i, \psi_j \rangle$$
+        Using the fact that $\psi_i$ are eigenvectors of $T^*T$ with eigenvalue $\lambda_i^2$:
+        $$= \frac{1}{\lambda_i \lambda_j} \langle \lambda_i^2 \psi_i, \psi_j \rangle = \frac{\lambda_i^2}{\lambda_i \lambda_j} \delta_{ij} = \delta_{ij}$$
+        So the $\phi_k$ are orthonormal. We can extend this set to an orthonormal basis $\{\phi_k\}$ for the whole space $H$.
+
+        Now let's expand an arbitrary vector $x \in H$ using the basis $\{\psi_k\}$.
+        $$x = \sum_k \langle x, \psi_k \rangle \psi_k$$
+        Applying the operator $T$ to both sides:
+        $$Tx = \sum_k \langle x, \psi_k \rangle T\psi_k$$
+        For terms where $\lambda_k > 0$, we substitute $T\psi_k = \lambda_k \phi_k$. For terms where $\lambda_k = 0$, we have $\|T\psi_k\|^2 = \langle T^*T\psi_k, \psi_k \rangle = 0$, so $T\psi_k = 0$. Thus, we get:
+        $$Tx = \sum_k \lambda_k \langle x, \psi_k \rangle \phi_k$$
+        or $T = \sum_k \lambda_k \phi_k \otimes \psi_k$.
+    \end{proof}
+
+
+
+    
+
+    \item Let $T,S \in L(H,H)$ be self-adjoint operators and $f,g \in C(\sigma(T)).$ Prove that:
+    \begin{enumerate}
+        \item $\bar{f}(T) = f(T)^*$
+        \item $\|f(T)\| = \sup_{t\in\sigma(T)}|f(t)|$
+        \item If operators $S$ and $T$ commute then operators $f(S)$ and $g(T)$ commute. (Check this for polynomials and pass to a limit.)
+    \end{enumerate}
+
+    \begin{proof}
+        (a) Let $T$ be a self-adjoint operator and $f \in C(\sigma(T))$. We want to show that $\overline{f}(T) = f(T)^*$.
+
+ Let $p(t) = \sum_{k=0}^n a_k t^k$. Then the conjugate polynomial is given by $\overline{p}(t) = \sum_{k=0}^n \overline{a_k} t^k$. Now let's observe the operator 
+$$p(T) = \sum_{k=0}^n a_k T^k.$$
+If we take the adjoint of the operator we get 
+$$p(T)^* = \left(\sum_{k=0}^n a_k T^k\right)^* = \sum_{k=0}^n \overline{a_k} (T^k)^* = \sum_{k=0}^n \overline{a_k} (T^*)^k = \sum_{k=0}^n \overline{a_k} T^k$$
+So we know that for polynomials, $p(T)^* = \overline{p}(T)$.
+
+Now let's pass to the limit for a continuous function $f$. By the Weierstrass approximation theorem, there exists a sequence of polynomials $p_n$ such that $p_n \to f$ uniformly on $\sigma(T)$. This implies that $\overline{p_n} \to \overline{f}$ uniformly as well. By the definition of the continuous functional calculus, we know that $p_n(T) \to f(T)$ in the operator norm.
+
+Since the adjoint operation is continuous , we get the following of
+$$f(T)^* = (\lim_{n \to \infty} p_n(T))^* = \lim_{n \to \infty} (p_n(T)^*) = \lim_{n \to \infty} \overline{p_n}(T).$$
+Since $\overline{p_n}(T)$ converges to $\overline{f}(T)$, we get 
+$f(T)^* = \overline{f}(T)$
+
+
+
+        (b)Let $f \in C(\sigma(T))$. We want to show that the norm of the operator $f(T)$ is equal to the supremum of the absolute value of the function on the spectrum.
+
+First, let's consider the polynomial case. Note that he operator norm of polynomials is the following. 
+$$\|p(T)\| = \max_{t \in \sigma(T)} |p(t)| = \|p\|_\infty$$
+
+We want to show this holds for any continuous $f$. Let $p_n$ be a sequence of polynomials that converges uniformly to $f$ on $\sigma(T)$, meaning $\|p_n - f\|_\infty \to 0$. By the construction of the functional calculus, we also have that $p_n(T) \to f(T)$ in the operator norm.
+
+Since the norm is a continuous function, we can take the limit of the norms to get the following.
+$$\|f(T)\| = \lim_{n \to \infty} \|p_n(T)\| = \lim_{n \to \infty} \|p_n\|_\infty$$
+Since $\|p_n\|_\infty$ converges to $\|f\|_\infty$ by definition of uniform convergence, we get
+$$\|f(T)\| = \|f\|_\infty = \sup_{t \in \sigma(T)} |f(t)|.$$
+
+
+
+
+        (c)Let $S, T \in L(H,H)$ be self-adjoint operators such that $ST = TS$. We want to show that $f(S)$ and $g(T)$ commute for any $f \in C(\sigma(S))$ and $g \in C(\sigma(T))$.
+
+First, let's show this for polynomials. Let $p$ and $q$ be polynomials. Since $S$ and $T$ commute, $S$ commutes with $T^2$, and by induction $S$ commutes with any power $T^k$. By linearity, $S$ must commute with any polynomial $q(T)$.
+$$S q(T) = q(T) S$$
+Now apply the same logic to $q(T)$. Since $q(T)$ commutes with $S$, it must commute with any power $S^k$, and therefore with any polynomial $p(S)$. Thus, we have:
+$$p(S)q(T) = q(T)p(S)$$
+
+Now let's pass to the limit. Let $p_n$ be a sequence of polynomials converging uniformly to $f$ on $\sigma(S)$, and $q_n$ be a sequence converging uniformly to $g$ on $\sigma(T)$. This means $p_n(S) \to f(S)$ and $q_n(T) \to g(T)$ in operator norm.
+
+We want to observe the product $f(S)g(T)$. Since operator multiplication is continuous, we can write:
+$$f(S)g(T) = \left(\lim_{n \to \infty} p_n(S)\right) \left(\lim_{n \to \infty} q_n(T)\right) = \lim_{n \to \infty} (p_n(S) q_n(T))$$
+$$= \lim_{n \to \infty} (q_n(T) p_n(S))= \left(\lim_{n \to \infty} q_n(T)\right) \left(\lim_{n \to \infty} p_n(S)\right) = g(T)f(S)$$
+Thus, the operators commute.
+    \end{proof}
+
+
+    \item Prove the uniqueness of $\sqrt{T}$.
+
+    \begin{proof}
+        Let $T \in L(H)$ be a positive self-adjoint operator. Then there exist a a positive self-adjoint operator let call $A$ such that $A^2 = T$.  Suppose there exists another positive self-adjoint operator $B$ such that $B^2 = T$. We want to show that $A=B$. First, let's show that both $A$ and $B$ commute. So note by construction of the operator $A$, we can write $A = f(T)$ where $f(t) = \sqrt{t}$. Meaning that $p_n(T) \rightarrow A$ as $n\rightarrow \infty$. Now let's observe B and show that it commutes with $T$. We have the following of $$BT = BB^2 = B^3 = B^2B = TB$$ meaning B is commutable with T. Now since A is a limit of polynomials $p_n(T)$, B must commute with A as shown in the previous problem. So now let's look at $A^2-B^2$. Since we have that $A$ and $B$ commute and $A^2 = T = B^2$, we have the following.
+        $$A^2-B^2 = (A-B)(A+B) = 0$$
+        Let x be any arbitrary vector and $y = (A-B)x$. From the equality earlier we get the following.
+        $$(A+B)y = 0$$
+        taking the inner product with $y$, we get
+        $$\langle (A+B)y, y\rangle  = 0 \rightarrow\langle Ay,y \rangle + \langle By,y \rangle = 0$$
+        Since $A$ and $B$ are positive operators, then both inner products must be 0. Note that given a positive self-adjoint operator, there is a unique square root operator such that $(\sqrt{T})^2 = T$. With that let's observe $\langle Ay,y \rangle$. 
+        $$\langle Ay,y \rangle = \langle \sqrt{A}\sqrt{A}y,y \rangle =  \langle \sqrt{A}y,\sqrt{A}y \rangle = \|\sqrt{A}y\|^2 = 0 $$
+        $$\Rightarrow \sqrt{A}y = 0 \Rightarrow Ay = \sqrt{A}(\sqrt{A}y) = 0.$$ Thus we get $Ay = 0$ and $By = 0$ (as we do the same process). Now we go back to our definition of y, we get 
+        $$(A-B)y = Ay - By = 0 - 0 = 0.$$
+        Now, substitute the definition $y = (A-B)x$ back into this equation:
+ $$(A-B)y = (A-B)(A-B)x = (A-B)^2 x = 0$$
+ Since $(A-B)$ is a self-adjoint operator, we can assume that if its square is zero, the operator itself is zero on that vector.
+  $$\|(A-B)x\|^2 = \langle (A-B)x, (A-B)x \rangle = \langle (A-B)^2 x, x \rangle = \langle 0, x \rangle = 0$$
+ Thus, $(A-B)x = 0$. Since $x$ was arbitrary, $A = B$.
+    \end{proof}
+    
+
+
+\end{enumerate}
+
+\end{document}

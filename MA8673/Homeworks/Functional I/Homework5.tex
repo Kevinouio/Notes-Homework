@@ -1,0 +1,268 @@
+\documentclass[]{article}
+
+% Packages for mathematics
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{bm}
+\usepackage{authblk}
+
+% Package for graphics
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{subcaption}
+\usepackage{placeins}
+
+
+% Package for page layout and headers/footers
+%\usepackage{geometry}
+%\geometry{margin=1in}
+
+
+% Package for clickable links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+}
+
+% Package for algorithms
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{matlab-prettifier}
+\usepackage{tabularx}
+\usepackage{amsmath, physics}
+
+% Custom theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\title{Functional Analysis Homework 5}
+\author{Kevin Ho}
+\date{September 20th}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Prove that Parseval's identity holds for an orthonormal system ($x_k$) iff ($x_k$) is complete. Therefore, the inequality cases of Bessel's inequality hold exactly when the system is complete.
+    \begin{equation*}
+        \sum_k|\langle x,x_k\rangle|^2 = \|x\|^2
+    \end{equation*}
+    
+
+\begin{enumerate}
+    \item [($\Rightarrow $)] So suppose the inequality above is true for every vector. Then, we want to show that the orthonormal system $x_k$ is complete or $\overline{\text{span}\{x_k\}} =  X$. So we can show this by showing that the only vector in the space that is orthogonal to every $x_k$ is the zero vector. So let $y$ be a vector orthogonal to every single basis vector. This means that $\forall k, \langle y,x_k\rangle = 0$. So when we plug that into Parseval's inequality, we get 
+    \begin{equation*}
+        \sum_k|\langle y,x_k\rangle|^2 = 0=\|y\|^2 \implies \|0\|^2
+    \end{equation*}
+    Meaning that y must be the zero vector itself for the identity to be true, showing that the system is complete. (I guess this also is proved in question 3 as well)
+
+    \item [($\Leftarrow $)] So suppose the orthonormal system $x_k$ is complete. Then we know that $\overline{\text{span}\{x_k\}} =  X$. With the completeness, the orthogonal projection of x onto the span is the identity map so when we observe the Fourier series for x. We get 
+    \begin{equation*}
+        S_n(x) =  \sum_{k=1}^n\langle x,x_k\rangle x_k
+    \end{equation*}
+    and when we take the square we get a result of the Pythagorean Theorem of 
+    \begin{equation*}
+         \rightarrow \|S_n(x)\|^2 =  \|\sum_{k=1}^n\langle x,x_k\rangle x_k\|^2 =  \sum_{k=1}^n |\langle x,x_k\rangle |^2 
+    \end{equation*}
+    So now let's look at the partial sums $S_n(x)$ (left side of the inequality). So with the completeness of X, we get 
+    \begin{equation*}
+        \lim_{n \rightarrow\infty}\|x - S_n(x)\| = 0 
+    \end{equation*}
+    and so we apply the Pythagorean Theorem to get 
+    \begin{equation*}
+        \|x\|^2 = \|S_n(x)\|^2+\|x-S_n(x)\|^2 =  \|S_n(x)\|^2 +0 
+    \end{equation*}
+    *equality is true as $n\rightarrow\infty$
+    Which then leads to the equality being true of Parseval's inequality.\qed
+
+\end{enumerate}
+    
+
+
+
+
+
+
+    \item Prove that Gram-Schmidt orthogonalization of the monomials $(t^k)^\infty_{k=0}$ in the space $L_2[-1,1]$ gives the system of Legendre orthogonal polynomials 
+    \begin{equation*}
+        P_k(t) = \frac{1}{2^kk!}\frac{d^k}{dt^k}(t^2-1)^k,
+    \end{equation*}
+    up to normalization constants. More precisely, $P_k(t)$ form an orthogonal basis in $L_2[-1,1]$ and $\|P_k\|^2_2 = \frac{2}{2k+1}$.
+
+    \begin{enumerate}
+        \item [Proof:] So with the properties of Gram-Schmidt orthogonalization. We require two things about  $P_k(t)$ in which  $P_k(t)$ must be a polynomial of degree k and that each polynomial is orthogonal to each in the space. So the second fact is obvious but the first property comes from the Gram-Schmidt construction itself. The formula for the k-th resulting polynomial
+\begin{equation*}
+P_k(t) = t^k - \sum_{j=0}^{k-1} \frac{\langle t^k, v_j(t) \rangle}{|v_j(t)|^2} v_j(t)
+\end{equation*}
+This formula shows that the polynomial is created by starting with $t_k$
+  and subtracting a sum of lower-degree polynomials, which proves the resulting polynomial has a degree of k. So now lets show the two properties.
+        So with the first properties of the polynomial being at most degree k, let's observe the system. 
+        \begin{equation*}
+            (t^2-1)^k \rightarrow t^{2k} 
+        \end{equation*}
+        \begin{equation*}
+            \Rightarrow \frac{d^k}{dt^k}(t^{2k} )
+        \end{equation*}
+        leading to a polynomial degree of k after differentiating so it then satisfies the first property and now we need to show orthogonality to $t^j$ for $j<k$. So we do the inner product, we get 
+        \begin{equation*}
+            \langle P_k(t), t^j \rangle = \int_{-1}^1P_k(t)(t^j)dt = 0 
+        \end{equation*}
+        let $c_k = \frac{1}{2^kk!}$
+        $$\rightarrow   c_k\int_{-1}^1(\frac{d^k}{dt^k}(t^2-1)^k)(t^j)dt $$
+        now we apply integration by parts to where we let $u = t^j, dv =\frac{d^k}{dt^k}(t^2-1)^kdt$. Getting us $du = jt^{j-1}, v = \frac{d^{k-1}}{dt^{k-1}}(t^2-1)^kdt$. The uv term gets us the following 
+        \begin{equation*}
+            \eval{t^j\frac{d^{k-1}}{dt^{k-1}}(t^2-1)^kdt}^1_{-1} = 0
+        \end{equation*}
+        and so we then get the remaining integral of 
+
+        $$\langle P_k, t^j \rangle = -c_k \int_{-1}^{1} \left( \frac{d^{k-1}}{dt^{k-1}}(t^2-1)^k \right) (j \cdot t^{j-1}) \,dt$$
+        Now we repeat this process for j+1 times to have it being differentiated j+1 times getting that $$\frac{d^{j+1}}{dt^{j+1}}(t^j) = 0$$This will make the entire integrand zero, and so the integral becomes zero.$$\langle P_k, t^j \rangle = 0$$
+This only works because we are given that $j < k$. This ensures that we can always perform the integration by parts $j+1$ times without running out of derivatives to remove from the $(t^2-1)^k$ term. Giving is the orthogonality of each polynomial.\qed
+    \end{enumerate}
+
+    
+
+
+
+
+
+
+
+
+    \item Consider a system of vectors $(x_k)$ (not necessarily orthogonal) in a Hilbert space X. Prove that $(x_k)$ is complete iff the only vector orthogonal to all of $x_k$ is zero.
+    \begin{enumerate}
+        \item [$(\Rightarrow)$] So let the system $x_k$ be complete. This gives us that $\overline{\text{span}\{x_k\}} =  X$. So let's choose an $z \in \overline{\text{span}\{x_k\}}$ and $y$ be a vector that is orthogonal or every $x_k$. So let's rewrite $z$ as 
+        \begin{equation*}
+            z = \sum_{i = 1}^n c_ix_i
+        \end{equation*}
+        and so we get 
+        \begin{equation*}
+            \langle z,y \rangle =  \langle \sum_{i = 1}^n c_ix_i,y \rangle  =  \sum_{i = 1}^n c_i\langle x_i,y \rangle  = 0
+        \end{equation*}
+        And with the closure of the span, then there is a sequence of vectors ${z_n}$ such that it converges to $y$ as $n\rightarrow\infty$.  So as we observe $ \lim_{n\rightarrow\infty} \langle z_n, y\rangle  \rightarrow \langle y, y\rangle  =\|y\|^2 =  0$ so then y must be the 0 vector.
+        
+        \item [$(\Leftarrow)$] So assume that the system $x_k$ is not complete and that the only vector orthogonal to all of $x_k$ is the zero vector. Then $\overline{\text{span}\{x_k\}} $ does not represent the space of $X$. With this in mind, let $y \notin Y=\overline{\text{span}\{x_k\}}  $ but $y \in X$. By the Projection Theorem, we can write y to be a unique decomposition of $y = x_0 + z$ where $z\in Y^\perp$ and $ x_0 \in Y$. 
+        $z$ cannot be the zero vector as if $z = 0$, then $y = x_0$. So then z must be a non-zero vector which is a contradiction as there should only be the zero vector to all of $x_k$ that is orthogonal. \qed 
+    \end{enumerate}
+    
+    
+
+
+
+
+    \item Suppose $w(t)$ is a continuous weight function $\mathbb{R} \rightarrow \mathbb{R}_+$. Consider the Hilbert space $L_2(\mathbb{R}, w(t) dt)$, i.e. the measure on $\mathbb{R}$ is given by $w(t)dt$. The Gram Schmidt orthogonalization of monomials $(t^k)^\infty_{k=0}$ produces a system orthogonal polynomials $P_k(t)$ with respect to the weight $w(t)$, i.e.
+    \begin{equation*}
+        \int_\mathbb{R} P_k(t)P_l(t)w(t)dt = \delta_{kl}.
+    \end{equation*}
+    Now consider the weight $w(t) = \frac{1}{\sqrt2\pi}e^\frac{t^2}{2}$, i.e. the standard normal density. Prove that the orthogonal polynomials with respect to this weight is the system of Hermite polynomials 
+    \begin{equation*}
+        P_k(t) = (-1)^ke^\frac{t^2}{2}\frac{d^k}{dt^k}e^\frac{-t^2}{2},
+    \end{equation*}
+    up to normalization constants. More precisely, $P_k(t)$ form an orthogonal basis in $L_2(\mathbb{R}, w(t)dt)$ and $\|P_k\|^2_2 = k!$.
+    \begin{enumerate}
+        \item [Proof:] So we approach this very similarly as question 3 where we show the two properties of Gram Schmidt to show then following is true.
+
+        So for the first property, I'm not going to write the full derivation but describe what occurs for the polynomial degree. So with k=0, the exponentials cancel out leading to a polynomial of degree 0 so the base case is accounted for. Now as the degree k increases, each derivative of $e^\frac{-t^2}{2}$ gains a polynomial degree in front of it leading to the next polynomial being degree 1 for $k=1$ and this continues for higher levels of k leading to the first property being satisfied.
+
+        Now for the second property, we need to show that $P_k(t)$ is orthogonal to $t^k, j<k$. So now let's look at the inner product space for it.
+
+        \begin{equation*}
+            \langle P_k, t^j \rangle = \int_{-\infty}^{\infty} \left[ (-1)^k e^{t^2/2} \frac{d^k}{dt^k} e^{-t^2/2} \right] t^j \left[ \frac{1}{\sqrt{2\pi}} e^{-t^2/2} \right] dt
+        \end{equation*}
+        \begin{equation*}
+            \rightarrow \frac{(-1)^k}{\sqrt{2\pi}} \int_{-\infty}^{\infty} \left( \frac{d^k}{dt^k} e^{-t^2/2} \right) t^j dt
+        \end{equation*}
+        Now with integration by parts, we let  $u = t^j, dv = \frac{d^k}{dt^k} e^{-t^2/2} dt$ doing this j+1 times. The boundary term $uv$ will be zero at both $\pm\infty$. This is because $v$ will always be a polynomial times $e^{-t^2/2}$, and the exponential decay of $e^{-t^2/2}$ goes to zero much faster than any polynomial grows.
+
+        After repeating integration by parts $j+1$ times, we get $$\frac{d^{j+1}}{dt^{j+1}}(t^j) = 0$$This will make the entire integrand zero, and so the integral becomes zero.$$\langle P_k, t^j \rangle = 0, j<k$$ 
+        And so showing the orthogonality of all polynomials of lower degree w.r.t. the weighted inner product. Since these are the unique properties of the polynomials generated by the Gram-Schmidt process, the Hermite polynomials must be the same as the ones generated by Gram-Schmidt, up to normalization constants. \qed
+        
+        
+    \end{enumerate}
+
+
+    
+
+
+
+    \item Show that every linear functional $f$ on $\mathbb{C}^n$ has the form 
+    \begin{equation*}
+        f(x) = \sum^n_{k=1}x_ky_k = \langle x,y\rangle, x = (x_1, ..., x_n),
+    \end{equation*}
+    for some $y = (y_1, ..., y_n)\in \mathbb{C}^n$.
+    \begin{enumerate}
+        \item [Proof:]:  Let $e_k$ be the canonical basis. Then we can rewrite x as the following 
+        \begin{equation*}
+            x = \sum_{k=1}^nx_ke_k
+        \end{equation*}
+        and so we can rewrite $f$ to be the following (note linearity of f):
+        \begin{equation*}
+            f(x) = f(\sum_{k=1}^nx_ke_k) = \sum_{k=1}^nx_kf(e_k)
+        \end{equation*}
+        and so let $y_k = f(e_k)$ leading to the equality. \qed
+
+
+        
+    \end{enumerate}
+
+
+
+
+
+
+    \item Compute the norms of the integration and the point evaluation functionals considered in Examples 2.1.2 and 2.1.3.
+    \begin{enumerate}
+        \item [2.1.2:]
+        \begin{equation*}
+            F(g) = \int_0^1 g(t)w(t)dt 
+        \end{equation*}
+        $$|F| = |\int_0^1 g(t)w(t)dt | \leq \int_0^1 |g(t)w(t)|dt =  \int_0^1 |g(t)||w(t)|dt $$
+        $$ \leq \int_0^1 \|g\|_\infty|w(t)|dt =  \|g\|_\infty\int_0^1 |w(t)|dt$$
+        $$\rightarrow |F| \leq\|g\|_\infty\int_0^1 |w(t)|dt $$
+        showing that  $ \|F\| \leq\|g\|_\infty\int_0^1 |w(t)|dt $, implying that the norm of the functional is bounded by the constant part $ \|F\| \leq\int_0^1 |w(t)|dt $. So let's try to show equality now, and let $$g(t) =
+\begin{cases} 
+   1 & \text{if } w(t) > 0 \\
+  -1 & \text{if } w(t) < 0 \\
+   0 & \text{if } w(t) = 0 
+\end{cases}. $$
+Then $\|g\|_\infty = 1$ and the the product for the integral becomes the following.
+        \begin{equation*}
+            F(g) = \int_0^1 g(t)w(t)dt=\int_0^1 |w(t)|dt   
+        \end{equation*}
+        Thus finding that $|F| =\int_0^1 |w(t)|dt$  and so we get 
+        \begin{equation*}
+            \|F\| = \int_0^1 |w(t)|dt   
+        \end{equation*}
+
+
+        
+        \item [2.1.3:]
+        \begin{equation*}
+            F(g) = g(t_0), t_0\in [0,1]
+        \end{equation*}
+        $$|F(g)| = |g(t_o)| \le\max_{t \in [0,1]} |g(t)|$$
+        Substituting our definitions back in, this is:
+        $$|F(g)| \le 1 \cdot \|g\|_\infty$$
+        This gives us that $\|F\|\leq 1$. And now we need to show that $\|F\| =1$, so let $g(t) = 1$. It is in the space $C[0,1]$, $\|g\|_\infty = 1$, and $F(g) = g(t_0) =1$ so $|F(g)| = 1 \cdot\|g\|_\infty$ is ture. Since the norm can't be larger than 1, and we found a function for which the ratio is exactly 1, the norm of the point evaluation function must be 1.\qed
+    \end{enumerate}
+
+
+
+
+
+    
+
+\end{enumerate}
+
+\end{document}

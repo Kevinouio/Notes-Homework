@@ -1,0 +1,132 @@
+\documentclass[]{article}
+
+% Packages for mathematics
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{bm}
+\usepackage{authblk}
+
+% Package for graphics
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{subcaption}
+\usepackage{placeins}
+
+
+% Package for page layout and headers/footers
+%\usepackage{geometry}
+%\geometry{margin=1in}
+
+
+% Package for clickable links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+}
+
+% Package for algorithms
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{matlab-prettifier}
+\usepackage{tabularx}
+\usepackage{amsmath, physics}
+
+% Custom theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\title{Functional Analysis Homework 14}
+\author{Kevin Ho}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    
+    \item Show that if $f(t) \geqslant 0, \forall t$ then $f(T)\geqslant0$.
+    \begin{proof}
+        So note that spectral Mapping Theorem gives that $\sigma(f(T)) = f(\sigma(T)) = \{f(t):t\in \sigma(T)\}$. Since $f(t) \geqslant 0, \forall t$, it implies that $ f(\sigma(T)) \geq 0$. And so the spectrum of $f(T)$ must be positive so $f(T)$ must also be positive.
+    \end{proof}
+
+    \item Compute the spectral measure for the diagonal matrix $T = diag(\lambda_1, ..., \lambda_n)$ acting as an operator on $\mathbb{C}^n$.
+
+    \begin{proof}
+        So by Borel Functional Calculus, the spectral measure must satisfy the following of 
+        $$
+        \langle f(T)x,y\rangle = \int_{\sigma(T)}f(\lambda)d\mu_{x,y}(\lambda)
+        $$
+        for all continuous functions f. 
+        So for a diagonal matrix $T$, we have $f(T) = diag(f(\lambda_1),\dots,f(\lambda_n))$. And so expanding the earlier inner product, $\langle f(T)x,y\rangle$, with $x,y \in \mathbb{C}^n$  we have 
+
+        $$
+        \langle f(T)x,y\rangle = \sum^n_{j=1}f(\lambda_j)x_j\bar{y_j}.
+        $$
+        So using a property of the Dirac Delta Measure where we can rewrite the function as the following of 
+        $$
+        \int f(\lambda) d \delta_c(\lambda) = f(c),
+        $$
+        We can rewrite our inner product to be 
+         $$
+        \sum^n_{j=1}f(\lambda_j)x_j\bar{y_j} = \int_\mathbb{C}f(\lambda)d \left( \sum^n_{j=1}f(\lambda_j)x_j\bar{y_j} \delta_{\lambda_j} \right) (\lambda)
+        $$
+
+        Leading to the spectral measure being 
+        $$
+        \mu_{x,y}  = \sum^n_{j=1}x_j\bar{y_j} \delta_{\lambda_j}
+        $$
+        
+    \end{proof}
+
+    \item Let $T$ be a multiplication operator in $L_2[0,1]$ by a function $g\in L_\infty[0,1].$ Show that for $f\in \mathcal{B}[0,1],$ the operator $f(T)$ if the multiplication operator in $L_2[0,1]$ by the function $f(g(t))$.
+
+    \begin{proof} Let $p(x)$ be a polynomial defined by $p(x) = \sum_{k=0}^n c_k x^k$. By the definition of the polynomial functional calculus, the operator $p(T)$ is the linear combination $\sum_{k=0}^n c_k T^k$. Since $T$ is the multiplication operator by $g(t)$, the operator $T^k$ corresponds to multiplication by $(g(t))^k$. Therefore, for any vector $h \in L_2[0,1]$, the action of the operator is:
+
+$$(p(T)h)(t) = \sum_{k=0}^n c_k (g(t))^k h(t) = p(g(t))h(t)$$
+
+This confirms that for any polynomial $p$, the operator $p(T)$ acts strictly as the multiplication operator by the composite function $p(g(t))$.
+
+We next extend this property to the space of continuous functions $C[0,1]$. By the Weierstrass Approximation Theorem, any continuous function $f$ can be uniformly approximated by a sequence of polynomials $\{p_n\}$. As $n \to \infty$, the sequence $p_n$ converges to $f$ uniformly on the spectrum of the operator. This implies convergence in the operator norm topology:
+
+$$\lim_{n \to \infty} \| p_n(T) - f(T) \| = 0$$
+
+Simultaneously, because the convergence is uniform, the sequence of functions $p_n(g(t))$ converges uniformly to $f(g(t))$ in $L_\infty[0,1]$. Consequently, the multiplication operators corresponding to $p_n(g(t))$ converge in the operator norm to the multiplication operator denoted by $M_{f(g)}$. Since limits in the operator norm topology are unique, we conclude:
+
+$$f(T) = M_{f(g)}$$
+
+Finally, we generalize the result to all bounded Borel functions $f \in \mathcal{B}[0,1]$. Let $\mathcal{K}$ be the class of all bounded Borel functions $u$ such that $u(T)$ is the multiplication operator by $u(g(t))$. We have already shown that $C[0,1] \subset \mathcal{K}$. Consider a uniformly bounded sequence $\{f_n\} \subset \mathcal{K}$ such that $f_n(t) \to f(t)$ pointwise. By the properties of the functional calculus, $f_n(T)$ converges to $f(T)$ in the strong operator topology. That is, for any $h \in L_2[0,1]$:
+
+$$\lim_{n \to \infty} \| (f_n(T) - f(T))h \|_2 = 0$$
+
+On the other hand, since $\{f_n(g(t))\}$ is uniformly bounded and converges pointwise to $f(g(t))$, the Dominated Convergence Theorem ensures that the associated multiplication operators converge strongly to the multiplication operator by $f(g(t))$. Because the strong limit is unique, $f$ must essentially belong to $\mathcal{K}$. Since $\mathcal{B}[0,1]$ is the smallest class containing continuous functions that is closed under pointwise limits of uniformly bounded sequences, it follows that for all $f \in \mathcal{B}[0,1]$, $f(T)$ is the multiplication operator by $f(g(t))$.
+
+    \end{proof}
+
+    \item Show that if $E_1 \subseteq E_2$ then $P_{E_1} \leqslant P_{E_2}$ and $\text{Im}(E_1) \subseteq \text{Im}(E_2)$.
+
+    \begin{proof}
+        Since $E_1 \subseteq E_2$, the indicator functions satisfy $1_{E_1}(t) \le 1_{E_2}(t)$ for all $t$.
+By the order-preserving property of the Borel functional calculus, it follows immediately that $P_{E_1} \leqslant P_{E_2}$.
+
+
+The functional calculus is a homomorphism, so $P_{E_2} P_{E_1} = 1_{E_2}(T) 1_{E_1}(T) = (1_{E_2} \cdot 1_{E_1})(T)$.
+Since $E_1 \subseteq E_2$, $1_{E_2} \cdot 1_{E_1} = 1_{E_1}$. Thus, $P_{E_2} P_{E_1} = P_{E_1}$.
+If $y \in \text{Im}(P_{E_1})$, then $y = P_{E_1} y = P_{E_2} (P_{E_1} y)$, which implies $y \in \text{Im}(P_{E_2})$.
+Therefore, $\text{Im}(P_{E_1}) \subseteq \text{Im}(P_{E_2})$.
+
+    \end{proof}
+
+\end{enumerate}
+
+\end{document}

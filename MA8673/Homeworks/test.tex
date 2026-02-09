@@ -1,0 +1,171 @@
+\documentclass[]{article}
+
+% Packages for mathematics
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{bm}
+\usepackage{authblk}
+
+% Package for graphics
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{subcaption}
+\usepackage{placeins}
+
+
+% Package for page layout and headers/footers
+%\usepackage{geometry}
+%\geometry{margin=1in}
+
+
+% Package for clickable links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+}
+
+% Package for algorithms
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{matlab-prettifier}
+\usepackage{tabularx}
+\usepackage{amsmath, physics}
+
+% Custom theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\title{Functional Analysis Homework 13}
+\author{Kevin Ho}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    
+    
+    \begin{proof}Let $\{x_n\}$ be a sequence in $\mathcal{D}(A)$ such that $x_n \to x$ and $Ax_n \to y$ in $\mathcal{H}$. To prove that $A$ is closed, we must show that $x \in \mathcal{D}(A)$ and $Ax = y$.Since $\{Ax_n\}$ is a convergent sequence, it is a Cauchy sequence. By the normality condition $\|Ah\| = \|A^*h\|$, we have for any $n, m$:
+$$
+\|A^*x_n - A^*x_m\| = \|A^*(x_n - x_m)\| = \|A(x_n - x_m)\| = \|Ax_n - Ax_m\|
+$$
+Since $\{Ax_n\}$ is Cauchy, the Right Hand Side goes to 0 as $n,m \to \infty$. Therefore, $\{A^*x_n\}$ is also a Cauchy sequence in $\mathcal{H}$ and must converge to some limit $z$.
+
+We now have:
+$$
+x_n \to x \quad \text{and} \quad A^*x_n \to z
+$$
+Recall that the adjoint operator $A^*$ is always closed. By the definition of closedness applied to $A^*$, this implies that $x \in \mathcal{D}(A^*)$ and $A^*x = z$.
+
+Since $A$ is normal, we are given that $\mathcal{D}(A) = \mathcal{D}(A^*)$. Therefore, $x \in \mathcal{D}(A)$.
+
+Finally, we must show that $Ax = y$. We apply the norm equality to the vector $x_n - x$:
+$$
+\|Ax_n - Ax\| = \|A^*(x_n - x)\| = \|A^*x_n - A^*x\|
+$$
+ taking the limit as $n \to \infty$:
+\begin{itemize}
+    \item On the right side, since $A^*x_n \to z$ and we found $A^*x = z$, the term $\|A^*x_n - A^*x\| \to 0$.
+    \item Therefore, the left side $\|Ax_n - Ax\| \to 0$, which implies $Ax_n \to Ax$.
+\end{itemize}
+
+Since we originally assumed $Ax_n \to y$, by the uniqueness of limits, we must have $Ax = y$.
+
+Thus, $x \in \mathcal{D}(A)$ and $Ax = y$, proving that $A$ is closed.
+\end{proof}
+
+
+
+
+
+
+
+
+\begin{proof}
+\textbf{Example (domains).}
+Let $\mathcal P$ denote the set of complex polynomials. Define
+\[
+D_1:=\{P(x)e^{-x^2}:P\in\mathcal P\},\qquad
+D_2:=\{Q(x)e^{-x^4}:Q\in\mathcal P\}.
+\]
+Both are linear subspaces of $L^2(\mathbb R)$.
+
+\textbf{Density.}
+Consider the weighted Hilbert spaces
+\[
+H_1 := L^2(\mathbb R, e^{-2x^2}\,dx),\qquad
+H_2 := L^2(\mathbb R, e^{-2x^4}\,dx),
+\]
+and unitary maps $U_1:H_1\to L^2(\mathbb R)$, $U_2:H_2\to L^2(\mathbb R)$ given by
+\[
+(U_1h)(x)=h(x)e^{-x^2},\qquad (U_2h)(x)=h(x)e^{-x^4}.
+\]
+Then $D_1 = U_1(\mathcal P)$ and $D_2 = U_2(\mathcal P)$.
+Using the standard fact that polynomials are dense in $H_1$ and in $H_2$ (Gaussian-type weights),
+it follows that $D_1$ and $D_2$ are dense in $L^2(\mathbb R)$.
+
+\textbf{Disjointness.}
+Let $f\in D_1\cap D_2$. Then for some $P,Q\in\mathcal P$,
+\[
+P(x)e^{-x^2}=Q(x)e^{-x^4}\quad\text{a.e.}
+\]
+Hence $Q(x)=P(x)e^{x^4-x^2}$ a.e. If $P\not\equiv 0$, then $|P(x)e^{x^4-x^2}|\to\infty$
+as $|x|\to\infty$, which is impossible for a polynomial $Q$. Thus $P\equiv 0$ and $Q\equiv 0$,
+so $f=0$. Therefore $D_1\cap D_2=\{0\}$.
+
+\textbf{Essential self-adjointness for $M_x$ on $D_1$.}
+Let $T_1 := M_x|_{D_1}$, so $T_1f = xf$ with domain $D_1$.
+First $D_1\subset \mathcal D(M_x)$ because if $f=P e^{-x^2}$ then $xf=xP e^{-x^2}\in L^2$.
+Also $x$ is real-valued, hence $T_1$ is symmetric.
+
+We use the criterion: $T_1$ is essentially self-adjoint iff $\operatorname{Ran}(T_1\pm i)$ is dense in $L^2$.
+Fix $h\in L^2(\mathbb R)$ and define
+\[
+\psi(x):=\frac{h(x)e^{x^2}}{x-i}.
+\]
+Note that $\psi\in L^2(\mathbb R,(x^2+1)e^{-2x^2}\,dx)$ since
+\[
+\int_{\mathbb R}|\psi(x)|^2 (x^2+1)e^{-2x^2}\,dx
+=\int_{\mathbb R}\frac{|h(x)|^2 e^{2x^2}}{|x-i|^2}(x^2+1)e^{-2x^2}\,dx
+=\int_{\mathbb R}|h(x)|^2\,dx <\infty.
+\]
+By density of polynomials in $L^2(\mathbb R,(x^2+1)e^{-2x^2}\,dx)$, choose polynomials $P_n$ such that
+\[
+\int_{\mathbb R}\left|P_n(x)-\psi(x)\right|^2 (x^2+1)e^{-2x^2}\,dx \to 0.
+\]
+Multiplying out shows
+\[
+\|(x-i)P_n(x)e^{-x^2}-h\|_{L^2}^2
+=\int_{\mathbb R}\left|P_n(x)-\psi(x)\right|^2 (x^2+1)e^{-2x^2}\,dx \to 0.
+\]
+Thus $h$ lies in the closure of $\operatorname{Ran}(T_1-i)$, so $\operatorname{Ran}(T_1-i)$ is dense in $L^2$.
+The same argument works with $x+i$, hence $\operatorname{Ran}(T_1+i)$ is also dense. Therefore $T_1$ is essentially self-adjoint.
+
+\textbf{Essential self-adjointness for $M_{x^2}$ on $D_2$.}
+Let $T_2 := M_{x^2}|_{D_2}$, so $T_2f = x^2f$ with domain $D_2$.
+Again $D_2\subset \mathcal D(M_{x^2})$ and $T_2$ is symmetric since $x^2$ is real.
+Repeat the previous density-of-range argument with
+\[
+\phi(x):=\frac{h(x)e^{x^4}}{x^2-i},
+\]
+and the weight $(x^4+1)e^{-2x^4}$ (using $|x^2-i|^2=x^4+1$). This gives density of
+$\operatorname{Ran}(T_2\pm i)$, hence $T_2$ is essentially self-adjoint.
+
+Therefore $M_x$ is essentially self-adjoint on $D_1$ and $M_{x^2}$ is essentially self-adjoint on $D_2$,
+with $D_1\cap D_2=\{0\}$.
+\end{proof}
+
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,112 @@
+\documentclass[]{article}
+
+% Packages for mathematics
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{bm}
+\usepackage{authblk}
+
+% Package for graphics
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{subcaption}
+\usepackage{placeins}
+
+
+% Package for page layout and headers/footers
+%\usepackage{geometry}
+%\geometry{margin=1in}
+
+
+% Package for clickable links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+}
+
+% Package for algorithms
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{matlab-prettifier}
+\usepackage{tabularx}
+\usepackage{amsmath, physics}
+
+% Custom theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\title{Functional Analysis Homework 10}
+\author{Kevin Ho}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Show that all finite-dimensional normed spaces $X$ have Schur property, so the weak and strong convergence in $X$ coincide. 
+    \begin{proof}
+        Let $X$ be finite dimensional and $x_n \rightharpoonup x$. Weak convergence implies boundedness, so ${x_n}$ lies in a closed ball. In finite dimensions, closed and bounded sets are compact, hence ${x_n}$ has a norm-convergent subsequence $x_{n_k}\to y$. Norm convergence $\Rightarrow$ weak convergence, so $x_{n_k}\rightharpoonup y$. Weak limits are unique, thus $y=x$.
+        
+        In a metric space, if every subsequence has a further subsequence converging to $x$, then the whole sequence converges to $x$. Therefore $x_n\to x$ in norm. Hence weak and strong convergence coincide on $X$.
+    \end{proof}
+    
+
+    
+    \item Prove that in an infinite dimensional normed space $X$, weak topology is stricktly weaker than the strong topology. Why does this not contradict Schur property of $X = \ell_1$ mentioned in Remark 3.5.14?
+\begin{proof}
+(\emph{Strictness}) Consider the open unit ball $B={x:|x|<1}$, which is norm-open. We show $B$ is \emph{not} weakly open. If it were, some basic weak neighborhood of $0$,
+$$
+U={x\in X:\ |f_i(x)|<\varepsilon,\ i=1,\dots,m},
+$$
+would satisfy $U\subset B$ for some $f_1,\dots,f_m\in X^*$ and $\varepsilon>0$. But $V:=\bigcap_{i=1}^m\ker f_i$ has finite codimension and is infinite dimensional. Thus we can choose $x\in V$ with $|x|>1$. Then $x\in U$  but $x\notin B$, a contradiction. Hence $B$ is not weakly open, so the weak topology is strictly coarser.
+
+({No contradiction with $\ell_1$}) The Schur property is a {sequential} statement: if $x_n\rightharpoonup x$ in $\ell_1$, then $|x_n-x|\to0$. Topological equality is stronger: it requires the collections of {all} open sets to match. In infinite-dimensional spaces (including $\ell_1$) the weak topology is not first countable, so agreeing on convergent sequences does \emph{not} force the topologies to be identical. Thus $\ell_1$ can have Schur while weak $\neq$ norm topologies.
+\end{proof}
+
+    \item Show that $\ell_\infty$ is a universal space for all separable Banach spaces. In other words, show that every separable Banach space $X$ isometrically embeds into $\ell_\infty$.
+\begin{proof}
+Let $X$ be separable. By Banach--Alaoglu, the closed unit ball $B_{X^*}$ is weak$^*$-compact; since $X$ is separable, $B_{X^*}$ is metrizable in the weak$^*$ topology, hence has a countable dense subset $\{f_n\}_{n\ge 1}\subset B_{X^*}$.
+
+Define $T:X\to \ell_\infty$ by
+\[
+T(x):=\big(f_1(x),f_2(x),\dots\big).
+\]
+Linearity is clear. For each fixed $x\in X$, the map $\Phi_x:B_{X^*}\to\mathbb{K}$ given by $\Phi_x(f)=|f(x)|$ is weak$^*$-continuous, so
+\[
+\sup_{n\ge 1}|f_n(x)|
+=
+\sup_{f\in \overline{\{f_n\}}^{\,w^*}} |f(x)|
+=
+\sup_{f\in B_{X^*}} |f(x)|.
+\]
+By Hahn--Banach,
+\[
+\|x\|=\sup_{f\in B_{X^*}}|f(x)|.
+\]
+Therefore
+\[
+\|T(x)\|
+=
+\sup_{n\ge 1}|f_n(x)|
+=
+\|x\|,
+\]
+so $T$ is an isometry (hence injective). Thus $X$ embeds isometrically into $\ell_\infty$.
+\end{proof}
+
+
+
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,318 @@
+\documentclass[]{article}
+
+% Packages for mathematics
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{bm}
+\usepackage{authblk}
+
+% Package for graphics
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{subcaption}
+\usepackage{placeins}
+
+
+% Package for page layout and headers/footers
+%\usepackage{geometry}
+%\geometry{margin=1in}
+
+
+% Package for clickable links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+}
+
+% Package for algorithms
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{matlab-prettifier}
+\usepackage{tabularx}
+
+% Custom theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\title{Functional Analysis Homework 3}
+\author{Kevin Ho}
+\date{September 12th}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Let $X$ be a Banach space and $Y$ be a (linear) subspace of $X$. Show that :
+    \begin{enumerate}
+        \item $Y$ is a Banach space iff $Y$ is closed.
+        \item If $Y$ is closed, then $X/Y$ is a Banach space.
+    \end{enumerate}
+    \item[Proof:]  By definition of complete we have that there should be the closed section of it. 
+    
+    (a) $(\Rightarrow)$ So let Y be a Banach Space. let $\{y_n\} \in Y$ such that $y_n \rightarrow x$ for $x\in X$. Note that Y is complete. With this we know $y_n$ is a Cauchy sequence and with the completeness property that $Y$ has, each $\{y_n\} \rightarrow y \in Y$. Since $\{y_n\}$ converges to both $x\in X $ and $y\in Y$, it must be that $x=y$ is true as limits in normed spaces are unique and so $x,y \in Y$ so Y is closed.
+
+    (a) $(\Leftarrow)$ So now lets assume that Y is a closed subspace within X. Let $\{y_n\} \in Y$ such that $\{y_n\} $ is a Cauchy sequence. Since $Y\subseteq X$, $\{y_n\}$ is a Cauchy sequence in $X$. With this we can use the completeness property of X so that every sequence $\{y_n\}$ converges to some $x \in X$. By definition of $Y$ being closed, $x\in Y$. Thus we have shown the compleness of $Y$, meaning that Y is a Banach space.
+
+    (b) So with this, we mainly need to show that $X/Y$ is complete. So let's define a Cauchy sequence $\{[x_n]\} \in X/Y$. We want to show that each sequence $\{[x_n]\}$ converges to some limit point in the space $X/Y$. Since $\{[x_n]\}$ is a Cauchy sequence, we can pick a subsequence $\{[x_{n_k}]\}$so that the distance between consecutive terms is less than $1/2^k$.
+    So, for each $k \ge 1$, we have:
+    $$\|[x_{n_{k+1}}] - [x_{n_k}]\|_{X/Y} = \|[x_{n_{k+1}} - x_{n_k}]\|_{X/Y} < \frac{1}{2^k}$$
+     Using the definition of the quotient norm, for each $k$, we can find an element $y_k \in Y$ such that:
+    $$\|(x_{n_{k+1}} - x_{n_k}) + y_k\|_X < \frac{1}{2^k}$$
+    Let $v_k = x_{n_{k+1}} - x_{n_k} + y_k$. The series $\sum_{k=1}^{\infty} v_k$ is absolutely convergent because $\sum \|v_k\|_X < \sum \frac{1}{2^k} = 1$.Since $X$ is a Banach space, any absolutely convergent series converges. So, the sequence of partial sums $s_m = \sum_{k=1}^{m} v_k$ converges to some limit $s \in X$. Let's look at the partial sums again:
+    $$s_m = \sum_{k=1}^{m} (x_{n_{k+1}} - x_{n_k} + y_k) = (x_{n_{m+1}} - x_{n_1}) + \sum_{k=1}^{m} y_k$$
+    In the quotient space, the term $\sum y_k$ is in $Y$, so it vanishes. Thus, $[s_m] = [x_{n_{m+1}} - x_{n_1}]$. As $m \to \infty$, we have $s_m \to s$, so $[s_m] \to [s]$.
+    This means $[x_{n_{m+1}} - x_{n_1}] \to [s]$, which implies that $[x_{n_{m+1}}] \to [s + x_{n_1}]$. Overall showing if a Cauchy sequence has a convergent subsequence, the entire sequence converges to the same limit. Therefore, $\{[x_n]\}$ converges in $X/Y$, proving that $X/Y$ is a Banach space
+   \qed 
+    
+
+
+
+    
+    \item Show that the space $C^k[0,1]$ of $k$-times differentiable functions is not a Banach space with respect to the sup-norm.
+
+    Show that $C^k[0,1]$ is a Banach space with respect to the norm
+    % So the main idea that comes with this is stuff that does not converge but continouts from 0-1 such as 1/x
+    \begin{equation*}
+        \|f\|_{C^k} = \|f\|_{\infty} + \|f'\|_{\infty} + ... +\|f^{(k)}\|_{\infty}. 
+    \end{equation*}
+
+    \item[Proof:] So let's observe the sequence of functions:
+    \begin{equation*}
+        f_n(x) = \sqrt{({x-\frac{1}{2}})^2 + \frac{1}{n}}
+    \end{equation*}
+    so let's observe as $n\rightarrow\infty$. The $\frac{1}{n}$ goes to zero and so know that the function is pointwise continuous and since the function under the square root is always positive for the interval $[0,1]$, we know that it is k-times differentiable. So now let's show that it is not a Banach space w.r.t the sup-norm. 
+   
+    So if we observe the derivative of the function at the point $\frac{1}{2}$, there is a discontinuity at that point(sharp corner at that x value). thus is not complete therefore the space $C^k[0,1]$ of $k$-times differentiable functions is not a Banach space with respect to the sup-norm.
+
+    So now with that in mind, let's show that the space is a Banach space with the given norm $\|f\|_{C^k}$. So let $\{f_n\} \in (C^k[0,1],\|\cdot\|_{C^k})$ be Cauchy. This gives us that for every $\epsilon > 0$ 
+    \begin{equation*}
+        \|f_n-f_m\|_{C^k}= \sum_{j=0}^k\\||f_n^{(j)}-f_m^{(j)}\|_\infty < \epsilon \Rightarrow \||f_n^{(j)}-f_m^{(j)}\|_\infty < \epsilon
+    \end{equation*}
+    So let's pull a result that we have done in Adv Calc II think where we know that the space $(C[0,1], \|\cdot\|_\infty)$ is a Banach Space and so complete. With this combining from the earlier inequality, there is a limit point in each continuous function let's call $g_j$, i.e. $f_n^{(j)} \rightarrow g_j$. Now, let $f=g_0$.
+
+    \begin{equation*}
+        f'_n(x) - f'_n(0) = \int_0^x f''(t)dt
+    \end{equation*}
+    \begin{equation*}
+        \Rightarrow \lim_{n\rightarrow \infty}(f'_n(x) - f'_n(0)) =  \lim_{n\rightarrow \infty}\int_0^x f''_n(t)dt
+    \end{equation*}
+    \begin{equation*}
+    \Rightarrow g_1(x) - g_1(0) =  \int_0^x\lim_{n\rightarrow \infty} f''_n(t)dt
+    \end{equation*}
+    \begin{equation*}
+    \Rightarrow g_1(x) - g_1(0) =  \int_0^xg_2(t)dt
+    \end{equation*}
+
+    And so essentially we get that $g_n' = g_{n+1}$ as we keep repeating this for k-times. And so by induction, we show that $f^(j) = g_j$ for all $j = 1,..,k$. Since each $g_j$ is continuous, this proves that f is k-times continuously differentiable, so $f \in C^k[0,1]$
+
+    \begin{equation*}
+        \|f_n-f\|_{C^k}= \sum_{j=0}^k\\||f_n^{(j)}-f^{(j)}\|_\infty  \Rightarrow \||f_n^{(j)}-f^{(j)}\|_\infty 
+    \end{equation*}
+
+     \begin{equation*}
+        \Rightarrow \lim_{n\rightarrow \infty} \|f_n-f\|_{C^k} =  \sum_{j=0}^k (\lim_{n\rightarrow \infty}||f_n^{(j)}-g_j\|_\infty) = 0 
+    \end{equation*}
+
+    Therefore the space is complete and is a Banach space. \qed
+    
+
+
+
+    \item Prove the polarization identity.
+    \begin{equation*}
+        \langle x,y \rangle = \frac{1}{4}(\|x+y\|^2 - \|x-y\|^2 +i\|x+iy\|^2 - i\|x-iy\|^2)
+    \end{equation*}
+    %just look at previous theorems and properties that exist occur for inner product spaces.
+    \item[Proof:] 
+    \begin{equation*}
+        \frac{1}{4}(\|x+y\|^2 - \|x-y\|^2 +i\|x+iy\|^2 - i\|x-iy\|^2)
+    \end{equation*}
+    \begin{equation*}
+        \|x+y\|^2 \Rightarrow \|x\|^2 + 2Re \langle x,y \rangle + \|y\| ^2
+    \end{equation*}
+    \begin{equation*}
+        \|x-y\|^2 \Rightarrow \|x\|^2 - 2Re \langle x,y \rangle + \|y\| ^2
+    \end{equation*}
+    combining them simplifies to:
+    \begin{equation*}
+        \frac{1}{4}(4Re\langle x,y \rangle + i\|x+iy\|^2 - i\|x-iy\|^2)
+    \end{equation*}
+    So now let's simplify the other two norms in the equation:
+    \begin{equation*}
+        \|x+iy\|^2 \Rightarrow \langle x+iy, x+iy\rangle  \Rightarrow 
+        \langle x,x\rangle + \langle x,iy\rangle + \langle iy,x\rangle +\langle iy,iy\rangle
+    \end{equation*}
+    \begin{equation*}
+        \Rightarrow\|x\|^2 - i\langle x,y\rangle +i\langle y,x\rangle  + i(-i)\|y\|^2 
+    \end{equation*}
+    \begin{equation*}
+        \Rightarrow\|x\|^2 - i\langle x,y\rangle + i\overline{\langle x,y\rangle}  + \|y\|^2 
+    \end{equation*}
+
+    \begin{equation*}
+        \|x-iy\|^2 \Rightarrow \langle x-iy, x-iy\rangle  \Rightarrow 
+        \langle x,x\rangle - \langle x,iy\rangle - \langle iy,x\rangle +\langle iy,iy\rangle
+    \end{equation*}
+    \begin{equation*}
+        \Rightarrow\|x\|^2 + i\langle x,y\rangle -i\langle y,x\rangle  + i(-i)\|y\|^2 
+    \end{equation*}
+    \begin{equation*}
+        \Rightarrow\|x\|^2 + i\langle x,y\rangle -i\overline{\langle x,y\rangle}  + \|y\|^2 
+    \end{equation*}
+
+    And then combining them together gets 
+    \begin{equation*}
+        i(\|x+iy\|^2 -\|x-iy\|^2) \Rightarrow i((-2i)\langle x,y\rangle +(2i) 
+        \overline{\langle x,y\rangle})
+    \end{equation*}
+    \begin{equation*}
+        \Rightarrow (i(-2i)(\langle x,y\rangle - \overline{\langle x,y\rangle})
+    \end{equation*}
+    \begin{equation*}
+        \Rightarrow (2)2iIm(\langle x,y\rangle))
+    \end{equation*}
+    \begin{equation*}
+        \Rightarrow 4iIm(\langle x,y\rangle))
+    \end{equation*}
+
+    And then we can plug that into our earlier simplification to get
+    \begin{equation*}
+        \frac{1}{4}(4Re\langle x,y \rangle + 4iIm(\langle x,y\rangle)) \Rightarrow\langle x,y\rangle
+    \end{equation*}
+
+    \qed
+
+    
+    
+
+
+
+    \item Let $X,Y $ be inner product spaces. Show that their direct sum 
+    \begin{equation*}
+        X \oplus_2 Y:= \{(x,y): x\in X, y\in Y\}
+    \end{equation*}
+    is also an inner product space, with the inner product defined as 
+    \begin{equation*}
+        \langle(x_1,y_1), (x_2,y_2)\rangle = \langle x_1,x_2 \rangle + \langle y_1,y_2 \rangle.
+    \end{equation*}
+        Derive a formula for the norm in $X \oplus_2 Y$. Show that if $X,Y$ are Hilbert spaces then so is $X \oplus_2 Y$.
+
+    \item[Proof:] So let's show the three axioms for the inner product space
+    \begin{enumerate}
+
+        \item[Positive-Definiteness:] We check the inner product of a vector $u_1 = (x_1, y_1)$ with itself:
+    \[ \langle u_1, u_1 \rangle = \langle (x_1,y_1), (x_1,y_1) \rangle = \langle x_1, x_1 \rangle_X + \langle y_1, y_1 \rangle_Y \]
+    Since $X$ and $Y$ are inner product spaces, $\langle x_1, x_1 \rangle_X \ge 0$ and $\langle y_1, y_1 \rangle_Y \ge 0$. Their sum is also non-negative, so $\langle u_1, u_1 \rangle \ge 0$.
+    
+    Furthermore, $\langle u_1, u_1 \rangle = 0$ if and only if $\langle x_1, x_1 \rangle_X + \langle y_1, y_1 \rangle_Y = 0$. Since both terms are non-negative, this holds if and only if $\langle x_1, x_1 \rangle_X = 0$ and $\langle y_1, y_1 \rangle_Y = 0$. By the axioms in $X$ and $Y$, this implies $x_1 = \mathbf{0}$ and $y_1 = \mathbf{0}$, so $u_1 = (\mathbf{0}, \mathbf{0})$.
+    Furthermore, $\langle u_1, u_1 \rangle = 0$ if and only if $\langle x_1, x_1 \rangle_X + \langle y_1, y_1 \rangle_Y = 0$. Since both terms are non-negative, this holds if and only if $\langle x_1, x_1 \rangle_X = 0$ and $\langle y_1, y_1 \rangle_Y = 0$. By the axioms in $X$ and $Y$, this implies $x_1 = \mathbf{0}$ and $y_1 = \mathbf{0}$, so $u_1 = (\mathbf{0}, \mathbf{0})$.
+        So with the fact that we are using the inner products and adding them together, we can assume positive definiteness as unique.
+        \item[Linearity:]\begin{align*}
+        \langle a u_1 + u_2, u_3 \rangle &= \langle (ax_1 + x_2, ay_1 + y_2), (x_3, y_3) \rangle \\
+        &= \langle ax_1 + x_2, x_3 \rangle_X + \langle ay_1 + y_2, y_3 \rangle_Y \\
+        &= (a\langle x_1, x_3 \rangle_X + \langle x_2, x_3 \rangle_X) + (a\langle y_1, y_3 \rangle_Y + \langle y_2, y_3 \rangle_Y)  \\
+        &= a(\langle x_1, x_3 \rangle_X + \langle y_1, y_3 \rangle_Y) + (\langle x_2, x_3 \rangle_X + \langle y_2, y_3 \rangle_Y)  \\
+        &= a \langle u_1, u_3 \rangle + \langle u_2, u_3 \rangle 
+    \end{align*}
+    \item[Conjugate Sym:]
+    \begin{align*}
+        \langle u_1, u_2 \rangle &= \langle x_1, x_2 \rangle_X + \langle y_1, y_2 \rangle_Y \\
+        &= \overline{\langle x_2, x_1 \rangle_X} + \overline{\langle y_2, y_1 \rangle_Y} \\
+        &= \overline{\langle x_2, x_1 \rangle_X + \langle y_2, y_1 \rangle_Y} \\
+        &= \overline{\langle u_2, u_1 \rangle}
+    \end{align*}
+    \end{enumerate}
+    The norm is defined as $\|u\| = \sqrt{\langle u, u \rangle}$. For a vector $u = (x,y)$:
+\[ \langle u, u \rangle = \langle x, x \rangle_X + \langle y, y \rangle_Y = \|x\|_X^2 + \|y\|_Y^2 \]
+Therefore, the formula for the norm is:
+\[ \|(x,y)\| = \sqrt{\|x\|_X^2 + \|y\|_Y^2} \]
+
+
+
+
+    Suppose $X$ and $Y$ are Hilbert spaces. We must show $X \oplus_2 Y$ is complete.
+
+     Let $\{u_n\}$ be a Cauchy sequence in $X \oplus_2 Y$, where $u_n = (x_n, y_n)$. For any $\epsilon > 0$, there is an $N$ such that for all $m, n > N$:
+    \[ \|u_n - u_m\|^2 = \|x_n - x_m\|_X^2 + \|y_n - y_m\|_Y^2 < \epsilon^2 \]
+    
+ Since both terms are non-negative, this implies $\|x_n - x_m\|_X^2 < \epsilon^2$ and $\|y_n - y_m\|_Y^2 < \epsilon^2$. Thus, $\{x_n\}$ is a Cauchy sequence in $X$ and $\{y_n\}$ is a Cauchy sequence in $Y$. Since $X$ and $Y$ are complete, these sequences converge to limits: $x_n \to x \in X$ and $y_n \to y \in Y$. Let $u = (x,y)$. We show that $u_n \to u$:
+    \[ \lim_{n \to \infty} \|u_n - u\|^2 = \lim_{n \to \infty} (\|x_n - x\|_X^2 + \|y_n - y\|_Y^2)  = 0 \]
+
+Since every Cauchy sequence in $X \oplus_2 Y$ converges to a limit in the space, it is complete. Therefore, if $X$ and $Y$ are Hilbert spaces, so is $X \oplus_2 Y$. \qed
+
+
+    \item Show that $C(K), c_0, L_p[0,1], \ell _p$ for $p=[1, \infty]$, $p\neq 2$ are not inner product spaces. (More accurately, it is not possible to define an inner product on those spaces which would agree with their norms). Use Theorem 1.4.21.
+    Note for myself: $\|x+y\|^2 + \|x-y\|^2 = 2(\|x\|^2 + \|y\|^2)$
+    
+
+    \begin{enumerate}
+        \item [$C(K)$:] Consider the space $C[0,1]$ with the sup-norm. Let $f=x, g=1$
+        \begin{enumerate}
+            \item $\|f\|_\infty$ = $1$
+            
+            \item $\|g\|_\infty$ = $1$
+            
+            \item $\|f+g\|_\infty$ = $2$
+            
+            \item $\|f-g\|_\infty$ = $1$
+        \end{enumerate}
+        We then get $2^2+1^2 = 2(1^1+1^1)$ Which is not true so $C(K)$ is not an inner product space.
+
+        \item[$c_0$]: let $x = (1,0,0,...), y = (0,1,0,...)$ with the sup norm
+        \begin{enumerate}
+            \item $\|x\|_\infty$ = $1$
+            
+            \item $\|y\|_\infty$ = $1$
+            
+            \item $\|x+y\|_\infty$ = $1$
+            
+            \item $\|x-y\|_\infty$ = $1$
+        \end{enumerate}
+        We then get $1^2+1^2 = 2(1^1+1^1)$ Which is not true so $c_0$ is not an inner product space.
+        
+       \item [$L_p$ for $p\neq2$]: let $f = \chi_{[0,\frac{1}{2}]}(t), g =\chi_{[\frac{1}{2},1]}(t) $ with the p norm $(\int_0^1|f(t)|^pdt)^\frac{1}{p}$
+        \begin{enumerate}
+            \item $\|x\|_p$ = $(\frac{1}{2})^\frac{1}{p}$
+            
+            \item $\|y\|_p$ = $(\frac{1}{2})^\frac{1}{p}$
+            
+            \item $\|x+y\|_p$ = $1$
+            
+            \item $\|x-y\|_p$ = $1$
+        \end{enumerate}
+        We then get $1^2+1^2 = 2((\frac{1}{2})^\frac{2}{p}+(\frac{1}{2})^\frac{2}{p}) \rightarrow 4((\frac{1}{2})^\frac{2}{p}) $ Which is not true unless p = 2 so $L_p$ for $p\neq 2$ is not an inner product space.
+
+
+        \item [$\ell_p$ for $p\neq2$]: let $x = (1,0,0,...), y = (0,1,0,...)$  with the p norm $(\sum_{k=1}^\infty|x|^p)^\frac{1}{p}$
+        \begin{enumerate}
+            \item $\|x\|_p$ = $1$
+            
+            \item $\|y\|_p$ = $1$
+            
+            \item $\|x+y\|_p$ = $(2)^\frac{1}{p}$
+            
+            \item $\|x-y\|_p$ = $(2)^\frac{1}{p}$
+        \end{enumerate}
+        We then get $2^\frac{2}{p}+2^\frac{2}{p} = 2(1^1+1^1)$ Which is not true unless p = 2 so $\ell_p$ for $p\neq 2$ is not an inner product space.
+
+        
+        
+    \end{enumerate}
+    \qed
+    
+
+
+\end{enumerate}
+
+\end{document}

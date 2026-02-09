@@ -1,0 +1,107 @@
+\documentclass[]{article}
+
+% Packages for mathematics
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{bm}
+\usepackage{authblk}
+
+% Package for graphics
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{subcaption}
+\usepackage{placeins}
+
+
+% Package for page layout and headers/footers
+%\usepackage{geometry}
+%\geometry{margin=1in}
+
+
+% Package for clickable links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+}
+
+% Package for algorithms
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{matlab-prettifier}
+\usepackage{tabularx}
+\usepackage{amsmath, physics}
+
+% Custom theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\title{Functional Analysis Homework 6}
+\author{Kevin Ho}
+\date{October 3rd}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Prove that $c^*_0 = \ell_1. $ The meaning of this is the same as in Corollary 2.2.6, i.e. the functionals on $c_0$ are given by summation with weight from $\ell_1$
+
+\begin{proof}
+Let $y=(y_k)\in \ell_1$ and define $T(y)\in (c_0)^*$ by
+\[
+(T(y))(x)=\sum_{k=1}^\infty x_k y_k,\qquad x=(x_k)\in c_0.
+\]
+This is well defined since
+\[
+\big|(T(y))(x)\big|\le \sum_{k=1}^\infty |x_k||y_k|
+\le \|x\|_\infty \sum_{k=1}^\infty |y_k|=\|x\|_\infty\|y\|_1.
+\]
+Hence $T:\ell_1\to (c_0)^*$ is linear and bounded with $\|T(y)\|\le \|y\|_1$.
+
+We claim $\|T(y)\|=\|y\|_1$. For $N\in\mathbb{N}$ set
+$x^{(N)}=(x^{(N)}_k)$ by $x^{(N)}_k=\operatorname{sgn}(y_k)$ for $k\le N$ and
+$0$ otherwise. Then $x^{(N)}\in c_0$, $\|x^{(N)}\|_\infty=1$, and
+\[
+(T(y))(x^{(N)})=\sum_{k=1}^N |y_k|.
+\]
+Therefore
+\[
+\|T(y)\|\ge \sup_{N}\big|(T(y))(x^{(N)})\big|=\sup_{N}\sum_{k=1}^N|y_k|
+=\|y\|_1.
+\]
+Combined with $\|T(y)\|\le \|y\|_1$, this gives $\|T(y)\|=\|y\|_1$, so $T$ is an isometry.
+
+It remains to show $T$ is surjective. Let $f\in (c_0)^*$. Define $y_k:=f(e_k)$, where
+$e_k$ is the canonical basis vector. For $N\in\mathbb{N}$, set
+$x^{(N)}=\sum_{k=1}^N \operatorname{sgn}(y_k)e_k\in c_0$. Then
+\[
+\sum_{k=1}^N |y_k|=\sum_{k=1}^N \operatorname{sgn}(y_k)f(e_k)=f(x^{(N)})
+\le \|f\|\,\|x^{(N)}\|_\infty=\|f\|.
+\]
+Thus the partial sums are uniformly bounded, so $\sum_{k=1}^\infty |y_k|<\infty$ and
+$y\in \ell_1$.
+
+For $x\in c_{00}$ (finite support), by linearity,
+\[
+f(x)=\sum_{k=1}^\infty x_k f(e_k)=\sum_{k=1}^\infty x_k y_k=(T(y))(x).
+\]
+Since $c_{00}$ is dense in $c_0$ under $\|\cdot\|_\infty$ and both $f$ and $T(y)$ are continuous on $(c_0,\|\cdot\|_\infty)$, it follows that $f(x)=(T(y))(x)$ for all $x\in c_0$. Hence $f=T(y)$ with $y\in\ell_1$, proving $T$ is surjective.
+
+Therefore $T:\ell_1\to (c_0)^*$ is a surjective isometry, i.e.\ $(c_0)^*=\ell_1$.
+\end{proof}
+
+
+
+\end{enumerate}
+
+\end{document}

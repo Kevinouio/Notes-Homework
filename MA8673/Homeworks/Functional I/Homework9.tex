@@ -1,0 +1,190 @@
+\documentclass[]{article}
+
+% Packages for mathematics
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{bm}
+\usepackage{authblk}
+
+% Package for graphics
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{subcaption}
+\usepackage{placeins}
+
+
+% Package for page layout and headers/footers
+%\usepackage{geometry}
+%\geometry{margin=1in}
+
+
+% Package for clickable links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+}
+
+% Package for algorithms
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{matlab-prettifier}
+\usepackage{tabularx}
+\usepackage{amsmath, physics}
+
+% Custom theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\title{Functional Analysis Homework 8}
+\author{Kevin Ho}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Let $\{x_k\}^\infty_{k=1}$ be a sequence of nonzero vectors in a Banach space $X$. Define the space of coefficients $E$ by:
+    $$
+    E := \left\{ a = \{a_k\}^\infty_{k=1}: \sum^\infty_{k=1}a_kx_k \text{ converges in $X$}\right\}
+    $$
+    with the norm 
+    $$
+    \|a\| := \sup_{n\in \mathbb{N}}\left\|\sum^n_{k=1} a_kx_k \right\|.
+    $$
+    Prove that $E$ is a Banach space.
+    \begin{proof}
+{(Norm axioms)}
+If $a\in E$ then $\sum_{k=1}^\infty a_kx_k$ converges in $X$, so its partial sums
+$S_n(a):=\sum_{k=1}^n a_kx_k$ are Cauchy and hence bounded; thus $\|a\|<\infty$.
+Homogeneity and the triangle inequality follow from those in $X$:
+for each $n$,
+\[
+\Bigl\|\sum_{k=1}^n (\lambda a_k)x_k\Bigr\|=|\lambda|\Bigl\|\sum_{k=1}^n a_kx_k\Bigr\|,\quad
+\Bigl\|\sum_{k=1}^n (a_k+b_k)x_k\Bigr\|\le
+\Bigl\|\sum_{k=1}^n a_kx_k\Bigr\|+\Bigl\|\sum_{k=1}^n b_kx_k\Bigr\|.
+\]
+Taking sups in $n$ gives $\|\lambda a\|=|\lambda|\,\|a\|$ and $\|a+b\|\le\|a\|+\|b\|$.
+For positive definiteness, if $\|a\|=0$ then $S_n(a)=0$ $\forall n$. In particular
+$a_1x_1=0$, so $a_1=0$ since $x_1\neq0$. Inductively, $a_1=\cdots=a_{m-1}=0$ implies
+$S_m(a)=a_mx_m=0$, hence $a_m=0$ (as $x_m\neq0$). Thus $a=0$.
+
+\medskip
+{(Completeness)}
+Let $\{a^{(p)}\}_{p\ge1}$ be Cauchy in $(E,\|\cdot\|)$ (Note: ($p$) and ($q$) refers to the index of the element not power). Write
+$S_n^{(p)}=\sum_{k=1}^n a^{(p)}_k x_k$. Then $\forall m,n,p,q$,
+\[
+\|S_n^{(p)}-S_n^{(q)}\|\le \|a^{(p)}-a^{(q)}\|,
+\]
+so for each fixed $n$, $(S_n^{(p)})_p$ is Cauchy in $X$ and converges to some $s_n\in X$.
+
+Next, for each fixed $k$ we have
+\[
+\|(a^{(p)}_k-a^{(q)}_k)x_k\|
+=\| (S_k^{(p)}-S_{k-1}^{(p)})-(S_k^{(q)}-S_{k-1}^{(q)})\|
+\le 2\|a^{(p)}-a^{(q)}\|,
+\]
+so $(a^{(p)}_k)_p$ is Cauchy  and converges to some
+$a_k$. For each $n$, continuity of finite sums gives
+\[
+\sum_{k=1}^n a_k x_k=\lim_{p\to\infty}\sum_{k=1}^n a^{(p)}_k x_k=\lim_{p\to\infty} S_n^{(p)}=s_n.
+\]
+We now show $(s_n)$ is Cauchy. Fix $\varepsilon>0$. Since $(a^{(p)})$ is Cauchy in $E$, choose $p_0$ so that $\|a^{(p)}-a^{(p_0)}\|\le\varepsilon, \forall  p\ge p_0$.
+Then $\forall n$,
+\[
+\|s_n-S_n^{(p_0)}\|=\lim_{p\to\infty}\|S_n^{(p)}-S_n^{(p_0)}\|
+\le \varepsilon.
+\]
+Because $a^{(p_0)}\in E$, the partial sums $(S_n^{(p_0)})_n$ converge, so $\exists N$ with
+$\|S_n^{(p_0)}-S_m^{(p_0)}\|\le\varepsilon, \forall n,m\ge N$. Hence for $n,m\ge N$,
+\[
+\|s_n-s_m\|\le \|s_n-S_n^{(p_0)}\|+\|S_n^{(p_0)}-S_m^{(p_0)}\|+\|S_m^{(p_0)}-s_m\|
+\le 3\varepsilon,
+\]
+so $(s_n)$ is Cauchy. Let $s=\lim_{n\to\infty}s_n$. Then $\sum_{k=1}^\infty a_kx_k$ converges to $s$.
+
+Finally, convergence in $E$:
+for $p\ge p_0$,
+\[
+\|a^{(p)}-a\|=\sup_n\|S_n^{(p)}-s_n\|
+\le \sup_n\|S_n^{(p)}-S_n^{(p_0)}\|+\sup_n\|S_n^{(p_0)}-s_n\|
+\le \|a^{(p)}-a^{(p_0)}\|+\varepsilon,
+\]
+and letting $p\to\infty$ gives $\|a^{(p)}-a\|\to0$. Thus $E$ is complete.
+
+Therefore $E$ is a Banach space. 
+\end{proof}
+
+    
+
+    \item Show that a Hamel basis of an infinite-dimensional Banach space $X$ is always uncountable.
+\begin{proof}
+ Assume $X$ is an infinite-dimensional Banach space but has a countable Hamel basis, $H = \{h_1, h_2, \dots\}$.
+
+Let's define a sequence of nested subspaces $X_n = \text{span}\{h_1, \dots, h_n\}$. Since every vector $x \in X$ is a finite linear combination of basis vectors, every $x$ must belong to some $X_n$. This allows us to write the entire space $X$ as the countable union $X = \bigcup_{n=1}^\infty X_n$.
+
+Now, let's analyze these subspaces. Each $X_n$ is finite-dimensional, and we know that any finite-dimensional subspace of a normed space is closed. Furthermore, since $X$ is infinite-dimensional, each $X_n$ is a proper subspace, which means its interior is empty. A closed set with an empty interior is, by definition, a nowhere dense set.
+
+We have just shown that the space $X$ is a countable union of nowhere dense sets.
+
+However, $X$ is a Banach space, meaning it is a complete metric space. By Baire Category Theorem, a complete metric space cannot be expressed as a countable union of nowhere dense sets. Thus a contradiction and so the Hamel basis $H$ must be uncountable.
+\end{proof}
+
+
+    \item Prove that a subset $A \subseteq c_0$ is precompact iff $\exists b\in c_0$ vector that majorizes all vectors $a\in A$, i.e. 
+    $$
+    |a_k| \leqslant b_k, \forall k\in\mathbb{N}.
+    $$
+    \begin{proof}
+
+($\Rightarrow$)First, assume $A$ is precompact. By pointwise boundedness, we can define a vector $b$ by $b_k = \sup_{a \in A} |a_k|$, which is finite for each $k$ and clearly majorizes $A$. To show $b \in c_0$, we use the uniform equiconvergence of $A$. For any $\epsilon > 0$, there exists an $N$ such that $|a_k| < \epsilon$ $\forall a \in A$ and all $k \ge N$. Taking the supremum over $a \in A$ gives $b_k = \sup |a_k| \le \epsilon$ $\forall k \ge N$. This shows that $b_k \to 0$, so the majorizing vector $b$ is in $c_0$.
+
+($\Leftarrow$)Conversely, assume $\exists b \in c_0$ such that $|a_k| \le b_k$ $\forall a \in A$ and all $k$. We must show $A$ is precompact. First, $A$ is pointwise bounded because $\sup_{a \in A} |a_k| \le b_k < \infty$ for each $k$. Second, $A$ is uniformly equiconvergent to 0. Since $b \in c_0$, we know $b_k \to 0$. Thus, for any $\epsilon > 0$, there exists an $N$ such that $k \ge N$ implies $b_k < \epsilon$. This gives $|a_k| \le b_k < \epsilon$ $\forall a \in A$ and all $k \ge N$. Since $A$ satisfies both conditions, it is precompact.
+\end{proof}
+
+
+    \item Prove that compactness in normed spaces is stable under linear operations:
+    \begin{enumerate}
+        \item If $A,B$ are precompact sets in a normed space, then Minkowski sum $A + B$ is precompact;
+        \item If $A$ is a precompact subset of $X$ and $T\in L(X,Y)$ then $T(A)$ is a precompact set in $Y$.
+        
+    \end{enumerate}
+   \begin{proof}
+
+
+
+(a) Let $A$ and $B$ be precompact, and let $\epsilon > 0$. Since $A$ and $B$ are totally bounded, we can cover them with finite $\epsilon/2$-nets.
+
+There exists a finite set $\{a_1, \dots, a_n\} \subseteq A$ such that $A \subseteq \bigcup_{i=1}^n B(a_i, \epsilon/2)$.
+Similarly, there exists a finite set $\{b_1, \dots, b_m\} \subseteq B$ such that $B \subseteq \bigcup_{j=1}^m B(b_j, \epsilon/2)$.
+
+Now, consider an arbitrary element $z = a+b$ in $A+B$. Then there exist $i$ and $j$ such that $\|a - a_i\| < \epsilon/2$ and $\|b - b_j\| < \epsilon/2$.
+
+We can bound the distance from $z$ to the point $a_i + b_j$ using the triangle inequality:
+$$\|z - (a_i + b_j)\| = \|(a - a_i) + (b - b_j)\| \le \|a - a_i\| + \|b - b_j\| < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$$
+This shows that any $z \in A+B$ is contained within an $\epsilon$-ball centered at one of the points in the set $C = \{a_i + b_j \mid 1 \le i \le n, 1 \le j \le m\}$. This set $C$ is finite, containing at most $n \times m$ elements. Thus, $A+B \subseteq \bigcup_{c \in C} B(c, \epsilon)$. Since we found a finite $\epsilon$-net for an arbitrary $\epsilon$, $A+B$ is totally bounded and therefore precompact.
+
+(b) Let $\{y_n\}$ be an arbitrary sequence in $T(A)$. By definition, for each $n$, there exists an $x_n \in A$ such that $y_n = T(x_n)$.
+
+Since $A$ is precompact, its closure $\overline{A}$ is compact. This means the sequence $\{x_n\} \subseteq A$ must have a subsequence, $\{x_{n_k}\}$, that converges to some limit $x \in \overline{A}$.
+
+The operator $T \in L(X,Y)$ is a bounded linear operator, which implies it is continuous. Applying the continuous map $T$ to our convergent subsequence $\{x_{n_k}\}$, we find:
+$$\lim_{k \to \infty} y_{n_k} = \lim_{k \to \infty} T(x_{n_k}) = T\left(\lim_{k \to \infty} x_{n_k}\right) = T(x)$$
+This shows that $\{y_{n_k}\}$ is a convergent subsequence of $\{y_n\}$, and it converges to $T(x) \in Y$. Since every sequence in $T(A)$ has a convergent subsequence, $T(A)$ is relatively compact, and therefore precompact.
+   \end{proof}
+    
+
+
+\end{enumerate}
+
+\end{document}

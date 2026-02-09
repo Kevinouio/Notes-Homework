@@ -1,0 +1,183 @@
+\documentclass[]{article}
+
+% Packages for mathematics
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{bm}
+\usepackage{authblk}
+
+% Package for graphics
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{subcaption}
+\usepackage{placeins}
+
+
+% Package for page layout and headers/footers
+%\usepackage{geometry}
+%\geometry{margin=1in}
+
+\usepackage{mathrsfs}
+% Package for clickable links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+}
+
+% Package for algorithms
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{matlab-prettifier}
+\usepackage{tabularx}
+\usepackage{amsmath, physics}
+
+% Custom theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\title{Functional Analysis (MA 8673) Homework 1}
+\author{Kevin Ho}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Define 
+    $$
+    A = -i\frac{d}{dx}
+    $$
+    on $L^2[0,2\pi]$ with domain $\mathcal{D}(A) = \{f\in C^1[0,2\pi]: f(0) = f(2\pi) =0\}.$ Prove that $A$ is symmetric. Find $A^*$ and its respective domain $\mathcal{D}(A^*)$. Is $A$ self-adjoint? If not find a self-adjoint extension of $A$.
+
+
+    \begin{proof}  
+    \textbf{Symmetry}: let $f,g \in \mathcal{D}(A) $. Then we have the following derivation of the inner product between $f$ and $g$ be,
+
+    \begin{align*}
+         \langle    Af,g   \rangle &=  \int_0^{2\pi}-if'(x)\overline{g(x)}dx, \text{ Integration by Parts} \\ 
+         &=-i\left(f(x)\overline{g(x)}\rvert_0^{{2\pi}} -\int_0^{2\pi}f(x)\overline{g'(x)}dx\right)\\
+         &=-i\left(\left(f({2\pi})\overline{g({2\pi})})- f(0)\overline{g(0)}\right) -\int_0^{2\pi}f(x)\overline{g'(x)}dx\right)\\
+         &= \int_0^{2\pi}f(x)\overline{ig'(x)})dx \\
+         &= \int_0^{2\pi}f(x)(-i\overline{g'(x)}))dx \\
+         &= \langle    f,Ag   \rangle 
+    \end{align*}
+    Thus A is symmetric.
+    
+
+    
+
+    \textbf{    $A^* \text{ and } \mathcal D({A^*}) $}: So note in the previous part the term 
+    $$
+    -i\left(f({2\pi})\overline{g({2\pi})})- f(0)\overline{g(0)}\right)
+    $$
+    Now note that there is no necessary conditions that is restricted on $g$'s boundary conditions. We then end with the following of
+    $$
+    -i\left((0)\overline{g({2\pi})})- (0)\overline{g(0)}\right)
+    $$
+    This gives us that $g$ isn't constrained to the conditions that $f$ is given in the Domain $\mathcal{D}(A)$ where $f(0) = f(2\pi)=0$. 
+    With this in mind, this gives us properties to which $g$ must satisfy being that it must be absolutely continuous on the interval to ensure that FTOC holds and that $g' \in L^2[0,2\pi]$, giving us that the domain must be square-integrable. This proves that $A$ is not a self adjoint operator. Now defining $A^*$, we simply look at our reconstruction of $\langle Af,g \rangle$ to get that $A^* = \langle f,-ig' \rangle$. 
+
+
+    \textbf{Self-Adjoint Extension}: Since $A$ is not self-adjoint we try to find the extension to have A to be self-adjoint. A simple way to do this is since the domain do not match, we can just extend $\mathcal{D}(A)$ to be $\{f\in AC[0,2\pi]:f(0)=f(2\pi)\}$ and it is clear that the domains now match as above. 
+
+        
+    \end{proof}
+
+
+
+    \item (a) Suppose that $B$ is a symmetric operator such that $A\subset B$ and that $\text{Ran}(A+i) = \text{Ran}(B+i)$. Prove that $B=A$.
+    
+    (b) Suppose that $A$ is a symmetric operator with $\text{Ran}(A+i) = \mathcal{H}$
+         but $\text{Ran}(A-i) \neq \mathcal{H}$. Prove that $A$ has no self-adjoint extension.
+    
+    \begin{proof}
+        \textbf{(a):} So we know that $\mathcal{D}(A) \subset \mathcal{D}(B)$ from the given statement so we want to show the other direction. 
+        
+        Let $g \in \mathcal{D}(B)$. Since $\text{Ran}(B+i) = \text{Ran}(A+i)$, there exists $f \in \mathcal{D}(A)$ such that:
+$$(B+i)g = (A+i)f$$
+Since $A \subset B$, $$(B+i)g = (B+i)f.$$ Thus:
+$$(B+i)(g-f) = 0$$
+Since $B$ is symmetric, its eigenvalues are real, so $\text{Ker}(B+i)=\{0\}$. Therefore $g-f=0$, implying $g=f \in \mathcal{D}(A)$. 
+Since $\mathcal{D}(B) \subseteq \mathcal{D}(A)$, we have $B=A$.
+        
+        \textbf{(b):}
+        Assume for contradiction that a self-adjoint extension $\tilde{A}$ exists ($A \subset \tilde{A}$).
+Since $\tilde{A}$ is self-adjoint, $\text{Ran}(\tilde{A} \pm i) = \mathcal{H}$.
+We are given $\text{Ran}(A+i) = \mathcal{H}$. Thus:
+$$\text{Ran}(A+i) = \text{Ran}(\tilde{A}+i) = \mathcal{H}$$
+By the result in part (a), this implies $A = \tilde{A}$.
+However, this would mean $A$ is self-adjoint, which requires $\text{Ran}(A-i) = \mathcal{H}$. This contradicts the given condition that $\text{Ran}(A-i) \neq \mathcal{H}$.
+Thus, no such extension exists.
+        
+    \end{proof}
+
+    \item Define 
+    $$
+    A = -\frac{d^2}{dx^2}
+    $$
+    on $L^2[0,2\pi]$ with domain $\mathcal{D}(A) =C^\infty_0(\mathbb{R}).$ Compute $A^*$ and its respective domain $\mathcal{D}(A^*)$. Is $A$ essentially self-adjoint?
+
+    \begin{proof}
+        \textbf{$A^* \text{ and } D(A^*)$:}
+        Let $f\in \mathcal{D}(A)$ and $g\in \mathcal{D}(A^*)$, We decompose the Operator as follows.
+
+
+
+
+        \begin{align*}
+            \langle Af, {g} \rangle &= \int_0^{2\pi} -f''(x)\overline{g(x)}dx ,\text{ Integration by Parts}\\
+            &= -\left( f'(x)\overline{g(x)}|_0^{2\pi}-  \int_0^{2\pi} f'(x)\overline{g'(x)}dx\right), \text{ Integration by Parts} \\
+            &= -\left( f'(x)\overline{g(x)}|_0^{2\pi}- f(x)\overline{g'(x)}|_0^{2\pi} + \int_0^{2\pi} f(x)\overline{g''(x)}dx\right), \text{ Compact Support of $f$} \\
+            &= -\int_0^{2\pi} f(x)\overline{g''(x)}dx\\
+            &= \langle f, -g'' \rangle
+        \end{align*}
+        Thus showing that $A^* = -\frac{d^2}{dx^2}$. Now for $\mathcal D(A^*)$, similar to the argument as stated in the first question, $g$ is not in the same domain as $f$ as it does not require the compact support that $f$ has, and so $D(A^*) =\{ g \in L^2[0,2\pi]: g \text{ and } g' \text{ are absolutely continuous and  }  g'' \in L^2[0,2\pi]\}$ 
+
+        
+
+          \textbf{Ess Self Adjoint:} My claim is that the operator $A$ is not essentially Self Adjoint. To prove this claim, let's show that the closure of $A$ does not equal the adjoint. So note that for functions in $\mathcal D(A)$, it requires them to have compact support leading to a zero boundary condition. Taking the closure of the operator extends the domain to functions with valid derivatives, and conserving the boundary conditions being zero. 
+          
+          However, as we have shown for the domain of $\mathcal D(A^*)$, it has no strict conditions on the boundaries of the functions in the domain. This fails the property of $\mathcal D(\bar A) = \mathcal D(A^*)$ so thus the closure is not self-adjoint. Therefore not essentially self-adjoint.
+    \end{proof}
+
+
+
+   item Let $M_g$ be the multiplication operator by $g$. Find two dense linear subspaces of $L^2(\mathbb{R}), \mathcal D_1 \text{ and }\mathcal D_2 $ with $\mathcal D_1 \cap \mathcal D_2 = \{0\}$ so that $M_x$ is essentially self-adjoint on $\mathcal  D_1$ and $M_{x^2}$ is essentially self-adjoint on $\mathcal D_2$.
+
+    \begin{proof}
+    \textbf{Example:} So let's define both of our Domains 
+    
+    \begin{align*}
+        &\mathcal{D}_1 = \{ P(x)e^{-x^2}: P \in \mathcal{P}  \}, \text{$\mathcal{P}$ is the set of all polynomials} \\
+        &\mathcal{D}_2 = \{ Q(x)e^{-x^4}: Q \in \mathcal P\}
+    \end{align*}
+    \textbf{Dense:} The set $\mathcal{D}_1$ contains the linear span of the Hermite functions $\{H_n(x)e^{-x^2/2}\}_{n=0}^\infty$. Since the Hermite functions form an orthonormal basis for $L^2(\mathbb{R})$ (Shown last semester in homework), their finite linear span is dense. For $\mathcal{D}_2$: Since $e^{-x^4}$ is a strictly positive, rapidly decaying weight, the set of weighted polynomials is similarly dense in $L^2(\mathbb{R})$ 
+    
+    \textbf{Disjoint:} Let $f\in \mathcal D_1 \cap \mathcal D_2$. Then 
+    \begin{align*}
+    f(x) = P(x)e^{-x^2}&=Q(x)e^{-x^4} \\
+    \rightarrow P(x)e^{x^4-x^2}&=Q(x)
+    \end{align*}
+    If $P(x) \neq 0$, then $Q(x)$ explodes to infinity which should not happen, thus the polynomials must be the trivial solution $\{0\}$. Therefore $\mathcal D_1 \cap \mathcal D_2 = \{0\}$  
+    
+    
+    \textbf{Essentially Self Adjoint:} A symmetric operator $T$ is essentially self-adjoint on a domain $\mathcal{D}$ if and only if $\text{Ran}(T \pm i)$ is dense in the Hilbert space. Equivalent, we show that $\text{Ran}(T \pm i)^\perp = \{0\}$.
+    
+    $M_x$ on $\mathcal{D}_1$Let $h \in L^2(\mathbb{R})$ be orthogonal to $\text{Ran}(M_x - i)$. Then for all $f \in \mathcal{D}_1$:$$\langle h, (M_x - i)f \rangle = 0$$$$\rightarrow \int_{-\infty}^{\infty} \overline{h(x)} (x - i) P(x)e^{-x^2} \, dx = 0 \quad \forall P \in \mathcal{P}$$Let $k(x) = \overline{h(x)}(x-i)$. The condition implies that $k$ is orthogonal to the dense set $\mathcal{D}_1$. Therefore, $k(x) = 0$ almost everywhere.$$\overline{h(x)}(x - i) = 0 \quad \text{a.e.}$$Since $(x - i) \neq 0$ for any $x \in \mathbb{R}$, we must have $h(x) = 0$ a.e.The same argument holds for $M_x + i$. Thus, $M_x$ is essentially self-adjoint on $\mathcal{D}_1$. The same argument applies for $\mathcal D_2$ thus $M_{x^2}$ is essentially self-adjoint on $\mathcal D_2$
+    
+    \end{proof}
+
+\end{enumerate}
+
+\end{document}

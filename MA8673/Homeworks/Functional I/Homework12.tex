@@ -1,0 +1,325 @@
+\documentclass[]{article}
+
+% Packages for mathematics
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{bm}
+\usepackage{authblk}
+
+% Package for graphics
+\usepackage{graphicx}
+\graphicspath{{../figures/}}
+\usepackage{subcaption}
+\usepackage{placeins}
+
+
+% Package for page layout and headers/footers
+%\usepackage{geometry}
+%\geometry{margin=1in}
+
+
+% Package for clickable links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+}
+
+% Package for algorithms
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{matlab-prettifier}
+\usepackage{tabularx}
+\usepackage{amsmath, physics}
+
+% Custom theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\title{Functional Analysis Homework 12}
+\author{Kevin Ho}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Let $T \in L(X,X)$
+    \begin{enumerate}
+        \item Prove if $\lambda \in \sigma_p(T) \text{ and } \lambda \notin\sigma_p(T^*), \text{then } \lambda\in \sigma_r(T^*)$
+        \item Prove that $$ \sigma_r(T) \subseteq \sigma_p(T^*) \subseteq \sigma_r(T)\cup\sigma_p(T).$$
+        Deduce that if $X$ is reflexive, then $\sigma_r(T^*) \subset\sigma_p(T)$. Deduce that self-adjoint bounded linear operators in Hilbert space do not have residual spectrum.
+    \end{enumerate}
+
+
+ 
+\begin{proof}
+
+\smallskip
+
+\noindent (a) Assume $\lambda \in \sigma_p(T)$ and $\lambda \notin \sigma_p(T^*)$.
+So there exists $0 \neq x \in X$ with
+\[
+T x = \lambda x,
+\]
+i.e. $(T - \lambda I)x = 0$, so $\ker(T - \lambda I) \neq \{0\}$.
+
+Consider $T^{**} \colon X^{**} \to X^{**}$.
+Let $J \colon X \to X^{**}$ be the canonical embedding. Then
+\[
+T^{**} Jx = J(Tx) = J(\lambda x) = \lambda Jx.
+\]
+Since $x \neq 0$, we also have $Jx \neq 0$. So $\lambda$ is an eigenvalue of $T^{**}$:
+\[
+\lambda \in \sigma_p(T^{**}), \qquad \ker(T^{**} - \lambda I) \neq \{0\}.
+\]
+
+Now look at $T^* - \lambda I \colon X^* \to X^*$.
+We know
+\[
+(T^* - \lambda I)^* = T^{**} - \lambda I.
+\]
+By the duality fact above,
+\[
+\ker(T^{**} - \lambda I) \neq \{0\}
+\quad\Longleftrightarrow\quad
+\overline{\operatorname{Ran}(T^* - \lambda I)} \neq X^*.
+\]
+So the range of $T^* - \lambda I$ is \emph{not} dense in $X^*$.
+
+On the other hand, $\lambda \notin \sigma_p(T^*)$ means
+\[
+\ker(T^* - \lambda I) = \{0\},
+\]
+so $T^* - \lambda I$ is injective.
+So thus $\lambda \in  \sigma_r(T^*)$
+
+\smallskip
+
+\noindent (b) ( $\sigma_r(T) \subseteq \sigma_p(T^*)$)
+
+Let $\lambda \in \sigma_r(T)$. So by definition,
+\[
+T - \lambda I \text{ is injective and } \overline{\operatorname{Ran}(T - \lambda I)} \neq X.
+\]
+Because the range is not dense, there exists a non-zero functional 
+$f \in X^*$ such that
+\[
+f\big((T - \lambda I)x\big) = 0 \quad \text{for all } x \in X
+\]
+
+
+But
+\[
+f\big((T - \lambda I)x\big) = (T^* f)(x) - \lambda f(x)
+= (T^* - \lambda I)f(x),
+\]
+for all $x \in X$. So $(T^* - \lambda I)f = 0$ and $f \neq 0$, which means
+\[
+\lambda \in \sigma_p(T^*).
+\]
+Thus $\sigma_r(T) \subseteq \sigma_p(T^*)$.
+
+\medskip
+
+
+($\sigma_p(T^*) \subseteq \sigma_r(T)\cup\sigma_p(T)$.)
+
+Let $\lambda \in \sigma_p(T^*)$. Then there exists $0 \neq f \in X^*$ with
+\[
+T^* f = \lambda f.
+\]
+Evaluating at $x \in X$ gives
+\[
+f(Tx) = (T^* f)(x) = \lambda f(x),
+\]
+so
+\[
+f\big((T - \lambda I)x\big) = 0
+\quad \text{for all } x \in X.
+\]
+Thus $f$ vanishes on $\operatorname{Ran}(T - \lambda I)$, i.e.
+\[
+\operatorname{Ran}(T - \lambda I) \subseteq \ker f.
+\]
+
+Since $f \neq 0$, $\ker f$ is a proper closed subspace of $X$, hence
+\[
+\overline{\operatorname{Ran}(T - \lambda I)} \subseteq \ker f \neq X,
+\]
+so the range of $T - \lambda I$ is not dense in $X$.
+
+Now we split into two cases:
+
+\begin{itemize}
+    \item If $\ker(T - \lambda I) \neq \{0\}$, then $\lambda \in \sigma_p(T)$.
+    \item If $\ker(T - \lambda I) = \{0\}$, then $T - \lambda I$ is injective with non-dense range, so by definition $\lambda \in \sigma_r(T)$.
+\end{itemize}
+
+In either case
+\[
+\lambda \in \sigma_p(T) \cup \sigma_r(T).
+\]
+So $\sigma_p(T^*) \subseteq \sigma_r(T)\cup\sigma_p(T)$.
+
+\medskip
+
+\emph{Reflexive case: $\sigma_r(T^*) \subset \sigma_p(T)$.}
+
+Assume $X$ is reflexive. Then we can identify $X$ isometrically with $X^{**}$, and $(T^*)^* = T^{**}$ corresponds to $T$ under this identification. Applying the first inclusion above to the operator $T^*$ (acting on $X^*$) gives
+\[
+\sigma_r(T^*) \subseteq \sigma_p\big((T^*)^*\big) = \sigma_p(T^{**}).
+\]
+Under the identification $X \cong X^{**}$, the eigenvectors of $T$ and $T^{**}$ correspond, so
+\[
+\sigma_p(T^{**}) = \sigma_p(T).
+\]
+Therefore
+\[
+\sigma_r(T^*) \subseteq \sigma_p(T).
+\]
+
+
+\medskip
+
+\emph{Self-adjoint operators in Hilbert space have no residual spectrum.}
+
+Now let $H$ be a Hilbert space and $T \in L(H,H)$ be self-adjoint. Hilbert spaces are reflexive, so from above we have
+\[
+\sigma_r(T) = \sigma_r(T^*) \subseteq \sigma_p(T).
+\]
+On the other hand, in a Hilbert space we have the orthogonality relation
+\[
+\operatorname{Ran}(T - \lambda I)^\perp
+= \ker\big((T - \lambda I)^*\big)
+= \ker(T^* - \overline{\lambda} I).
+\]
+For self-adjoint $T$, the spectrum is real, so any $\lambda \in \sigma(T)$ satisfies $\lambda = \overline{\lambda}$, and
+\[
+\operatorname{Ran}(T - \lambda I)^\perp
+= \ker(T - \lambda I).
+\]
+
+Now suppose, for contradiction, that $\lambda \in \sigma_r(T)$. By definition of the residual spectrum on a Hilbert space, $T - \lambda I$ is injective and $\overline{\operatorname{Ran}(T - \lambda I)} \neq H$.
+
+Injectivity gives
+\[
+\ker(T - \lambda I) = \{0\}.
+\]
+But then
+\[
+\operatorname{Ran}(T - \lambda I)^\perp
+= \ker(T - \lambda I) = \{0\},
+\]
+which forces
+\[
+\overline{\operatorname{Ran}(T - \lambda I)} = H.
+\]
+This contradicts the assumption that the range is not dense.
+
+Therefore $\sigma_r(T)$ must actually be empty for self-adjoint $T$ on a Hilbert space: self-adjoint bounded linear operators do not have residual spectrum.
+\end{proof}
+
+    
+    \item Let $S,T \in L(X,X).$ Prove that the operator $ST$ is invertible iff both $S$ and $T$ are invertible. 
+    \begin{proof}
+        ($\Rightarrow$:) Suppose that $ST$ is invertible. We want to show each individual operator $S,T$ are invertible. First let's show that T is invertible. To do this, we first show injectivity of T. So let $x\in null(T)$. Then $Tx = 0$. And so multiply by the operator S we get $STx = 0$. Since $ST$ is invertible, the only possible element that x can be is the 0 vector thus showing that T is injective. And then by Rank Nullity Theorem, assuming that X is finite-dimensional, with T being injective implies that it is also invertible. 
+
+        Now let's show that S is invertible by doing the opposite of showing T is invertible by showing first that S is surjective. So let $y\in X$ such that $\exists x\in X$ such that $STx = y$. Rewrite it to be $S(Tx) = y$. Let $Tx = z$ for $z \in X$. Then we get $Sz = y$. Meaning that we found a pre-image $z$ for an arbitrary $y$ leading to the operator $S$ to be surjective. And then similarly for $T$, by rank nullity, the surjectivity implies that $S$ is invertible. (Assuming X is finite- dimensional)
+
+        I'm pretty sure we talked about this in class for infinite dimensional operators not working for rank nullity as an example of it not working is the left and right shift operators. 
+
+        
+        ($\Leftarrow$:) Suppose that $S$ and $T$ are invertible. Then consider $B = T^{-1}S^{-1}$ to be a possible inverse. Then we have the following 
+        $$ (ST)(B) = (ST)(T^{-1}S^{-1}) = STT^{-1}S^{-1} = I
+        $$
+        So thus ST in invertible.
+        
+    \end{proof}
+
+
+    
+
+    \item Let $T \in L(X,X).$ Prove that $\lambda \in \sigma(T)$ implies $\lambda^n \in \sigma(T^n)$. (Hint: (i) factor $T^n - \lambda^nI = S(T-\lambda I)$ for some $S\in L(X,X).$ (ii) Show that for $U,V \in L(X,X),$ the operator UV is invertible iff both $U$ and $V$ are invertible.)
+
+\begin{proof}
+    (i) 
+
+    Recall the scalar identity
+    $$x^n - \lambda^n = (x - \lambda)(x^{n-1} + \lambda x^{n-2} + \cdots + \lambda^{n-1}).$$
+    The same algebra works for operators since $T$ commutes with itself and with scalars. So define
+    $$S := T^{n-1} + \lambda T^{n-2} + \cdots + \lambda^{n-1} I \in L(X,X).$$
+    Then
+    \begin{align*}
+        T^n - \lambda^n I 
+        &= (T - \lambda I)\big(T^{n-1} + \lambda T^{n-2} + \cdots + \lambda^{n-1} I\big) \\
+        &= (T - \lambda I)S.
+    \end{align*}
+    Since $S$ is a polynomial in $T$, it also commutes with $T$ and therefore with $T - \lambda I$:
+    $$S(T - \lambda I) = (T - \lambda I)S.$$
+    Note that (ii) is shown from question 2.
+
+    We want to show that $\lambda^n$ must be in $\sigma(T^n)$. So we argue by contradiction: assume
+    $$\lambda^n \notin \sigma(T^n).$$
+    Then $T^n - \lambda^n I$ is invertible.
+    So from (i), we have that 
+    $$T^n - \lambda^n I = (T - \lambda I) S,$$
+    where $S$ is a polynomial in $T$. In particular $S$ commutes with $T$, and hence
+    $$(T - \lambda I)S = S(T - \lambda I).$$
+
+    So we are in the situation of the claim with
+    $$A = T - \lambda I, \quad B = S.$$
+    The operator $AB = T^n - \lambda^n I$ is invertible by our assumption, and $A$ and $B$ commute. By the claim, this implies that $A = T - \lambda I$ is invertible. But this contradicts our starting assumption that $\lambda \in \sigma(T)$. Therefore our assumption that $\lambda^n \notin \sigma(T^n)$ must be false. So we conclude that
+    $$\lambda^n \in \sigma(T^n).$$
+\end{proof}
+
+    \item Compute the spectrum of a projection $P\in L(X,X)$ in a Banach space $X$.
+    \begin{proof}
+      
+        Since $P$ is a projection, we know that $P^2 = P$. This implies that the spectrum $\sigma(P)$ is a subset of the roots of the polynomial $x^2 - x = 0$, which are $\{0, 1\}$.
+
+        First, let's show that any $\lambda \notin \{0, 1\}$ is not in the spectrum (i.e., $P - \lambda I$ is invertible). So let $\lambda \in \mathbb{C}$ such that $\lambda \neq 0$ and $\lambda \neq 1$. We can explicitly construct the inverse. Consider the operator:
+        $$ R = \frac{1}{1-\lambda}P - \frac{1}{\lambda}(I-P) $$
+        Then we compute $(P - \lambda I)R$. Recall that $P^2 = P$ and $P(I-P) = 0$.
+        $$
+        \begin{aligned}
+        (P - \lambda I)R &= (P - \lambda I) \left( \frac{1}{1-\lambda}P - \frac{1}{\lambda}(I-P) \right) \\
+        &= \frac{1}{1-\lambda}P^2 - \frac{1}{\lambda}P(I-P) - \frac{\lambda}{1-\lambda}P + \frac{\lambda}{\lambda}(I-P) \\
+        &= \frac{1}{1-\lambda}P - 0 - \frac{\lambda}{1-\lambda}P + (I-P) \\
+        &= \left( \frac{1-\lambda}{1-\lambda} \right)P + I - P \\
+        &= P + I - P \\
+        &= I
+        \end{aligned}
+        $$
+        Since the inverse exists, any $\lambda \notin \{0, 1\}$ is in the resolvent set. Thus $\sigma(P) \subseteq \{0, 1\}$.
+
+        Now let's determine if 0 and 1 are actually in the spectrum. This depends on if $P$ is a trivial projection.
+        
+        \textbf{Case 1:} If $P = 0$. Then $P - \lambda I = -\lambda I$, which is invertible everywhere except $\lambda = 0$. So $\sigma(0) = \{0\}$.
+        
+        \textbf{Case 2:} If $P = I$. Then $P - \lambda I = (1-\lambda)I$, which is invertible everywhere except $\lambda = 1$. So $\sigma(I) = \{1\}$.
+
+        \textbf{Case 3:} If $P \neq 0$ and $P \neq I$.
+        First check $\lambda = 0$. The operator is just $P$. Since $P \neq I$, $I-P \neq 0$, meaning there exists a non-zero vector $x$ in the range of $(I-P)$ such that $Px = 0$. So $P$ is not injective, thus not invertible. Thus $0 \in \sigma(P)$.
+        
+        Now check $\lambda = 1$. The operator is $P - I$. Since $P \neq 0$, there exists a non-zero vector $x$ in the range of $P$ such that $Px = x$, which implies $(P-I)x = 0$. So $P-I$ is not injective, thus not invertible. Thus $1 \in \sigma(P)$.
+
+        $$ \sigma(P) = \begin{cases} \{0\} & \text{if } P = 0 \\ \{1\} & \text{if } P = I \\ \{0, 1\} & \text{otherwise} \end{cases} $$
+    \end{proof}
+    
+    
+
+
+\end{enumerate}
+
+\end{document}
