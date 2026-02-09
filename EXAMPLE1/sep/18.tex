@@ -1,0 +1,282 @@
+% !TEX root = ../notes.tex
+
+\documentclass[../notes.tex]{subfiles}
+
+\begin{document}
+
+\section{September 18}
+Today, we will continue to review Galois cohomology.
+
+\subsection{Local and Global Duality}
+Akin to \Cref{prop:procyclic-cohom}, we have the following duality statement for local fields.
+\begin{theorem}[Tate] \label{thm:tate}
+	Fix a finite extension $K$ of $\QQ_p$, set $G\coloneqq\op{Gal}(\ov K/K)$ for brevity, and let $M$ be a finite discrete $G$-module.
+	\begin{listalph}
+		\item Finiteness: the modules $\mathrm H^i(K;M)$ are finite for all $i$ and vanishes for $i\ge3$.
+		\item Duality: for a $G$-module $M$, we define the $G$-module $M^*\coloneqq\op{Hom}_\ZZ(M,\mu_\infty(\ov K))$. Then there is a perfect pairing
+		\[\mathrm H^i(K;M)\times\mathrm H^{2-i}(K;M^*)\to\QQ/\ZZ.\]
+		\item Euler characteristic formula: one has
+		\[\frac{\#\mathrm H^0(K;M)\cdot\#\mathrm H^2(K;M)}{\#\mathrm H^1(K;M)}=\frac1{\#(\OO_K/(\#M)\OO_K)}.\]
+	\end{listalph}
+\end{theorem}
+\begin{remark}
+	One can define the pairing via a cup product
+	\[\cup\colon\mathrm H^i(K;M)\times\mathrm H^{2-i}(K;M^*)\to\mathrm H^2(K;\mu_\infty),\]
+	and it turns out that the target is isomorphic to $\QQ/\ZZ$ (via the ``local invariant'' map of local class field theory).
+\end{remark}
+\begin{remark}
+	One calls (c) an Euler characteristic formula because the invariant
+	\[\chi(M)\coloneqq\frac{\#\mathrm H^0(K;M)\cdot\#\mathrm H^2(K;M)}{\#\mathrm H^1(K;M)}\]
+	behaves like an Euler characteristic. Indeed, it is like an alternating sum of cohomology groups.
+\end{remark}
+\begin{remark}
+	It is possible to check \Cref{thm:tate} explicitly for $M\in\{\ZZ/m\ZZ,\mu_m\}$.
+\end{remark}
+In order to relate local fields with finite fields, we should explain how one can recover an unramified cohomology.
+\begin{definition}[inertia group]
+	Fix a local field $K$ with finite residue field $k$. Then the Galois action on $K$ preserves the absolute value and therefore descends to $\OO_K/\mf p_K=k$. We define the \textit{inertia subgroup} $I_K$ of $\op{Gal}(\ov K/K)$ to fit in the short exact sequence
+	\[1\to I_K\subseteq\op{Gal}(\ov K/K)\to\op{Gal}(\ov k/k)\to1.\]
+\end{definition}
+\begin{remark} \label{rem:unramified-closure}
+	Let $K^{\mathrm{ur}}$ be the maximal unramified extension of $K$. Then we see that $\op{Gal}(K^{\mathrm{ur}}/K)$ is simply $\op{Gal}(\ov K/K)/I_K$, which is $\op{Gal}(\ov k/k)$.
+\end{remark}
+\begin{definition}[unramified]
+	Fix a local field $K$. Then a $\op{Gal}(\ov K/K)$-module $M$ is \textit{unramified} if and only if $I_K$ acts trivially on $M$. In this case, we define the \textit{unramified cohomology} $\mathrm H^i_{\mathrm{ur}}(K;M)$ as the image of
+	\[\op{Inf}\colon\mathrm H^i(\op{Gal}(K^{\mathrm{ur}}/K);M)\to\mathrm H^i(\op{Gal}(\ov K/K);M).\]
+\end{definition}
+\begin{remark}
+	By \Cref{prop:procyclic-cohom} (which applies by \Cref{rem:unramified-closure}), we see that only the unramified cohomology which has a chance of being nonzero is indices $0$ and $1$.
+\end{remark}
+\begin{example} \label{ex:unramified-char}
+	Suppose that $M$ is a trivial Galois module, and consider the commutative diagram
+	% https://q.uiver.app/#q=WzAsNCxbMCwwLCJcXG1hdGhybSBIXjFcXGxlZnQoXFxvcHtHYWx9KEtee1xcbWF0aHJte3VyfX0vSyksTV5IXFxyaWdodCkiXSxbMSwwLCJcXG9we0hvbX1cXGxlZnQoXFxvcHtHYWx9KEtee1xcbWF0aHJte3VyfX0vSyksTV5IXFxyaWdodCkiXSxbMCwxLCJcXG1hdGhybSBIXjFcXGxlZnQoXFxvcHtHYWx9KEtee1xcbWF0aHJte3NlcH19L0spLE1eSFxccmlnaHQpIl0sWzEsMSwiXFxvcHtIb219XFxsZWZ0KFxcb3B7R2FsfShLXntcXG1hdGhybXtzZXB9fS9LKSxNXkhcXHJpZ2h0KSJdLFswLDJdLFsyLDNdLFswLDFdLFsxLDNdXQ==&macro_url=https%3A%2F%2Fraw.githubusercontent.com%2FdFoiler%2Fnotes%2Fmaster%2Fnir.tex
+	\[\begin{tikzcd}[cramped]
+		{\mathrm H^1\left(\op{Gal}(K^{\mathrm{ur}}/K);M\right)} & {\op{Hom}\left(\op{Gal}(K^{\mathrm{ur}}/K),M\right)} \\
+		{\mathrm H^1\left(\op{Gal}(K^{\mathrm{sep}}/K);M\right)} & {\op{Hom}\left(\op{Gal}(K^{\mathrm{sep}}/K),M\right)}
+		\arrow[from=1-1, to=1-2]
+		\arrow[from=1-1, to=2-1]
+		\arrow[from=1-2, to=2-2]
+		\arrow[from=2-1, to=2-2]
+	\end{tikzcd}\]
+	induced by the commutative squares of \Cref{ex:profinite-trivial-crossed-hom}. In particular, the rightward map is induced by the quotient $\op{Gal}(K^{\mathrm{sep}}/K)\onto\mathrm{Gal}(K^{\mathrm{ur}}/K)$. Thus, an element $\chi\in\mathrm H^1(K;M)$ viewed as a Galois character is unramified if and only if it factors through $\op{Gal}(K^{\mathrm{ur}}/K)$, which is equivalent to vanishing on the (closed) inertia subgroup $I_K$.
+\end{example}
+\begin{example} \label{ex:unramified-mu-m}
+	Suppose that $m$ is a positive integer nonzero in $K$. Then \Cref{ex:h1-of-mu-n} provides an isomorphism
+	\[\delta\colon K^\times/K^{\times m}\to\mathrm H^1(K;\mu_m)\]
+	given by $\delta(a)\colon\sigma\mapsto\sigma\sqrt[m]a/\sqrt[m]a$. We claim that $\delta(a)\in\mathrm H^1_{\mathrm{ur}}(K;\mu_m)$ if and only if $v(a)\equiv0\pmod m$. Indeed, $\delta(a)$ is unramified if and only if $I_K$ fixes $K(\sqrt[m]a)$, which is equivalent to the extension $K(\sqrt[m]a)/K$ being unramified. We can see that this extension is unramified if and only if $\sqrt[m]a$ succeeds at having integer valuation, which is equivalent to $v(a)\equiv0\pmod m$.
+\end{example}
+We are now able to relate our two dualities.
+\begin{proposition} \label{prop:unramified-self-dual}
+	Fix a finite extension $K$ of $\QQ_p$. Let $M$ be a discrete Galois module, and suppose further that $M$ is unramified and that $\#M$ is coprime to $p$. Then $M^*$ is still unramified, and under the duality pairing
+	\[\mathrm H^i(K;M)\times\mathrm H^{2-i}(K;M^*)\to\QQ/\ZZ,\]
+	the two subgroups $\mathrm H^1_{\mathrm{ur}}(K;M)$ and $\mathrm H^1_{\mathrm{ur}}(K;M^*)$ are annihilators of each other.
+\end{proposition}
+\begin{proof}
+	The fact that $M^*$ is unramified is direct because both $M$ and $\mu_{\#M}$ are unramified. One can check directly that $\mathrm H^1_{\mathrm{ur}}(K;M)$ and $\mathrm H^1_{\mathrm{ur}}(K;M^*)$ annihilate each other because the cup product lands in $\mathrm H^2_{\mathrm{ur}}(K;\mu_{\#M})$, which automatically vanishes by \Cref{prop:procyclic-cohom}. Because we have a perfect pairing, it now remains to show that these two groups have the same size.
+	
+	By \Cref{prop:procyclic-cohom}, we see that $\mathrm H^1_{\mathrm{ur}}(K;M)$ is
+	\[\mathrm H^1\left(M\stackrel{\sigma-1}\to M\right)=\coker\left(M\stackrel{\sigma-1}\to M\right).\]
+	But because $M$ is finite, we see that the size of this cokernel equals the size of this kernel, so we conclude that $\#\mathrm H^1_{\mathrm{ur}}(K;M)=\#\mathrm H^0_{\mathrm{ur}}(K;M)$, but this is just $\#\mathrm H^0(K;M)$ because $M$ is unramified. One similarly deduces that $\#\mathrm H^1_{\mathrm{ur}}(K;M^*)=\#\mathrm H^0(K;M^*)$, which is $\#\mathrm H^2(K;M)$ by \Cref{thm:tate}. We now complete the proof with an Euler characteristic calculation because we know $\chi(M)=1$ by \Cref{thm:tate}.
+\end{proof}
+% \subsection{}
+Here is why unramified cohomology will be relevant to our story.
+\begin{lemma} \label{lem:ur-of-elliptic-curve}
+	Fix a finite extension $K$ of $\QQ_p$, and fix an elliptic curve $E$ of good reduction. For any positive integer $m$ coprime to $p$, the image of the map
+	\[0\to E(K)/mE(K)\to\mathrm H^1(K;E[m])\]
+	coincides with $\mathrm H^1_{\mathrm{ur}}(K;E[m])$.
+\end{lemma}
+\begin{proof}[Sketch]
+	The given map is induced from the long exact sequence of the map
+	\[0\to E[m](\ov K)\to E(\ov K)\stackrel m\to E(\ov K)\to0\]
+	by taking Galois invariants. Indeed, the long exact sequence includes the maps
+	\[E(K)\stackrel m\to E(K)\to\mathrm H^1(K;E[m]).\]
+	Now, to show the claim, we note that there is a morphism
+	% https://q.uiver.app/#q=WzAsMTAsWzAsMCwiMCJdLFsxLDAsIkVbbV0oS157XFxtYXRocm17dW5yfX0pIl0sWzEsMSwiRVttXShcXG92IEspIl0sWzAsMSwiMCJdLFsyLDAsIkUoS157XFxtYXRocm17dW5yfX0pIl0sWzMsMCwiRShLXntcXG1hdGhybXt1bnJ9fSkiXSxbNCwwLCIwIl0sWzIsMSwiRShcXG92IEspIl0sWzMsMSwiRShcXG92IEspIl0sWzQsMSwiMCJdLFswLDFdLFsxLDRdLFs0LDVdLFs1LDZdLFszLDJdLFsyLDddLFs3LDhdLFs4LDldLFs0LDcsIiIsMSx7InN0eWxlIjp7InRhaWwiOnsibmFtZSI6Imhvb2siLCJzaWRlIjoidG9wIn19fV0sWzUsOCwiIiwxLHsic3R5bGUiOnsidGFpbCI6eyJuYW1lIjoiaG9vayIsInNpZGUiOiJ0b3AifX19XSxbMSwyLCIiLDEseyJzdHlsZSI6eyJ0YWlsIjp7Im5hbWUiOiJob29rIiwic2lkZSI6InRvcCJ9fX1dXQ==&macro_url=https%3A%2F%2Fraw.githubusercontent.com%2FdFoiler%2Fnotes%2Fmaster%2Fnir.tex
+	\[\begin{tikzcd}[cramped]
+		0 & {E[m](K^{\mathrm{unr}})} & {E(K^{\mathrm{unr}})} & {E(K^{\mathrm{unr}})} & 0 \\
+		0 & {E[m](\ov K)} & {E(\ov K)} & {E(\ov K)} & 0
+		\arrow[from=1-1, to=1-2]
+		\arrow[from=1-2, to=1-3]
+		\arrow[hook, from=1-2, to=2-2]
+		\arrow[from=1-3, to=1-4]
+		\arrow[hook, from=1-3, to=2-3]
+		\arrow[from=1-4, to=1-5]
+		\arrow[hook, from=1-4, to=2-4]
+		\arrow[from=2-1, to=2-2]
+		\arrow[from=2-2, to=2-3]
+		\arrow[from=2-3, to=2-4]
+		\arrow[from=2-4, to=2-5]
+	\end{tikzcd}\]
+	of short exact sequences. Taking Galois invariants shows that the square
+	% https://q.uiver.app/#q=WzAsNCxbMCwwLCJcXGRpc3BsYXlzdHlsZVxcZnJhY3tFKEspfXttRShLKX0iXSxbMCwxLCJcXGRpc3BsYXlzdHlsZVxcZnJhY3tFKEspfXttRShLKX0iXSxbMSwwLCJcXG1hdGhybSBIXjEoS157XFxtYXRocm17dW5yfX0vSztFW21dKSJdLFsxLDEsIlxcbWF0aHJtIEheMShcXG92IEsvSztFW21dKSJdLFswLDEsIiIsMCx7ImxldmVsIjoyLCJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzAsMl0sWzEsM10sWzIsM11d&macro_url=https%3A%2F%2Fraw.githubusercontent.com%2FdFoiler%2Fnotes%2Fmaster%2Fnir.tex
+	\[\begin{tikzcd}[cramped]
+		{E(K)/mE(K)} & {\mathrm H^1(K^{\mathrm{unr}}/K;E[m])} \\
+		{E(K)/mE(K)} & {\mathrm H^1(\ov K/K;E[m])}
+		\arrow[from=1-1, to=1-2]
+		\arrow[equals, from=1-1, to=2-1]
+		\arrow[from=1-2, to=2-2]
+		\arrow[from=2-1, to=2-2]
+	\end{tikzcd}\]
+	commutes. By definition, $\mathrm H^1_{\mathrm{ur}}(K;E[m])$ is the image of the right vertical map, so it is enough to show that the top horizontal map is surjective.
+
+	To show that $E(K)/mE(K)\to\mathrm H^1(K^{\mathrm{unr}}/K;E[m])$ is surjective, we pass to the residue field. Because $E$ has good reduction, $E$ admits a model over $\OO$ (which we also denote by $\OO$); because $E$ is proper, we still have $E(\OO)=E(K)$. Thus, by taking the reduction t the residue field $\FF$, we receive a commutative diagram
+	% https://q.uiver.app/#q=WzAsNCxbMCwwLCJcXGRpc3BsYXlzdHlsZVxcZnJhY3tFKEspfXttRShLKX0iXSxbMSwwLCJcXG1hdGhybSBIXjEoS157XFxtYXRocm17dW5yfX0vSztFW21dKSJdLFswLDEsIlxcZGlzcGxheXN0eWxlXFxmcmFje0UoXFxGRil9e21FKFxcRkYpfSJdLFsxLDEsIlxcbWF0aHJtIEheMShcXG92ZXJsaW5le1xcRkZ9L1xcRkY7RVttXSkiXSxbMSwzLCIiLDAseyJsZXZlbCI6Miwic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFswLDFdLFsyLDNdLFswLDIsIiIsMix7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6ImVwaSJ9fX1dXQ==&macro_url=https%3A%2F%2Fraw.githubusercontent.com%2FdFoiler%2Fnotes%2Fmaster%2Fnir.tex
+	\[\begin{tikzcd}[cramped]
+		{\displaystyle\frac{E(K)}{mE(K)}} & {\mathrm H^1(K^{\mathrm{unr}}/K;E[m])} \\
+		{\displaystyle\frac{E(\FF)}{mE(\FF)}} & {\mathrm H^1(\overline{\FF}/\FF;E[m])}
+		\arrow[from=1-1, to=1-2]
+		\arrow[two heads, from=1-1, to=2-1]
+		\arrow[equals, from=1-2, to=2-2]
+		\arrow[from=2-1, to=2-2]
+	\end{tikzcd}\]
+	where the right-hand equality has used the good reduction hypothesis (and $m$ being coprime to $p$) via the N\'eron--Ogg--Shafarevich criterion. (The left-hand map is a surjection by the valuative criterion.) Thus, it is enough to show that the bottom map is surjective. Well, this map is induced by the Kummer sequence for $E$ over the residue field $\FF$, so this map actually to the longer exact sequence
+	\[E(\FF)\stackrel m\to E(\FF)\to\mathrm H^1(\FF;E[m])\to\mathrm H^1(\FF;E).\]
+	However, $\mathrm H^1(\FF;E)$ vanishes by Lang's theorem (note $E$ is connected), so the needed surjectivity follows.
+	%This amounts to noting that the next term $\mathrm H^1(K^{\mathrm{unr}}/K;E)$ vanishes: indeed, it is the colimit of the Galois cohomology groups $\mathrm H^1(L/K;E)$ where $L/K$ is finite and unramified, but this group is trivial because $E(L)$ is divisible for all finite extensions $L$ of $\QQ_p$.\todo{}
+	% by considerations of formal groups, we can go down to finite fields
+	% on finite fields, this injective map is seen to be surjective by a counting argument with prop 1.55
+\end{proof}
+% \begin{remark}
+% 	The map $E(K)/mE(K)\to\mathrm H^1(K;E[m])$ is induced by the ``Kummer'' exact sequence
+% 	\[0\to E[m]\to E\stackrel m\to E\to0.\]
+% 	Indeed, taking Galois cohomology produces an exact sequence
+% 	\[E(K)\stackrel m\to E(K)\to\mathrm H^1(K;E[m]).\]
+% \end{remark}
+The point of this lemma is that we are interested in $E(K)/mE(K)$, which appears to be some difficult invariant including the rank of $E$. However, $E[m]$ is just some explicitly computable torsion, so we find that we are actually able to handle $E(K)/mE(K)$ over local fields! For example, it turns out that $E[m](K)$ descends to the residue field in $E[m](k)$, which is contained in $E(k)$.
+
+While we're here, even though we will not use it for some time, now is as good a time as any to note that there is a global duality statement.
+\begin{theorem}[Pitou--Tate] \label{thm:pitou-tate}
+	Fix a number field $K$ and a set of places $\Sigma$ of $K$, and let  $K_\Sigma$ be the maximal Galois extension ramified only at $\Sigma$. For any finite discrete Galois module $M$, there is an exact sequence
+	\[\mathrm H^1(K_\Sigma/K;M)\stackrel{\op{loc}}\to\prod_{v\in\Sigma}\left(\mathrm H^1(K_v;M),\mathrm H^1_{\mathrm{ur}}(K_v;M)\right)\stackrel{\op{loc}^\lor}\to\mathrm H^1(K_\Sigma/K;M^*)^\lor,\]
+	where $(-)^\lor\coloneqq\op{Hom}(-,\QQ/\ZZ)$.
+\end{theorem}
+\begin{remark} \label{rem:almost-unramified}
+	The restricted product makes sense because $M$ will be unramified at all but finitely many places $v$: the Galois action on $M$ factors through $\op{Gal}(L/K)$ for some finite extension $L$ of $K$, so for any place $v$ unramified in $L$ has its inertia group $I_v$ have trivial image in $\op{Gal}(L/K)$ and thus acts trivially on $M$.
+\end{remark}
+\begin{remark} \label{rem:weil-pairing-on-adele}
+	Let's define the right-hand map. It is enough to define a pairing on
+	\[\prod_{v\in\Sigma}\left(\mathrm H^1(K_v;M),\mathrm H^1_{\mathrm{ur}}(K_v;M)\right)\times\prod_{v\in\Sigma}\left(\mathrm H^1(K_v;M^*),\mathrm H^1_{\mathrm{ur}}(K_v;M^*)\right).\]
+	For this, we simply sum the local pairings of \Cref{thm:tate}. These sums are finite (and so converge) because all but finitely many places $v\in\Sigma$ compute a pairing from $\mathrm H^1_{\mathrm{ur}}(K_v;M)\times\mathrm H^1_{\mathrm{ur}}(K_v;M^*)$, which vanishes by \Cref{prop:unramified-self-dual}.
+\end{remark}
+The given exact sequence is in fact the middle three terms of a nine-term exact sequence. For a proof of this (difficult!) theorem, we refer to \cite[Theorem~I.4.10]{milne-duality}, but the reader is warned that the notation is rather dense there.
+\begin{remark}
+	In \cite[Theorem~I.4.10]{milne-duality}, $\Sigma$ is required to be nonempty. However, the statement of \Cref{thm:pitou-tate} has no content if $\Sigma$ is empty because then the middle term vanishes.
+\end{remark}
+
+\subsection{Selmer Groups}
+We are now allowed to make the following global definition.
+\begin{defihelper}[Selmer group] \nirindex{Selmer group} \nirindex{local conditions}
+	Fix a number field $K$, and fix a finite discrete Galois module $M$. Furthermore, for each place $v$ of $K$, choose a subset $\mc L_v\subseteq\mathrm H^1(K_v;M)$, and we require that $\mc L_v=\mathrm H^1_{\mathrm{ur}}(K_v;M)$ for all but finitely many $v$. Then we define the \textit{Selmer group} with respect to the \textit{local conditions} $\mc L$ to be the pullback in the following square.
+	% https://q.uiver.app/#q=WzAsNCxbMCwwLCJcXG9we1NlbH1fe1xcbWMgTH0oTSkiXSxbMSwwLCJcXG1hdGhybSBIXjEoSztNKSJdLFsxLDEsIlxcZGlzcGxheXN0eWxlXFxwcm9kX3ZcXG1hdGhybSBIXjEoS192O00pIl0sWzAsMSwiXFxkaXNwbGF5c3R5bGVcXHByb2RfdlxcbWMgTF92Il0sWzMsMl0sWzAsM10sWzAsMV0sWzEsMl0sWzAsMiwiIiwxLHsic3R5bGUiOnsibmFtZSI6ImNvcm5lciJ9fV1d&macro_url=https%3A%2F%2Fraw.githubusercontent.com%2FdFoiler%2Fnotes%2Fmaster%2Fnir.tex
+	\[\begin{tikzcd}[cramped]
+		{\op{Sel}_{\mc L}(M)} & {\mathrm H^1(K;M)} \\
+		{\displaystyle\prod_v\mc L_v} & {\displaystyle\prod_v\mathrm H^1(K_v;M)}
+		\arrow[from=1-1, to=1-2]
+		\arrow[from=1-1, to=2-1]
+		\arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-1, to=2-2]
+		\arrow[from=1-2, to=2-2]
+		\arrow[hook, from=2-1, to=2-2]
+	\end{tikzcd}\]
+	The vertical maps are induced by the maps $\op{Gal}(\ov{K_v}/K_v)\to\op{Gal}(\ov K/K)$ given by restricting an automorphism.
+\end{defihelper}
+We will primarily be interested in the following example; we will say more about Selmer groups of elliptic curves next class.
+\begin{example}
+	If $E$ is an elliptic curve over a global field $K$, we can define $M\coloneqq E[m]$ and choose $\mc L_v$ to be the image of the map
+	\[0\to E(K_v)/mE(K_v)\to\mathrm H^1(K;E[m])\]
+	for each place $v$. This assembles into a local condition by \Cref{lem:ur-of-elliptic-curve}, so we receive a Selmer group $\op{Sel}_{\mc L}(E[m])$. We may write $\op{Sel}_m(E)$ for $\op{Sel}_{\mc L}(E[m])$ in this situation.
+\end{example}
+This definition is slightly complicated, so here are many remarks.
+\begin{remark}
+	To unravel the pullback, we note that the bottom arrow is an inclusion (of abelian groups), so the top arrow must be as well, allowing us to write
+	\[\op{Sel}_{\mc L}(M)=\left\{c\in\mathrm H^1(K;M):\op{Res}_vc\in\mc L_v\text{ for all places }v\right\}.\]
+\end{remark}
+\begin{remark} % \label{rem:almost-unramified}
+	It is undesirable to require that $\mc L_v=\mathrm H^1_{\mathrm{ur}}(K_v;M)$ for all places of $v$ because we do not expect $M$ to be unramified at all $v$, which means that $\mathrm H^1_{\mathrm{ur}}(K_v;M)$ is not expected to make sense at all places $v$. On the other hand, the requirement $\mc L_v=\mathrm H^1_{\mathrm{ur}}(K_v;M)$ does make sense because $M$ is unramified at all but finitely many places $v$ by \Cref{rem:almost-unramified}.
+\end{remark}
+\begin{remark} \label{rem:get-adelic-cohom}
+	The power of $\op{Sel}_{\mc L}(M)$ is that it requires the cocycles to be unramified outside a fixed set of places. For comparison, the image of $\mathrm H^1(K;M)$ maps to the restricted direct product
+	\[\prod_v\left(\mathrm H^1(K_v;M),\mathrm H^1_{\mathrm{ur}}(K_v;M)\right).\]
+	This amounts to saying that a given cocycle class $c\in\mathrm H^1(K;M)$ is unramified at all but finitely many places $v$. To see this, the definition of $\mathrm H^1(K;M)$ as a colimit means that there is a finite extension $L$ of $K$ for which $c$ is the inflation of an element in $\mathrm H^1(L/K;M)$. Thus, for any place $v$ unramified in $L$, the inertia group $I_v$ has trivial image in $\op{Gal}(L/K)$, so $c|_{I_v}$ is trivial, so $\op{Res}_vc$ is unramified.
+\end{remark}
+Inspired by \Cref{rem:get-adelic-cohom}, we make the following notation.
+\begin{notation}
+	Fix a number field $K$ and a finite discrete Galois module $M$. For each index $i$, we define $\mathrm H^i(\AA_K;M)$ as the restricted direct product
+	\[\mathrm H^i(\AA_K;M)\coloneqq\prod_v\left(\mathrm H^i(K_v;M),\mathrm H^i_{\mathrm{ur}}(K_v;M)\right).\]
+	Here, the restricted direct product makes sense because $M$ is unramified at all but finitely many places $v$ of $K$ (as discussed in \Cref{rem:almost-unramified}).
+\end{notation}
+Here is our finiteness result.
+\begin{theorem}
+	Fix a number field $K$, and fix a finite discrete Galois module $M$. Furthermore, for each place $v$ of $K$, choose a subset $\mc L_v\subseteq\mathrm H^1(K_v;M)$, and we require that $\mc L_v=\mathrm H^1_{\mathrm{ur}}(K_v;M)$ for all but finitely many $v$. Then $\op{Sel}_{\mc L}(M)$ is finite.
+\end{theorem}
+\begin{proof}
+	We start by noting that we have two legal reductions: we are allowed to make $\mc L$ and $K$ larger.
+	\begin{itemize}
+		\item We note that making $\mc L$ larger cannot help us, so we may assume that either $\mc L_v=\mathrm H^1(K_v;M)$ or $\mc L_v=\mathrm H^1_{\mathrm{ur}}(K_v;M)$ for all places $v$, and we let $S$ to be the finite set in which the former occurs. For example, $S$ includes the places where $M$ is ramified. From now on, we will abbreviate $\op{Sel}_{\mc L}(M)$ to $\op{Sel}_S(M)$. As noted previously with $\mc L$, we remark that we may enlarge $S$, and it will not make the problem any easier.
+
+		\item We show that we may reduce the question to any finite extension $K'$ of $K$. For this, we let $M'$ be the module $M$ with the restricted Galois action, and we let $S'$ be the set of primes of $K'$ lying over a prime of $S$. We then draw the following diagram.
+		% https://q.uiver.app/#q=WzAsNixbMiwwLCJcXG9we1NlbH1fe1N9KE0pIl0sWzMsMCwiXFxvcHtTZWx9X3tTJ31cXGxlZnQoXFxvcHtSZXN9XntcXG9we0dhbH0oXFxvdiBLL0spfV97XFxvcHtHYWx9KFxcb3YgSy9MKX1NXFxyaWdodCkiXSxbMywxLCJcXG1hdGhybSBIXjEoTDtNKSJdLFsyLDEsIlxcbWF0aHJtIEheMShLO00pIl0sWzEsMSwiXFxtYXRocm0gSF4xKFxcb3B7R2FsfShML0spO00pIl0sWzAsMSwiMCJdLFszLDIsIlxcb3B7UmVzfSJdLFswLDFdLFsxLDJdLFswLDNdLFs0LDMsIlxcb3B7SW5mfSJdLFs1LDRdXQ==&macro_url=https%3A%2F%2Fraw.githubusercontent.com%2FdFoiler%2Fnotes%2Fmaster%2Fnir.tex
+		\[\begin{tikzcd}[cramped]
+			&& {\op{Sel}_{S}(M)} & {\op{Sel}_{S'}\left(M'\right)} \\
+			0 & {\mathrm H^1(\op{Gal}(K'/K);M)} & {\mathrm H^1(K;M)} & {\mathrm H^1(K';M)}
+			\arrow[from=1-3, to=1-4]
+			\arrow[from=1-3, to=2-3]
+			\arrow[from=1-4, to=2-4]
+			\arrow[from=2-1, to=2-2]
+			\arrow["{\op{Inf}}", from=2-2, to=2-3]
+			\arrow["{\op{Res}}", from=2-3, to=2-4]
+		\end{tikzcd}\]
+		By definition of the Selmer group, the square is a pullback square, and the horizontal line is exact by the Inflation--Restriction exact sequence (\Cref{prop:inflation-restriction}). Thus, finiteness for the restricted module implies finiteness for $\op{Sel}_S(M)$ because $\mathrm H^1(\op{Gal}(K'/K);M)$ is finite (as the cohomology group of a finite module over a finite group).
+	\end{itemize}
+	We now complete the proof. To start, we remark that we may extend $K$ to an extension in which $M$ has the trivial Galois action. Indeed, because $M$ is finite and discrete, the continuity of the action provides a finite extension $K'$ of $K$ for which $\op{Gal}(\ov K/K')$ acts trivially on $M$.
+
+	Now, it remains to show finiteness when the Galois action is trivial and where the ground field is large. Because $M$ is a finite abelian group, it is a sum of cyclic groups (with trivial action), so we may assume that $M$ is some cyclic group $\ZZ/m\ZZ$. Thus, we see that $\op{Sel}_S(\ZZ/m\ZZ)$ now embeds into $\mathrm H^1(K;\ZZ/m\ZZ)$, which is the same as
+	\[\op{Hom}(\op{Gal}(\ov K/K),\ZZ/m\ZZ).\]
+	By \Cref{ex:unramified-char}, we see that a given character $\chi$ represents an unramified class at some place $v\in S$ if and only if $\chi|_{I_v}=1$.
+	
+	Thus, we want to show that there are only finitely many Galois characters which are unramified outside $S$.
+	%For this, we consider the maximal abelian extension $L$ of $K$ of exponent $m$ which is unramified outside $S$; concretely, such a thing can be constructed via Kummer theory or less concretely by class field theory. Then all characters $\chi$ as above factor through $\op{Gal}(L/K)$, so it is enough to note that $L$ is in fact a finite extension of $K$.
+	For this, we see that $\chi$ factors through an extension $L$ of $K$ which is of degree at most $m$ over $K$ and unramified outside $S$, of which there are only finitely many by the Hermite--Minkowski theorem. Indeed, the discriminant of $L$ over $\QQ$ is finitely supported (inside $S$ and whatever primes of $\QQ$ ramify in $K$), and the exponents of these primes are also upper-bounded because the order of  a prime $p$ dividing the discriminant is upper-bounded as a function of the ramification index,\footnote{This follows from the theory of higher ramification groups.} which is upper-bounded by the degree.%\footnote{Technically speaking, Hermite--Minkowski only bounds the number of fields with bounded discriminant, but the discriminant is supported in $S$ and the primes have exponent bounded by the degree.}
+\end{proof}
+\begin{remark}
+	Here is another way to conclude at the end, which uses Kummer theory. For technical reasons, we extend $K$ to be Galois over $\QQ$, and we go ahead and enlarge $S$ to be Galois-invariant and include the primes dividing $m$; let $S_\QQ$ be the corresponding primes in $\QQ$ lying under a prime in $S$.
+	
+	Note that any such Galois character $\chi$ factors through $\op{Gal}(L/k)$ where $L$ is finite abelian over $k$ of exponent dividing $m$ and unramified outside $S$. Thus, it is enough to show that there are only finitely many such fields $L$. But Kummer theory (via \Cref{thm:kummer}) tells us that abelian extensions $L/k$ of exponent dividing $m$ are in bijection with subgroups $B\subseteq K^\times/K^{\times m}$. To check that $L$ is unramified outside $S$ translates, \Cref{rem:kummer-ramified} explains that we may check that $B$ is generated by elements whose norms are supported in $S_\QQ$. Thus, the prime factorizations of the generators of $B$ are limited in exponent (by $m$) and support (by $S$) and unit (because $\OO_K^\times/\OO_K^{\times m}$ is finite), so there are only finitely many available subgroups $B$, and we are done.
+\end{remark}
+
+% \subsection{An Extended Example}
+% Fix a nonzero integer $n$ and consider the ``congruent number'' elliptic curve
+% \[E_n\colon y^2=x(x-n)(x+n).\]
+% One can show by some rearrangement that $E_n$ is a quadratic twist of the elliptic curve $y^2=x^3-x$. One can show that $E(\QQ)_{\mathrm{tors}}=E[2]$, which is precisely the set
+% \[E_n[2]=\{\infty,(0,0),(n,0),(-n,0)\}.\]
+% We are going to prove the following.
+% \begin{theorem}
+% 	We have
+% 	\[\dim_{\FF_2}\op{Sel}_2(E_p)=2+\begin{cases}
+% 		2 & \text{if }p\equiv1\pmod 8, \\
+% 		0 & \text{if }p\equiv3\pmod 8, \\
+% 		1 & \text{if }p\equiv5,7\pmod 8.
+% 	\end{cases}\]
+% \end{theorem}
+% \begin{example}
+% 	For any elliptic curve $E$ over $\QQ$, one has
+% 	\[\dim_{\FF_2}\op{Sel}_2(E)=\dim_{\FF_2}E[2](\ov\QQ)+\op{rank}E(\QQ)+\dim_{\FF_2}\Sha(E)[2].\]
+% 	Thus, one sees that $p\equiv1,3\pmod8$ must have rank $0$ and trivial $\Sha(E)[2]$. If $\Sha$ is finite, then the fact that it should be square further implies that the rank is $1$ and $\Sha(E)[2]$ is trivial.
+% \end{example}
+% Let's spend some time setting up the calculation. We work with a general elliptic curve $E$ over a number field $K$. Because $E[2]$ is defined over $K$, the Galois action is trivial. Thus, we see that $\mathrm H^1(K;E[2])$ is simply $\mathrm H^1(K;\mu_2)^2$, and we can compute this cohomology using the ``Kummer'' exact sequence
+% \[1\to\mu_2\to\ov K^\times\stackrel2\to\ov K^\times\to1,\]
+% which in Galois cohomology produces an isomorphism $\mathrm H^1(K;\mu_2)\cong K^\times/K^{\times2}$ by Hilbert's theorem 90. We may now identify $\mathrm H^1(K;E[2])$ with
+% \[\left\{(\alpha,\beta,\gamma)\in(K^\times/K^{\times2})^3:\alpha\beta\gamma=1\right\}.\]
+% It turns out that this map (approximately) sends some point $(x,y)$ of $E(K)/2E(K)$ to the triple $(x-a_1,x-a_2,x-a_3)$ when $E$ has the form $y^2=(x-a_1)(x-a_2)(x-a_3)$. Technically speaking, we should note that we send $\infty$ to the identity $(1,1,1)$, and we send any two-torsion point like $(a_1,0)$ to the triple whose last two coordinates are $a_1-a_2$ and $a_3-a_2$.
+
+% Of course, we would like a way to know if an interesting triple $(\alpha,\beta,\gamma)$ is in the image without having to find points in $E(K)$ first. Here is one such test.
+% \begin{lemma}
+% 	Fix an elliptic curve $E\colon y^2=(x-a_1)(x-a_2)(x-a_3)$ over a finite extension $K$ of $\QQ_p$. Then a triple $(\alpha,\beta,\gamma)$ lies in the image of the above map if and only if the system of equations
+% 	\[\begin{cases}
+% 		\alpha u^2=x-a_1, \\
+% 		\beta v^2=x-a_2, \\
+% 		\gamma w^2=x-a_3
+% 	\end{cases}\]
+% 	admits a solution.
+% \end{lemma}
+
+\end{document}

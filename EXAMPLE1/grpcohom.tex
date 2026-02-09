@@ -1,0 +1,271 @@
+% !TEX root = notes.tex
+
+\documentclass[notes.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Galois Cohomology}
+
+In this chapter, we run through some recollections of Galois cohomology which did not appear in class.
+
+\section{Hilbert's Theorem 90}
+Hilbert's theorem 90 is a tool frequently used in order to get Kummer theory off of the ground. We will require the following algebraic input.
+\begin{proposition}[Dedekind] \label{prop:dedekind-linear-ind}
+	Fix a group $G$ and a field $k$ and some distinct characters $\chi_1,\ldots,\chi_n\colon G\to k^\times$. Then the characters $\{\chi_1,\ldots,\chi_n\}$ are linearly independent.
+\end{proposition}
+\begin{proof}
+	This proof is tricky. Suppose for the sake of contradiction that there is a nonempty set $\{\chi_1,\ldots,\chi_n\}$ of distinct characters $k^\times\to A$ which fails to be linearly independent. We may as well assume that $n$ is as small as possible; we will derive contradiction by showing that some strict subset of these characters continues to not be linearly independent.
+
+	Now, we are given a relation
+	\[a_1\chi_1+a_2\chi_2+\cdots+a_n\chi_n=0\]
+	for some $a_1,\ldots,a_n\in k$; the minimality of our set of characters implies that all these coefficients are nonzero. The point is that there are two ways to produce a new relation.
+	\begin{itemize}
+		\item On one hand, we can multiply this entire relation by some $a\in k^\times$ to produce the relation
+		\[aa_1\chi_1+aa_2\chi_2+\cdots+aa_n\chi_n=0.\]
+		\item On the other hand, we note that any $g,h\in G$ has
+		\[a_1\chi_1(g)\chi_1(h)+a_2\chi_2(g)\chi_2(h)+\cdots+a_n\chi_n(g)\chi_n(h)=0\]
+		because the $\chi_\bullet$s are multiplicative. Thus, for any $g\in G$, we produce a new relation
+		\[a_1\chi_1(g)\chi_1+a_2\chi_2(g)\chi_2+\cdots+a_n\chi_n(g)\chi_n=0.\]
+	\end{itemize}
+	To complete the proof, we play these two relations against each other. Our characters are all distinct, so we may find some $g\in G$ for which $\chi_1(g)\ne\chi_2(g)$. Now, subtracting the relations
+	\[a_1\chi_1(g)\chi_1+a_2\chi_1(g)\chi_2+\cdots+a_n\chi_1(g)\chi_n=0\]
+	and
+	\[a_1\chi_1(g)\chi_1+a_2\chi_2(g)\chi_2+\cdots+a_n\chi_n(g)\chi_n=0\]
+	produces the relation
+	\[a_1(\chi_1(g)-\chi_2(g))\chi_2+\cdots+a_n(\chi_1(g)-\chi_n(g))\chi_n=0.\]
+	This is a nonzero relation because $a_1(\chi_1(g)-\chi_2(g))\ne0$, so we conclude that the characters $\{\chi_2,\ldots,\chi_n\}$ fail to be linearly independent, which is our desired contradiction.
+\end{proof}
+\begin{theorem}[Hilbert 90] \label{thm:h90}
+	Fix a field $k$.
+	\begin{listalph}
+		\item For any finite Galois extension $L$ of $k$, we have $\mathrm H^1(L/k,\mathbb G_m)=0$.
+		\item We have $\mathrm H^1(k,\mathbb G_m)=0$.
+	\end{listalph}
+\end{theorem}
+\begin{proof}
+	Note that (a) implies (b) by taking the colimit over all $L$ via \Cref{rem:galois-cohom-as-colimit} (where we are silently using \Cref{ex:galois-invariant-of-scheme}). It remains to show (a), for which we use \Cref{lem:h1-by-crossed-hom}.
+	
+	Set $G\coloneqq\op{Gal}(L/k)$, and we fix a crossed homomorphism $f\colon G\to L^\times$, which we want to show is actually principal. Well, we are given that $f(gh)=f(g)\cdot g(f(h))$ for any $g,h\in G$. We are on the hunt for some $b\in L^\times$ for which $f(g)=g(b)/b$ for all $g\in G$; provided that $b$ is nonzero, this is equivalent to $g(b)=f(g)^{-1}b$, so $b$ is more or less an eigenvector for the $G$-action with eigenvalue given by $f^{-1}$. Thus, a natural candidate would be to take some $a\in L$ and produce the ``average'' of the $G$-action defined by
+	\[b\coloneqq\sum_{g\in G}f(g)g(a).\]
+	Indeed, for any $h\in G$, we see that $h(b)$ is
+	\[\sum_{g\in G}hf(g)hg(a)=\frac1{f(h)}\sum_{g\in G}f(hg)hg(a)=\frac1{f(h)}\sum_{g\in G}f(g)g,\]
+	so $h(b)=f\left(h\right)^{-1}b$. It remains to see that we can find some $a\in L$ for which the resulting $b$ is nonzero, which follows from \Cref{prop:dedekind-linear-ind}.
+\end{proof}
+Here are a couple applications.
+\begin{corollary}
+	Fix a cyclic extension $L/k$ where $\op{Gal}(L/k)$ has generator $\sigma$. For $\alpha\in L^\times$, if $\op N_{L/k}(\alpha)=1$, then there is $\beta$ such that $\alpha=\sigma(\beta)/\beta$.
+\end{corollary}
+\begin{proof}
+	By \Cref{prop:compute-group-cohom-cyclic}, we see that
+	\[\mathrm H^1(L/k,L^\times)=\frac{\ker\left(\op N\colon L^\times\to K^\times\right)}{\im\left((\sigma-1)\colon L^\times\to L^\times\right)},\]
+	so the result follows by \Cref{thm:h90}.
+\end{proof}
+\begin{example} \label{ex:h1-of-mu-n}
+	Fix a base field $k$ and a positive integer $m$ not divisible by $\op{char}k$. Consider the finite commutative group scheme $\mu_m\subseteq\mathbb G_m$ given by the $m$th roots of unity. Then the long exact sequence of Galois modules
+	\[1\to\mu_m(k^{\mathrm{sep}})\to k^{\mathrm{sep}\times}\stackrel m\to k^{\mathrm{sep}\times}\to1\]
+	induces an exact sequence
+	\[k^\times\stackrel m\to k^\times\to\mathrm H^1(k;\mu_m)\to\mathrm H^1(k;\mathbb G_m).\]
+	But the last term vanishes by \Cref{thm:h90}, so we conclude that $\mathrm H^1(k;\mu_m)\cong k^\times/k^{\times m}$.
+\end{example}
+
+\section{Kummer Theory}
+Kummer theory classifies abelian extensions a given field $k$ of exponent $m$, provided that $\mu_m\subseteq k^\times$ and $\op{char}k\nmid m$. Let's start with the most basic case.
+\begin{lemma} \label{lem:classify-cyclic-kummer}
+	Fix a field $k$ and a positive integer $m$ such that $\mu_m\subseteq k$ and $\op{char}k\nmid m$. For any cyclic extension $K/k$ of degree $m$, there is $\alpha\in K$ such that $K=k(\alpha)$ and $\alpha^m\in k$.
+\end{lemma}
+\begin{proof}
+	Choose a generator $\sigma$ of $\op{Gal}(K/k)$. We use \Cref{thm:h90} to construct the needed $\alpha$. Well, choose a generator $\zeta$ of $\mu_m$, and then $\zeta\in k$ implies that $\op N_{K/k}(\zeta)=\zeta^m=1$. Thus, there is $\alpha\in K$ such that $\zeta=\sigma(\alpha)/\alpha$, so $\sigma(\alpha)=\zeta\alpha$, and a quick induction shows that $\sigma^i(\alpha)=\zeta^i\alpha$ for all $i$. Thus, $\alpha$ has $m$ distinct Galois conjugates, so $k(\alpha)$ is a degree $m$ extension of $k$, so $k(\alpha)=K$ follows for degree reasons. Lastly, we should check that $\alpha^m\in k$, which follows because
+	\[\sigma^i\left(\alpha^m\right)=\zeta^{mi}\alpha^m=\alpha^m\]
+	for all $\sigma^i$.
+\end{proof}
+For our main result, we should define a ``Kummer pairing.''
+\begin{definition}[Kummer pairing]
+	Fix a field $k$ and a positive integer $m$ such that $\op{char}k\nmid m$ and $\mu_m\subseteq k$.
+	Then we define the \textit{Kummer pairing}
+	\[\langle-,-\rangle\colon\op{Gal}(k^{\mathrm{sep}}/k)\times k^\times/k^{\times m}\to\mu_m\]
+	as follows: for any $\sigma\in\op{Gal}(k^{\mathrm{sep}}/k)$ and $a\in k^\times$, select some $\alpha\in k^{\mathrm{sep}}\times$ which is a root of the polynomial $X^m-a$. Then we define $\langle\sigma,a\rangle\coloneqq\sigma(\alpha)/\alpha$.
+\end{definition}
+\begin{remark}
+	Let's check that this pairing is well-defined.
+	\begin{itemize}
+		\item We see that any root of $X^m-a$ is separable because this polynomial is separable: its derivative is $mX^{m-1}$ because $\op{char}k\nmid m$.
+		\item Independent of $\alpha$: the other roots of this polynomial take the form $\zeta\alpha$ for some $\zeta\in\mu_m\subseteq k$, so $\sigma(\zeta\alpha)/(\zeta\alpha)=\sigma(\alpha)/\alpha$, so $\langle\sigma,a\rangle$ does not depend on the choice of $\alpha$.
+		\item Image in $\mu_m$: note $\langle\sigma,a\rangle\in\mu_m$ because $(\sigma(\alpha)/\alpha)^m=\sigma(a)/a=1$.
+		\item Independent of $k^{\times m}$: if we replace $a$ with some $a'\coloneqq ab^m$ where $b\in k^\times$, then we may select $\alpha'\coloneqq\alpha b$, which shows $\sigma(\alpha')/\alpha'=\sigma(\alpha)/\alpha$, so $\langle\sigma,a\rangle=\langle\sigma,ab\rangle$.
+	\end{itemize}
+\end{remark}
+\begin{theorem}[Kummer] \label{thm:kummer}
+	Fix a field $k$ and a positive integer $m$. Suppose that $\op{char}k\nmid m$ and $\mu_m\subseteq k$.
+	\begin{listalph}
+		\item There is a map sending subgroups $B$ between $k^{\times m}$ and $k^\times$ to abelian extensions $K/k$ of exponent $m$. This map sends $B$ to the extension $K_B\coloneqq k(B^{1/m})$ of $k$ generated by the $m$th roots of $B$.
+		\item Given some such $B$, the pairing restricted Kummer pairing
+		\[\op{Gal}(K_B/k)\times B\to\mu_m\]
+		is perfect.
+		% extension $K_B/k$ is finite if and only if the index $\left[B:k^{\times m}\right]$ is finite. In fact, there is an isomorphism
+		% \[\op{Gal}(K_B/k)^\lor\to B/k^{\times m}.\]
+		\item The map in (a) is an inclusion-preserving bijection.
+	\end{listalph}
+\end{theorem}
+% \begin{remark}
+% 	In the event of (c), it turns out that there is a canonical isomorphism
+% 	\[\op{Gal}(K_B/k)^\lor\to B/k^{\times m}.\]
+% \end{remark}
+\begin{proof}
+	% The main input is to define a ``Kummer pairing.'' Motivated by the above discussion, one can describe the pairing $\op{Gal}(K_B/k)\times B\to\mu_m$ by sending a pair $(\sigma,a)$ to the root of unity $\langle\sigma,a\rangle\in\mu_m$ such that
+	% \[\sigma(\alpha)=\langle\sigma,a\rangle\sigma(\alpha),\]
+	% where $\alpha$ is any root of the polynomial $X^m-a$. Namely, $\alpha$ and $\sigma(\alpha)$ are both roots of the equation $X^m-a$, so there is a unique root of unity $\langle\sigma,a\rangle\in\mu_m$ relating the two. Additionally, one can check that $\langle\sigma,a\rangle$ does not depend on the precise choice of $\alpha$: any other root of $X^m-a$ takes the form $\zeta\alpha$ for some $\zeta\in\mu_m$, so the fact that $\mu_m\subseteq k$ implies that
+	% \[\frac{\sigma(\zeta\alpha)}{\zeta\alpha}=\frac{\sigma(\alpha)}{\alpha}.\]
+	% We now show our parts in sequence. Everything is rather formal except for the surjectivity check in (c), for which we must use \Cref{lem:classify-cyclic-kummer}.
+	We use the Kummer pairing to show the parts in sequence. Everything is rather formal except for the surjectivity check in (c), for which we must use \Cref{lem:classify-cyclic-kummer}.
+	\begin{listalph}
+		\item We must check that $K_B/k$ is an abelian Galois extension of exponent $m$.
+		\begin{itemize}
+			\item To see that it is Galois, it is enough to check that it is generated by Galois elements, so it is enough to check that all Galois conjugates of $\alpha\in B^{1/m}$ live in $K_B$. Well, $a\coloneqq\alpha^m$ is an element of $k$ by construction, so $\alpha$ is the root of the polynomial $X^m-a$. Because $\mu_m\subseteq k$, we see that the set
+			\[\{\zeta\alpha:\zeta\in\mu_m\}\]
+			of roots of $X^m-a$ is therefore contained in $K_B$. 
+			\item To see that it is abelian, choose two automorphisms $\sigma,\tau\in\op{Gal}(K_B/k)$. We would like to check that $\sigma\tau=\tau\sigma$. It is enough to check this equality on generating elements of $K_B/k$, so we once again choose some $\alpha\in B^{1/m}$ and set $a\coloneqq\alpha^m$. Then we see that
+			\[\sigma\tau(\alpha)=\langle\sigma,a\rangle\langle\tau,a\rangle=\tau\sigma(\alpha).\]
+		\end{itemize}
+		\item %We will show that $\langle\cdot,\cdot\rangle$ descends to a perfect pairing
+		%\[\op{Gal}(K_B/k)\times B/k^{\times m}\to\mu_m.\]
+		Here are our checks.
+		\begin{itemize}
+			% \item Well-defined: if $a\in B$ and $b\in k$, we must check that $\langle\sigma,a\rangle=\langle\sigma,ab^m\rangle$. Well, this amounts to noting
+			% \[\frac{\sigma\left(\alpha\right)}{\alpha}=\frac{\sigma(\alpha b)}{\alpha b}\]
+			% for a chosen root $\alpha$ of $X^m-a$.
+			\item Injective on $\op{Gal}(K_B/k)$: suppose that $\sigma\in\op{Gal}(K_B/k)$ makes $\langle\sigma,\cdot\rangle$ the trivial function, and we must show that $\sigma$ is trivial. Well, it is enough to show that $\sigma$ is trivial on $B^{1/m}$, so we choose some $\alpha\in B^{1/m}$ and set $a\coloneqq\alpha^m$. Then
+			\[\frac{\sigma(\alpha)}{\alpha}=\langle\sigma,a\rangle=1,\]
+			so $\sigma$ is the identity on $\alpha$.
+			\item Injective on $B/k^{\times m}$: suppose that $a\in B$ makes $\langle\cdot,a\rangle$ is trivial, and we would like to show that $a\in k^{\times m}$. Well, choose a root $\alpha\in K_B$ of $X^m-a$, and we would like to show that $\alpha\in k$. For this, we note that $\langle\sigma,\alpha\rangle=1$ implies that $\sigma(\alpha)=\alpha$ for all $\sigma\in\op{Gal}(K_B/k)$, so the result follows.
+		\end{itemize}
+		\item This will require some effort. Here are our checks.
+		\begin{itemize}
+			\item Inclusion-preserving: if $B_1\subseteq B_2$, then we see $B_1^{1/m}\subseteq B_2^{1/m}$, so $K_{B_1}\subseteq K_{B_2}$.
+
+			\item Injective: in light of the previous check, it's enough to see that $K_{B_1}\subseteq K_{B_2}$ implies that $B_1\subseteq B_2$. For this, we reduce to the finite case. Choose $b\in B_1$, and it is enough to check that $b\in B_2$ given that $K_{\langle b\rangle}\subseteq K_{B_2}$. However, $b\in K_{B_2}$ implies that $b$ can be written as a finite polynomial in terms of finitely many elements in $B_2^{1/m}$, so we may as well replace $B_2$ by this finitely generated subgroup to check that $b\in B_2$. In total, we are reduced to the case where $B_1$ is generated by $b$ and $B_2$ is finitely generated.
+
+			Now, define $B_3\subseteq k^\times$ as being generated by $B_2$ and $b$. Because $b\in K_{B_2}$ already, we know $K_{B_2}=K_{B_3}$, so the duality of (b) implies
+			\[[B_2:k^{\times m}]=[B_3:k^{\times m}].\]
+			Because $B_2/k^{\times m}\subseteq B_3/k^{\times m}$ already, we see that equality must follow, so $b\in B_2$ is forced.
+
+			\item Surjective: Choose an extension $K/k$ which is abelian of exponent $m$. It is enough to check that $K$ can be generated by the $m$th roots of some subset $S\subseteq k^{\times m}$, from which we find $K=K_B$ where $B$ is the multiplicative subgroup generated by $S$. By writing $K$ as a composite of finite extensions of $k$, we note that each of these finite extensions must be abelian, so it is enough to generate such a finite abelian extension by $m$th roots. Well, a finite abelian group can be written as a product of cyclic groups, so we may write a finite abelian extension as a composite of cyclic ones, so it is enough to generate such finite cyclic extensions by $m$th roots. This is possible by \Cref{lem:classify-cyclic-kummer}.
+			\qedhere
+		\end{itemize}
+	\end{listalph}
+\end{proof}
+\begin{remark} \label{rem:kummer-ramified}
+	It will be worthwhile to know something about ramification in the case where $k$ is a number field. Given a finitely generated subgroup $B=\langle b_1,\ldots,b_n\rangle$ of $k^\times/k^{\times m}$, we claim that $K_B/k$ can only be ramified at primes $\mf p$ lying over rational primes dividing
+	\[m\prod_{i=1}^n\op N_{k/\QQ}(b_i).\]
+	Because the composite of unramified extensions is unramified, we may assume that $n=1$ so that $B=\langle b\rangle$. Now, a prime $\mf p$ of $k$ ramifies in $K_B$ if and only if $\mf p$ divides the relative discriminant of $K_B/k$. But this relative discriminant divides the discriminant of the generating polynomial $f(X)\coloneqq X^m-b$, which can be computed (up to sign) to be $\op N_{K_B/k}f'(\beta)$, where $\beta^m=b$. The result follows because $f'(X)=mX^{m-1}$.
+\end{remark}
+
+\section{Commutators}
+We will want to say something brief about nonabelian group cohomology.
+\begin{definition}
+	Fix a topological group $G$, and let $M$ be a topological group with continuous action by $G$. Then we define $\mathrm H^0(G;M)\coloneqq M^G$ and $\mathrm H^1(G;M)$ as the pointed set of continuous $1$-cocycles modulo continuous $1$-coboundaries. Explicitly, a $1$-cocycle is a function $f\colon G\to M$ for which
+	\[f(gh)=gf(h)\cdot f(g),\]
+	and two $1$-cocycles $f$ and $f'$ are equivalent if and only if there is $m\in M$ for which $(gm)f(g)=f'(g)m$ for all $g\in G$.
+\end{definition}
+\begin{remark}
+	A morphism $M\to M'$ of groups with $G$-action induces (by functoriality) a morphism $\mathrm H^1(G;M)\to\mathrm H^1(G;M')$ of pointed sets. Indeed, a continuous $1$-cocycle $G\to M$ certainly produces a continuous $1$-cocycle $G\to M'$ by composition, and the same is true for $1$-coboundaries. If $M$ and $M'$ are both abelian, then we can see that $\mathrm H^1(G;M)$ and $\mathrm H^1(G;M')$ are both groups under pointwise multiplication (indeed, they are the usual group cohomology groups), and the functorial map is a homomorphism.
+\end{remark}
+\begin{lemma} \label{lem:h0-and-h1-les}
+	Fix a topological group $G$ and an exact sequence
+	\[1\to A\to B\to C\to1\]
+	of topological groups with continuous $G$-action. Then there is an exact sequence
+	% https://q.uiver.app/#q=WzAsNyxbMCwwLCIwIl0sWzEsMCwiXFxtYXRocm0gSF4wKEc7QSkiXSxbMiwwLCJcXG1hdGhybSBIXjAoRztCKSJdLFszLDAsIlxcbWF0aHJtIEheMChHO0MpIl0sWzEsMSwiXFxtYXRocm0gSF4xKEc7QSkiXSxbMiwxLCJcXG1hdGhybSBIXjEoRztCKSJdLFszLDEsIlxcbWF0aHJtIEheMShHO0MpIl0sWzAsMV0sWzEsMl0sWzIsM10sWzMsNF0sWzQsNV0sWzUsNl1d&macro_url=https%3A%2F%2Fraw.githubusercontent.com%2FdFoiler%2Fnotes%2Fmaster%2Fnir.tex
+	\[\begin{tikzcd}[cramped]
+		0 & {\mathrm H^0(G;A)} & {\mathrm H^0(G;B)} & {\mathrm H^0(G;C)} \\
+		& {\mathrm H^1(G;A)} & {\mathrm H^1(G;B)} & {\mathrm H^1(G;C)}
+		\arrow[from=1-1, to=1-2]
+		\arrow[from=1-2, to=1-3]
+		\arrow[from=1-3, to=1-4]
+		\arrow[from=1-4, to=2-2]
+		\arrow[from=2-2, to=2-3]
+		\arrow[from=2-3, to=2-4]
+	\end{tikzcd}\]
+	of pointed sets. If $A\subseteq Z(B)$ and $C$ is abelian, then the last row can be continued by a map $\mathrm H^1(G;C)\to\mathrm H^2(G;A)$. If $B$ is abelian, then the boundary maps are homomorphisms.
+\end{lemma}
+\begin{proof}
+	This proof is exactly the same as the usual one, but we are forced to write things out explicitly because we no longer have access to derived functors. We will still be somewhat brief. For psychological reasons, identify $A$ with its image in $B$, and label the last map as $\pi\colon B\to C$. We proceed in steps.
+	\begin{enumerate}
+		\item Exactness of the top row follows because taking $G$-invariants is a left-exact functor.
+
+		\item We define the map $\delta_0\colon\mathrm H^0(G;C)\to\mathrm H^1(G;A)$. Indeed, given $c\in C^G$, we can find some $b\in B$ for which $\pi(b)=c$. Then $b$ produces a $1$-coboundary given by $f_b(g)\coloneqq (gb)b^{-1}$, which we can quickly check is in fact a $1$-cocycle: $(ghb)b^{-1}=g\left((hb)b^{-1}\right)\cdot (gb)b^{-1}$. Now, we note that
+		\[\pi\left((gb)b^{-1}\right)=gc\cdot c^{-1}\]
+		is trivial, so $f_b$ actually has values in $A$, so $f_b$ defines a class in $\mathrm H^1(G;A)$. To show that this map $\delta_0(c)\coloneqq f_b$ is well-defined, we need to know that it does not depend on the choice of lifting $b\in B$. Well, any other lift takes the form $ab$ for some $a\in A$, and we see that $f_{ab}(g)=(ga)f(b)a^{-1}$, so $f_{ab}$ and $f_b$ are equivalent.
+
+		Lastly, we should show that $\delta_0$ is a homomorphism when $B$ is abelian. Well, given $c,c'\in C^G$, we grant them lifts $b$ and $b'$, and then $bb'$ is a lift of $cc'$, so it is enough to note that $f_{bb'}=f_bf_{b'}$ by the commutativity in $B$.
+
+		\item Exact at $\mathrm H^0(G;C)$: an element $c\in C^G$ vanishes in $\mathrm H^1(G;A)$ if and only if its lift $b\in B$ is actually an element of $A$. This is equivalent to saying that $f_a=(ga)a^{-1}$ is equivalent to the identity.
+
+		\item Exact at $\mathrm H^1(G;A)$: a $1$-cocycle $f\in\mathrm H^1(G;A)$ vanishes in $\mathrm H^1(G;B)$ if and only if there is $b\in B$ for which $f(g)=(gb)b^{-1}$ for all $g\in G$. This is equivalent to saying that $f=\delta_0(\pi(b))$.
+
+		\item Exact at $\mathrm H^1(G;B)$: a $1$-cocycle $f\in\mathrm H^1(G;B)$ vanishes in $\mathrm H^1(G;C)$ if and only if there is $c\in C$ for which $\pi(f(g))=(gc)c^{-1}$ for all $g\in G$. Choosing a lift $b\in B$ for $c$, we see that we may change $f$ to the equivalent $1$-cocycle $f'(g)\coloneqq(gb)^{-1}f(g)b$ which now has $\pi(f(g))=1$ for all $g\in G$. But now $f$ comes from a class in $\mathrm H^1(G;A)$.
+		\qedhere
+	\end{enumerate}
+\end{proof}
+\begin{lemma} \label{lem:h1-to-h2}
+	Fix a topological group $G$ and an exact sequence
+	\[1\to A\to B\to C\to1\]
+	of topological groups with continuous $G$-action. If $A\subseteq Z(B)$ and $A$ is abelian, then the long exact sequence of \Cref{lem:h0-and-h1-les} can be continued to a map $\delta_1\colon\mathrm H^1(G;C)\to\mathrm H^2(G;A)$.
+\end{lemma}
+\begin{proof}
+	We define the map $\delta_1\colon\mathrm H^1(G;C)\to\mathrm H^2(G;A)$. Choose a $1$-cocycle $f$ representing a class in $\mathrm H^1(G;C)$. Then we can define a $1$-cochain $\widetilde f\colon G\to B$ by $\pi\left(\widetilde f(g)\right)=f(g)$ for all $g\in G$. We claim that this makes the boundary
+	\[\del\widetilde f(g,h)\coloneqq g\widetilde f(h)\cdot\widetilde f(g)\cdot \widetilde f(gh)^{-1}\]
+	into a $2$-cocycle of $A$, which will be $\delta_1f$. Certainly $\pi\left(\widetilde f(g,h)\right)=1$ for all $g$ and $h$ (because $C$ is abelian), so $\widetilde f$ outputs to $A$. To check the cocycle condition, we note that $A\subseteq Z(B)$, so $\del\widetilde f(g,h)=\widetilde f(gh)^{-1}\cdot g\widetilde f(h)\cdot\widetilde f(g)$ as well (seen by conjugating by $\widetilde f(gh)$), so checking the cocycle condition amounts to computing
+	\begin{align*}
+		& g_1\del\widetilde f(g_2,g_3)\cdot\del\widetilde f(g_1,g_2g_3)\cdot\left(\del\widetilde f(g_1g_2,g_3)\cdot\del\widetilde f(g_1,g_2)\right)^{-1} \\
+		={}& \frac{g_1g_2\widetilde f(g_3)\cdot g_1\widetilde f(g_2)\cdot g_1\widetilde f(g_2g_3)^{-1}\cdot g_1\widetilde f(g_2g_3)\cdot \widetilde f(g_1)\cdot\widetilde f(g_1g_2g_3)^{-1}}{\widetilde f(g_1g_2g_3)^{-1}\cdot g_1g_2\widetilde f(g_3)\cdot\widetilde f(g_1g_2)\cdot\widetilde f(g_1g_2)^{-1}\cdot g_1\widetilde f(g_2)\cdot\widetilde f(g_1)} \\
+		={}& \frac{g_1g_2\widetilde f(g_3)\cdot g_1\widetilde f(g_2)\cdot  \widetilde f(g_1)\cdot\widetilde f(g_1g_2g_3)^{-1}}{\widetilde f(g_1g_2g_3)^{-1}\cdot g_1g_2\widetilde f(g_3)\cdot g_1\widetilde f(g_2)\cdot\widetilde f(g_1)},
+	\end{align*}
+	so everything cancels because it takes the form $b_1b_2^{-1}b_1^{-1}b_2$ where $b_1b_2^{-1}\in A$.
+
+	We now check that $\delta_1$ is well-defined, for which we need to check that $\delta_1$ does not depend on the choice of representative $f$ or the choice of lift $\widetilde f$. Changing the lift $\widetilde f$ to some $\widetilde f'$ means that $c(g)\coloneqq\widetilde f(g)\widetilde f'(g)^{-1}$ is in $A$ for all $g\in G$, so we find that $\del\widetilde f'=\del\widetilde f\cdot\del c$ (because $A$ is central), so the $2$-coboundary $c$ witnesses that $\del\widetilde f'$ is equivalent to $\widetilde f$. Lastly, changing $f$ to some other $f'$ means that there is $c\in C$ for which $f(g)=gc\cdot f'(g)\cdot c^{-1}$. Then lifting $c\in C$ to some $b\in B$ shows that $f'$ can be lifted to
+	\[(g,h)\mapsto (ghb)\cdot g\widetilde f(h)\cdot (gb)^{-1}\cdot(gb)\cdot\widetilde f(g)\cdot b^{-1}\cdot b\cdot\widetilde f(gh)^{-1}\cdot(ghb)^{-1},\]
+	which equals the original $\del\widetilde f$ after remarking that $A$ is central in $B$.
+
+	Lastly, we need to check exactness at $\mathrm H^1(G;C)$. Well,  a $1$-cocycle $f\colon G\to C$ vanishes in $\mathrm H^2(G;A)$ if and only if there is a $1$-cochain $a\colon G\to A$ for which $\del\widetilde f=\del a$, where $\widetilde f$ is a chosen lift of $f$. Because $a$ is central, this is equivalent to $\del\left(a^{-1}\widetilde f\right)$ being a trivial $2$-cocycle, which means that $a^{-1}\widetilde f$ is a $1$-cocycle in $\mathrm H^1(G;B)$, and we can see that it has image $f$ in $\mathrm H^1(G;C)$. Conversely, any $1$-cocycle $f$ in $B$ has $\delta_1(\pi(f))$ trivial because $\pi(f)$ can be lifted to $f$, and $\del f=1$ because $f$ is already a $1$-cocycle.
+\end{proof}
+In the exact sequence
+\[1\to A\to B\to C\to1,\]
+with $A\subseteq Z(B)$ and $C$ abelian, the boundary map $\delta_1\colon\mathrm H^1(G;C)\to\mathrm H^2(G;A)$ of \Cref{lem:h1-to-h2} is a homomorphism when $B$ abelian. However, when $B$ is not abelian, it turns out to be quadratic.
+\begin{proposition} \label{prop:commutator-gives-cup}
+	Fix a topological group $G$ and an exact sequence
+	\[1\to A\to B\to C\to1\]
+	of topological groups with continuous $G$-action.
+	\begin{listalph}
+		\item There is an antisymmetric pairing $\varphi\colon C\otimes C\to A$ given on pure tensors $c\otimes c'$ by lifting $c$ and $c'$ to $b$ and $b'$, respectively, and defining $\varphi(c\otimes c')\coloneqq bb'b^{-1}(b')^{-1}$.
+		\item For any $f,f'\in\mathrm H^1(G;C)$, we have $\delta_1(ff')=\delta_1(f)\delta_1(f')\varphi(f\cup f')^{-1}$.
+	\end{listalph}
+\end{proposition}
+\begin{proof}
+	This is \cite[Section~1]{zarhin-cup-prod}. As usual, identify $A$ with its image in $B$, and denote the map $B\to C$ by $\pi$. We now quickly dispatch with (a).
+	\begin{itemize}
+		\item Note that $\varphi$ outputs to $A$ because $\pi\left(bb'b^{-1}(b')^{-1}\right)=1$, meaning that $\pi\circ\varphi$ is trivial.
+		\item Well-defined: changing the lifts $b$ or $b'$ will only adjust them by a central element in $A$, which will not affect the output commutator.
+		\item Antisymmetric: note $[b,b']^{-1}=[b',b]$, so $\varphi(c\otimes c')=\varphi(c'\otimes c)^{-1}$.
+		\item Bilinear: upon lifting $c_1,c_2,c'\in C$ to $b_1,b_2,b'\in B$, respectively, checking $\varphi(c_1c_2, c')=\varphi(c_1,c')\varphi(c_2,c')$ amounts to calculating
+		\begin{align*}
+			[b_1,b']\cdot[b_2,b']\cdot[b_1b_2,b']^{-1} &= b_1b'b_1^{-1}\left[(b')^{-1},b_2\right]b_1\left[b_2,(b')^{-1}\right](b')^{-1}b_1^{-1} \\
+			&= b_1b'b_1^{-1}b_1(b')^{-1}b_1^{-1}\cdot\left[(b')^{-1},b_2\right]\cdot\left[b_2,(b')^{-1}\right], \\
+			&= 1,
+		\end{align*}
+		where we have repeatedly used that the fact that $A$ is central. The other bilinearity check follows from antisymmetry.
+	\end{itemize}
+	We now turn to (b). This is a direct calculation. For $f,f'\in\mathrm H^1(G;C)$ and $g,h\in G$, we choose lifts $\widetilde f$ and $\widetilde f'$ of $f$ and $f'$ respectively, so we can calculate
+	\begin{align*}
+		\delta_1(ff')(g,h) &= g\widetilde f(h)\cdot g\widetilde f'(h)\cdot\widetilde f(g)\cdot\widetilde f'(g)\cdot\widetilde f'(gh)^{-1}\cdot\widetilde f(gh)^{-1} \\
+		&= \widetilde f(gh)^{-1}\cdot g\widetilde f(h)\cdot g\widetilde f'(h)\cdot\widetilde f(g)\cdot\widetilde f'(g)\cdot\widetilde f'(gh)^{-1} \\
+		&= \widetilde f(gh)^{-1}\cdot g\widetilde f(h)\cdot\widetilde f(g)\cdot\left[\widetilde f(g)^{-1},g\widetilde f'(h)\right]\cdot g\widetilde f'(h)\cdot\widetilde f'(g)\cdot\widetilde f'(gh)^{-1} \\
+		&= \del\widetilde f(g,h)\cdot\varphi\left(f^{-1}\cup f'\right)(g,h)\cdot\del\widetilde f'(g,h).
+	\end{align*}
+	The result follows after rearranging.
+\end{proof}
+\begin{definition}[commutator pairing]
+	Given a short exact sequence
+	\[1\to A\to B\to C\to1\]
+	of groups such that $A\subseteq Z(B)$ and $C$ is abelian, we let $\varphi\colon C\otimes C\to A$ defined in \Cref{prop:commutator-gives-cup} be the \textit{commutator pairing}.
+\end{definition}
+
+\end{document}

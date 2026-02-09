@@ -1,0 +1,45 @@
+% LTeX: enabled=false
+
+\documentclass[openany]{book}
+\usepackage[utf8]{inputenc}
+
+\newcommand{\nirpdftitle}{18.786 Notes}
+\usepackage{import}
+\inputfrom{..}{nir}
+% \usepackage{mathabx}
+
+\pagestyle{contentpage}
+
+\title{MA 8673 Functional Analysis}
+\author{Kevin Ho}
+\date{Spring 2026}
+\rhead{\textit{MA 8673 Functional Analysis}}
+
+\begin{document}
+
+\maketitle
+
+\nirtableofcontents
+
+\newpage
+
+\chapter{Introduction}
+
+\foreach \n in {2,4,6}
+{
+	\subfile{feb/\n}
+}
+
+\chapter{Locally Convex Spaces}
+
+\foreach \n in {9}
+{
+  \subfile{feb/\n}
+}
+
+
+
+\nirprintbib
+\nirprintindex
+
+\end{document}
