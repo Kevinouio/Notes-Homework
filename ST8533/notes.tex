@@ -1,0 +1,38 @@
+% LTeX: enabled=false
+
+\documentclass[openany]{book}
+\usepackage[utf8]{inputenc}
+
+\newcommand{\nirpdftitle}{ST8533}
+\usepackage{import}
+\inputfrom{..}{nir}
+% \usepackage{mathabx}
+
+\pagestyle{contentpage}
+
+\title{ST 8533 Applied Probability}
+\author{Kevin Ho}
+\date{Spring 2026}
+\rhead{\textit{ST 8533 Applied Probability}}
+
+\begin{document}
+
+\maketitle
+
+\nirtableofcontents
+
+\newpage
+
+\chapter{Introduction of Probability Theory}
+
+\foreach \n in {15,20}
+{
+	\subfile{jan/\n}
+}
+
+
+
+\nirprintbib
+\nirprintindex
+
+\end{document}

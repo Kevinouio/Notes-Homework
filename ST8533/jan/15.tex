@@ -1,0 +1,83 @@
+% !TEX root = ../notes.tex
+
+\documentclass[../notes.tex]{subfiles}
+
+\begin{document}
+
+\subsection{January 15}
+
+So for this class, we mainly discuss the topics of first being just a general review from The normal Math stats course at the undergraduate level. Later we move onto 3 full modules on Markov Chains.
+
+The topics in Markov chains that we discuss are the definitions, transistion matricies, Chapman-Kolmogorov equations, classification, recurrence, communitating classes, stationary distributions, and long-run behavior.
+We then move onto topics of Poisson Processes, nonhomogeneous Poisson processes, Renewel Theory and and introduction to Brownian motion. Make sure to check the syllabus to this.
+
+\section{Introduction}
+We are first gonna go through the basics of probability theory just to make sure you remember the topcis that will be used in this Stochastics Class.
+
+\begin{definition}
+  Consider a \textit{random experiment} and let $S$ to be the set of all possible outcomes. S is called the \textbf{sample space}.
+\end{definition}
+\begin{definition}
+  An \textbf{event} $E$ us a subset of the sample space $S$. The event $E$ occurs if the outcomes lies in $E$.
+\end{definition}
+So for a better visuallization of these definitions, suppose we flip two coins. The sample space is $S = \{HH, HT, TH, TT\}$ and the event of getting only one head is $E = \{HT, TH\}$.
+\begin{definition}
+  Let $A$ and $B$ be two events. We define the following operations.
+  \begin{itemize}
+    \item (Union): $A\cup B = \{x: x\in A \text{ or } x\in B\}$, the event that either $A$ or $B$ occurs.
+    \item (Intersection): $A\cap B = \{x: x\in A \text{ and } x\in B\}$, the event that both $A$ and $B$ occur.
+    \item (Complement): $A^c = \{x: x \notin A\}$, the event that $A$ does not occur.
+    \item (Subset): $A\subseteq B$ if $x\in A$ implies $x\in B$, the event that if $A$ occurs then $B$ also occurs.
+  \end{itemize}
+\end{definition}
+Most of these definitions are pretty intuitive. So now let's move onto some of the properties of these operations.
+\begin{proposition}
+  \begin{itemize}
+    \item (Commutative Law): $A\cup B = B\cup A$ and $A\cap B = B\cap A$.
+    \item (Associative Law): $A\cup (B\cup C) = (A\cup B)\cup C$ and $A\cap (B\cap C) = (A\cap B)\cap C$.
+    \item (Distributive Law): $A\cap (B\cup C) = (A\cap B)\cup (A\cap C)$ and $A\cup (B\cap C) = (A\cup B)\cap (A\cup C)$.
+  \end{itemize}
+\end{proposition}
+\begin{proposition}(De Morgan's Laws)
+  \begin{itemize}
+    \item $(A\cup B)^c = A^c \cap B^c$.
+    \item $(A\cap B)^c = A^c \cup B^c$.
+  \end{itemize}
+\end{proposition}
+\begin{definition}
+  Two events are called \textbf{disjoint} or \textbf{mutually exclusive} if $A\cap B = \emptyset$. This means that the two events cannot occur at the same time.
+\end{definition}
+So far we have only discussed the basic set operations on events. Now we want to move onto the notion of probability and how it is defined on these events.
+\begin{definition}
+  Let $\Omega$ denote the collection of all possible events. A \textbf{probability function} $P: \Omega \rightarrow [0,1]$ is a function that satisfies the following properties:
+\begin{itemize}
+  \item (Non-negativity): $P(A) \ge 0$ for any event $A$.
+  \item (Normalization): $P(S) = 1$.
+  \item (Countable Additivity): If $A_1, A_2,\dots, A_n$ are mutually exclusive events, then $$P\left(\bigcup_{i=1}^n A_i\right) = \sum_{i=1}^n P(A_i).$$
+\end{itemize}
+\end{definition}
+\begin{remark}
+  With this definition, we can derive some properties of the probability function. $\emptyset \in \Omega$ and $S\in \Omega$ since they are both events. For example, a coin is flipped. The sample space is $S = \{H, T\}$ and $\Omega$ is the power set of $S$, which is $\{\emptyset, \{H\}, \{T\}, S\}$.
+\end{remark}
+\begin{remark}
+  $P(A)$ can be interpreted as the long-run relative frequency of the event $A$ occurring in repeated independent trials of the random experiment. If the experiment is repeated $n$ times, and $n(A)$ is the number of times event $A$ occurs, then $$P(A) \approx \frac{n(A)}{n} \text{ as } n \to \infty.$$
+\end{remark}
+Now that we have defined the probability function, we can derive some properties of it.
+\begin{proposition}
+  \begin{itemize}
+    \item $P(\emptyset) = 0$.
+    \item $P(A^c) = 1 - P(A)$.
+    \item If $A\subseteq B$, then $P(A) \le P(B)$.
+    \item (Inclusion-Exclusion Principle): For any two events $A$ and $B$, $P(A\cup B) = P(A) + P(B) - P(A\cap B)$.
+  \end{itemize}
+\end{proposition}
+\begin{remark}
+  The Inclusion-Exclusion Principle can be extended to $n$ events. For events $A_1, A_2, \dots, A_n$, we have
+$$P\left(\bigcup_{i=1}^n A_i\right) = \sum_{i=1}^n P(A_i) - \sum_{1 \le i < j \le n} P(A_i \cap A_j) + \sum_{1 \le i < j < k \le n} P(A_i \cap A_j \cap A_k) - $$$$ \dots + (-1)^{n+1} P(A_1 \cap A_2 \cap \dots \cap A_n).$$
+\end{remark}
+
+
+
+
+
+\end{document}
